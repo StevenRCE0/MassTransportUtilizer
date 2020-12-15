@@ -1,8 +1,12 @@
 import React from 'react'
 import Dashboard from './dashboardCanvas'
+import MapFuture from "./Map";
 function App() {
   return (
-    <Dashboard />
+      <div>
+        <Dashboard />
+        <MapFuture />
+      </div>
   );
 }
 

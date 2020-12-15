@@ -15,7 +15,7 @@ class Dashboard extends React.Component {
                     <Rect
                         x={10} y={10} width={this.state.size - 20} height={this.state.size - 20}
                         fill={'#EEE'}
-                        shadowBlur={10}
+                        shadowBlur={4}
                         cornerRadius={this.state.rounded}
                     />
                 </Layer>
@@ -24,7 +24,6 @@ class Dashboard extends React.Component {
                         <CircularProgress
                             style={{
                                 position: 'absolute',
-                                
                                 top: this.state.rounded,
                                 left: this.state.rounded,
                             }}
