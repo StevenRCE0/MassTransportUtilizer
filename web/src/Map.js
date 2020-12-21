@@ -5,10 +5,12 @@ class Point extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: this.props.id,
             x: this.props.x,
             y: this.props.y,
             level: this.props.level,
             type: this.props.type,
+            line: this.props.line,
             station: this.props.station
         }
     }
@@ -40,11 +42,13 @@ class Path extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: this.props.id,
             x1: this.props.x1,
             y1: this.props.y1,
             x2: this.props.x2,
             y2: this.props.y2,
-            level: this.props.level
+            level: this.props.level,
+            line: this.props.line
         }
     }
     render() {
