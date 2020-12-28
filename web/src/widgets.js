@@ -14,18 +14,44 @@ import {
 // import {Layer, Rect, Stage} from "react-konva
 // import {CircularProgress} from "@material-ui/core";
 
-function linesConstructor(dataArray, tintArray) {
-    return dataArray.map(
-        function (line, index) {
-            return (
-                <Line
-                    key={index}
-                    type={"monotone"}
-                    datakey={"key"}
-                    stroke={tintArray[index]}
-                />
-            )
-        }
+function linesConstructor(dataArray, tintArray, state) {
+    const lines = dataArray.lines
+    let converted = []
+    let drawn = []
+    lines.map(function (line, lineIndex) {
+        line.values.map(function(y, x) {
+            const partPoint = {}
+            partPoint["index"] = x;
+            partPoint[line.name] = y;
+            converted[x] = Object.assign(partPoint, converted[x])
+            return partPoint
+        })
+        drawn.push(
+            <Line
+                type={"monotone"}
+                dot={{r: 6}}
+                id={lineIndex}
+                dataKey={line.name}
+                stroke={tintArray[lineIndex]}
+                strokeWidth={4}
+            />
+        )
+        return converted
+    })
+
+    return (
+        <LineChart
+            data={converted}
+            width={state.width - 2 * state.rounded}
+            height={state.height - 2 * state.rounded}
+            margin={{
+                top: state.rounded * 2,
+                left: state.rounded * 2
+            }}
+        >
+            <Legend />
+            {drawn}
+        </LineChart>
     )
 }
 
@@ -143,6 +169,55 @@ export class Dashboard extends React.Component {
     }
 }
 
+export class DashboardOne extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {size: 200, rounded: 20}
+    }
+    greatLegend(value) {
+        return (
+            <span style={{fontSize: 27}}>{value}</span>
+        )
+    }
+    render() {
+        const data = [{name: '鸽子力', value: 99}];
+        const tint = "#137A7F"
+        const frame = {height: this.state.size, width: this.state.size, borderRadius: this.state.rounded, align: "center"}
+        return (
+            <div className={'Layer'} style={frame}>
+                <RadialBarChart
+                    data={data}
+                    width={this.state.size}
+                    height={this.state.size}
+                    innerRadius={this.state.size / 2}
+                >
+                    <PolarAngleAxis
+                        type={"number"}
+                        domain={[0, 100]}
+                        angleAxisId={0}
+                        tick={false}
+                    />
+                    <RadialBar
+                        angleAxisId={0}
+                        dataKey={"value"}
+                        cornerRadius={"100%"}
+                        background
+                    >
+                        <Cell fill={tint}/>
+                    </RadialBar>
+                    <Legend
+                        verticalAlign={"middle"}
+                        align={"center"}
+                        iconSize={0}
+                        wrapperStyle={{transform: "translateX(4px)"}}
+                        formatter={this.greatLegend}
+                    />
+                </RadialBarChart>
+            </div>
+        )
+    }
+}
+
 export class Trends extends React.Component {
     constructor(props) {
         super(props);
@@ -189,18 +264,64 @@ export class Trends extends React.Component {
                     width={this.state.width - 2 * this.state.rounded}
                     height={this.state.height - 2 * this.state.rounded}
                     margin={{
-                        top: this.state.rounded,
-                        left: this.state.rounded
+                        top: this.state.rounded * 2,
+                        left: this.state.rounded * 2
                     }}
                 >
                     <CartesianGrid/>
                     <XAxis/>
                     <YAxis/>
                     <Legend/>
-                    <Line dataKey={"uv"}/>
-                    <Line dataKey={"pv"}/>
-                    {/*{linesConstructor(data, tint)}*/}
+                    <Line dataKey={"uv"} stroke={tint[0]} strokeWidth={4} dot={{r: 6}}/>
+                    <Line dataKey={"pv"} stroke={tint[1]} strokeWidth={4} dot={{r: 6}}/>
                 </LineChart>
+            </div>
+        )
+    }
+}
+
+export class SimpleTrends extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            width: 500,
+            height: 300,
+            rounded: 20
+        }
+    }
+    render() {
+        const frame = {
+            height: this.state.height,
+            width: this.state.width,
+            borderRadius: this.state.rounded
+        }
+        const tint = ["#EA0", "#08A"]
+        const lineData = {
+            xAxisMeasurement: "XExample",
+            lines: [
+                {
+                    name: 'One',
+                    values: [
+                        4000,
+                        5000,
+                        3500,
+                        5000
+                    ]
+                },
+                {
+                    name: "Two",
+                    values: [
+                        7500,
+                        5560,
+                        2280,
+                        5600
+                    ]
+                },
+            ]
+        }
+        return (
+            <div className={"Layer"} style={frame}>
+                {linesConstructor(lineData, tint, this.state)}
             </div>
         )
     }
