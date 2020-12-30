@@ -1,9 +1,16 @@
 .Layer {
+    height: 100%;
+    width: 100%;
     display: inline-block;
     position: relative;
     background: rgba(250, 250, 250, 0.8);
     background-blend-mode: exclusion;
-    margin: 20px;
+    text-align: center;
+    align-content: center;
+    overflow: hidden;
+}
+.Layer .recharts-wrapper {
+    margin : 0 auto;
 }
 .Desc {
     height: 100%;

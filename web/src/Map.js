@@ -1,5 +1,6 @@
 import React from "react";
 import {Stage, Layer, Circle, Group, Text, Ring, Line, Rect} from "react-konva";
+import "./dashboard.css";
 
 class Point extends React.Component {
     constructor(props) {
@@ -21,17 +22,14 @@ class Point extends React.Component {
         return(
             <Group x={this.state.x} y={this.state.y}>
                 <Circle
-                    radius={radius}
+                    radius={radius * 0.5}
                     fill={'#FFF'}
                     onClick={() => this.props.setPanel(0, 'station', [this.state.x, this.state.y], 1)}
                 />
                 <Ring
-                    innerRadius={radius}
-                    outerRadius={radius * 1.5}
-                    fill={'#900'}
-                    stroke={'#FFF'}
-                    shadowBlur={6}
-                    shadowColor={'rgba(0, 0, 0, .5)'}
+                    innerRadius={radius * 0.5}
+                    outerRadius={radius}
+                    fill={'#990'}
                 />
                 <Text text={this.state.station} fontSize={20} x={radius * 1.5 + 5}/>
             </Group>
@@ -58,7 +56,7 @@ class Path extends React.Component {
                 x={0}
                 y={0}
                 points={[this.state.x1, this.state.y1, this.state.x2, this.state.y2]}
-                stroke={'#BBF'}
+                stroke={'#BBB'}
                 strokeWidth={strokeWidth}
             />
         )
@@ -125,17 +123,19 @@ class MapFuture extends React.Component {
         ))
 
         return(
-            <Stage height={window.innerHeight} width={window.innerWidth}>
-                <Layer id={'FMpaths'}>
-                    {pathSet}
-                </Layer>
-                <Layer id={'FMstations'}>
-                    {pointSet}
-                </Layer>
-                <Layer id={'FMpanels'}>
-                    {this.showPanel()}
-                </Layer>
-            </Stage>
+            <div className={"Layer"}>
+                <Stage height={window.innerHeight} width={window.innerWidth}>
+                    <Layer id={'FMpaths'}>
+                        {pathSet}
+                    </Layer>
+                    <Layer id={'FMstations'}>
+                        {pointSet}
+                    </Layer>
+                    <Layer id={'FMpanels'}>
+                        {this.showPanel()}
+                    </Layer>
+                </Stage>
+            </div>
         )
     }
 }

@@ -58,13 +58,13 @@ function linesConstructor(dataArray, tintArray, state) {
 export class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {size: 300, rounded: 20}
+        this.state = {size: 240, rounded: 20}
     }
     render() {
         const spacing = this.state.rounded * 1.5
         const data = [{name: '摸鱼', value: 40}, {name: '摸到', value: 90}, {name: '意识', value: 60}, {name: '模糊', value: 70}];
         const tint = ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
-        const frame = {height: this.state.size, width: this.state.size, borderRadius: this.state.rounded}
+        const frame = {height: "100%", width: "100%", borderRadius: this.state.rounded}
         return (
             <div className={'Layer'} style={frame}>
                 <RadialBarChart
@@ -172,24 +172,31 @@ export class Dashboard extends React.Component {
 export class DashboardOne extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {size: 200, rounded: 20}
+        this.state = {size: 120, rounded: 20}
+        this.setState({size: this.props.size})
     }
     greatLegend(value) {
         return (
-            <span style={{fontSize: 27}}>{value}</span>
+            <span>{value}</span>
         )
     }
     render() {
-        const data = [{name: '鸽子力', value: 99}];
+        const data = {name: '鸽子力', value: 99};
         const tint = "#137A7F"
-        const frame = {height: this.state.size, width: this.state.size, borderRadius: this.state.rounded, align: "center"}
+        const frame = {height: "100%", width: "100%", borderRadius: this.state.rounded, align: "center"}
         return (
             <div className={'Layer'} style={frame}>
                 <RadialBarChart
-                    data={data}
+                    data={[data]}
                     width={this.state.size}
                     height={this.state.size}
                     innerRadius={this.state.size / 2}
+                    style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)"
+                    }}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -222,15 +229,15 @@ export class Trends extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: 500,
+            width: 400,
             height: 300,
             rounded: 20
         }
     }
     render() {
         const frame = {
-            height: this.state.height,
-            width: this.state.width,
+            height: "100%",
+            width: "100%",
             borderRadius: this.state.rounded
         }
         const tint = ["#A00", "#00A"]
@@ -284,15 +291,15 @@ export class SimpleTrends extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            width: 500,
+            width: 400,
             height: 300,
             rounded: 20
         }
     }
     render() {
         const frame = {
-            height: this.state.height,
-            width: this.state.width,
+            height: "100%",
+            width: "100%",
             borderRadius: this.state.rounded
         }
         const tint = ["#EA0", "#08A"]
