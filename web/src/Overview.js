@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import * as Widgets from "./widgets";
 import MapFuture from "./Map";
 
@@ -35,7 +34,7 @@ class Overview extends React.Component {
                     <Widgets.SimpleTrends />
                 </div>
                 <div className={"div10"}>
-                    <Widgets.SimpleTrends />
+                    <Widgets.SimpleBars />
                 </div>
             </div>
         )

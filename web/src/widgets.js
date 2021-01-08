@@ -9,10 +9,17 @@ import {
     LineChart,
     CartesianGrid,
     XAxis,
-    YAxis, Line
+    YAxis, Line, BarChart, Bar
 } from "recharts";
 // import {Layer, Rect, Stage} from "react-konva
 // import {CircularProgress} from "@material-ui/core";
+
+const transformToCentre = {
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+}
 
 function linesConstructor(dataArray, tintArray, state) {
     const lines = dataArray.lines
@@ -52,6 +59,35 @@ function linesConstructor(dataArray, tintArray, state) {
             <Legend />
             {drawn}
         </LineChart>
+    )
+}
+
+function barConstructor(dataArray, tintArray, state) {
+    let keys = []
+    dataArray.map(function (x) {
+        keys.push(Object.keys(x))
+    })
+    keys = keys[0]
+    console.log(keys)
+     const barContent = keys.map(function (key, index) {
+        return(
+            <Bar
+                dataKey={key}
+                fill={tintArray[index]}
+            />
+        )
+    })
+
+    return(
+        <BarChart
+            data={dataArray}
+            width={state.width}
+            height={state.height}
+            style={transformToCentre}
+        >
+            {barContent}
+            <Legend />
+        </BarChart>
     )
 }
 
@@ -287,7 +323,7 @@ export class Trends extends React.Component {
     }
 }
 
-export class SimpleTrends extends React.Component{
+export class SimpleTrends extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -329,6 +365,31 @@ export class SimpleTrends extends React.Component{
         return (
             <div className={"Layer"} style={frame}>
                 {linesConstructor(lineData, tint, this.state)}
+            </div>
+        )
+    }
+}
+
+export class SimpleBars extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            "width": 300,
+            "height": 120,
+            rounded: 20,
+        }
+    }
+    render() {
+        const data = {"uv": 900, "pv": 609}
+        const tint = ["#998", "#753"]
+        const frame = {
+            "width": "100%",
+            "height": "100%",
+            "border-radius": this.state.rounded
+        }
+        return(
+            <div className={"Layer"} style={frame}>
+                {barConstructor([data], tint, this.state)}
             </div>
         )
     }
