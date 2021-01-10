@@ -123,19 +123,17 @@ class MapFuture extends React.Component {
         ))
 
         return(
-            <div className={"Layer"}>
-                <Stage height={window.innerHeight} width={window.innerWidth}>
-                    <Layer id={'FMpaths'}>
-                        {pathSet}
-                    </Layer>
-                    <Layer id={'FMstations'}>
-                        {pointSet}
-                    </Layer>
-                    <Layer id={'FMpanels'}>
-                        {this.showPanel()}
-                    </Layer>
-                </Stage>
-            </div>
+            <Stage height={window.innerHeight} width={window.innerWidth}>
+                <Layer id={'FMpaths'}>
+                    {pathSet}
+                </Layer>
+                <Layer id={'FMstations'}>
+                    {pointSet}
+                </Layer>
+                <Layer id={'FMpanels'}>
+                    {this.showPanel()}
+                </Layer>
+            </Stage>
         )
     }
 }

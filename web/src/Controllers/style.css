@@ -1,0 +1,7 @@
+.SwitchBase {
+    height: 50px;
+    background: aliceblue;
+}
+.activatedR {
+    transform: scale(2);
+}

@@ -11,6 +11,9 @@ import {
     XAxis,
     YAxis, Line, BarChart, Bar
 } from "recharts";
+import './Controllers/Switch';
+import MapFuture from "./Map";
+import MapSwitch from "./Controllers/Switch";
 // import {Layer, Rect, Stage} from "react-konva
 // import {CircularProgress} from "@material-ui/core";
 
@@ -66,6 +69,7 @@ function barConstructor(dataArray, tintArray, state) {
     let keys = []
     dataArray.map(function (x) {
         keys.push(Object.keys(x))
+        return x
     })
     keys = keys[0]
     console.log(keys)
@@ -390,6 +394,27 @@ export class SimpleBars extends React.Component {
         return(
             <div className={"Layer"} style={frame}>
                 {barConstructor([data], tint, this.state)}
+            </div>
+        )
+    }
+}
+
+export class MapsBlock extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            rounded: 20,
+            activated: "普通线路图"
+        }
+    }
+
+    render() {
+        return(
+            <div className={"Layer"} style={{borderRadius: this.state.rounded}}>
+                <MapSwitch switchOptions={["普通线路图","喵喵喵"]} state={this.state}
+                    setState={(e) => (this.setState(e))}
+                />
+                <MapFuture />
             </div>
         )
     }

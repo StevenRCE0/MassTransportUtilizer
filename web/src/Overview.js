@@ -1,13 +1,12 @@
 import React from "react";
 import * as Widgets from "./widgets";
-import MapFuture from "./Map";
 
 class Overview extends React.Component {
     render() {
         return (
             <div className={"GridContainer"}>
                 <div className={"div1"}>
-                    <MapFuture />
+                    <Widgets.MapsBlock />
                 </div>
                 <div className={"div2"}>
                     <Widgets.DashboardOne />
