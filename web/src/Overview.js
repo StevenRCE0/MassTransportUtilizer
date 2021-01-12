@@ -11,10 +11,11 @@ class Overview extends React.Component {
 
     calculateSize = () => {
         this.setState({
-            size: Math.min(window.innerHeight, window.innerWidth) / 4
+            size: Math.min(window.innerHeight, window.innerWidth) / 8
         })
     }
     componentDidMount() {
+        this.calculateSize()
         window.addEventListener('resize', this.calculateSize)
     }
     componentWillUnmount() {
@@ -47,13 +48,13 @@ class Overview extends React.Component {
                     <Widgets.Dashboard size={size}/>
                 </div>
                 <div className={"div8"}>
-                    <Widgets.Trends />
+                    <Widgets.Trends port={{"height": size, "width": size * 2}}/>
                 </div>
                 <div className={"div9"}>
-                    <Widgets.SimpleTrends />
+                    <Widgets.SimpleTrends port={{"height": size, "width": size * 3}}/>
                 </div>
                 <div className={"div10"}>
-                    <Widgets.SimpleBars />
+                    <Widgets.SimpleBars port={{"height": size, "width": size * 2}}/>
                 </div>
             </div>
         )

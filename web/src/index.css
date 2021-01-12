@@ -15,7 +15,7 @@ code {
 
 .GridContainer {
     width: calc(100vw - 20px);
-    height: calc(100vh - 20px);
+    height: calc(100vh - 60px);
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(7, 1fr);

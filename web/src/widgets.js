@@ -52,12 +52,8 @@ function linesConstructor(dataArray, tintArray, state) {
     return (
         <LineChart
             data={converted}
-            width={state.width - 2 * state.rounded}
-            height={state.height - 2 * state.rounded}
-            margin={{
-                top: state.rounded * 2,
-                left: state.rounded * 2
-            }}
+            width={state.width}
+            height={state.height}
             style={transformToCentre}
         >
             <Legend />
@@ -103,10 +99,8 @@ export class Dashboard extends React.Component {
             rounded: 20
         }
     }
-    showSize() {console.log(this.props.size)}
     render() {
-        this.showSize()
-        const size = this.props.size
+        const size = this.props.size * 2
         const spacing = this.state.rounded * 1.5
         const data = [{name: '摸鱼', value: 40}, {name: '摸到', value: 90}, {name: '意识', value: 60}, {name: '模糊', value: 70}];
         const tint = ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
@@ -229,7 +223,7 @@ export class DashboardOne extends React.Component {
         const data = {name: '鸽子力', value: 99};
         const tint = "#137A7F"
         const frame = {height: "100%", width: "100%", borderRadius: this.state.rounded, align: "center"}
-        const size = this.props.size / 2
+        const size = this.props.size
         return (
             <div className={'Layer'} style={frame}>
                 <RadialBarChart
@@ -275,15 +269,12 @@ export class Trends extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: 400,
-            height: 300,
             rounded: 20
         }
     }
     render() {
+        const port = this.props.port
         const frame = {
-            height: "100%",
-            width: "100%",
             borderRadius: this.state.rounded
         }
         const tint = ["#A00", "#00A"]
@@ -314,12 +305,8 @@ export class Trends extends React.Component {
             <div className={"Layer"} style={frame}>
                 <LineChart
                     data={data}
-                    width={this.state.width - 2 * this.state.rounded}
-                    height={this.state.height - 2 * this.state.rounded}
-                    margin={{
-                        top: this.state.rounded * 2,
-                        left: this.state.rounded * 2
-                    }}
+                    width={port.width}
+                    height={port.height}
                     style={transformToCentre}
                 >
                     <CartesianGrid/>
@@ -338,12 +325,11 @@ export class SimpleTrends extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: 400,
-            height: 300,
             rounded: 20
         }
     }
     render() {
+        const port = this.props.port
         const frame = {
             height: "100%",
             width: "100%",
@@ -375,7 +361,7 @@ export class SimpleTrends extends React.Component {
         }
         return (
             <div className={"Layer"} style={frame}>
-                {linesConstructor(lineData, tint, this.state)}
+                {linesConstructor(lineData, tint, port)}
             </div>
         )
     }
@@ -385,12 +371,11 @@ export class SimpleBars extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            "width": 300,
-            "height": 120,
             rounded: 20,
         }
     }
     render() {
+        const port = this.props.port
         const data = {"uv": 900, "pv": 609}
         const tint = ["#998", "#753"]
         const frame = {
@@ -400,7 +385,7 @@ export class SimpleBars extends React.Component {
         }
         return(
             <div className={"Layer"} style={frame}>
-                {barConstructor([data], tint, this.state)}
+                {barConstructor([data], tint, port)}
             </div>
         )
     }
@@ -411,14 +396,14 @@ export class MapsBlock extends React.Component {
         super(props);
         this.state = {
             rounded: 20,
-            activated: "普通线路图"
+            activated: "无"
         }
     }
 
     render() {
         return(
             <div className={"Layer"} style={{borderRadius: this.state.rounded}}>
-                <MapSwitch switchOptions={["普通线路图","喵喵喵"]} state={this.state}
+                <MapSwitch switchOptions={["无","热力图"]} state={this.state}
                     setState={(e) => (this.setState(e))}
                 />
                 <MapFuture />
