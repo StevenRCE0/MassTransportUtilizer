@@ -10,7 +10,7 @@ export class Dock extends React.Component {
     }
 
     getNavigation(standing) {
-        const directions = ["概览", "客流组成分析"]
+        const directions = ["概览", "客流组成分析", "登入管理"]
         let elements = directions.map(function (way) {
             let now = "DockNavigation"
             if (way === standing) {

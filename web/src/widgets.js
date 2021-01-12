@@ -101,18 +101,18 @@ export class Dashboard extends React.Component {
     }
     render() {
         const size = this.props.size * 2
-        const spacing = this.state.rounded * 1.5
-        const data = [{name: '摸鱼', value: 40}, {name: '摸到', value: 90}, {name: '意识', value: 60}, {name: '模糊', value: 70}];
+        const spacing = size / 8
+        const data = [{name: '摸', value: 40}, {name: '到', value: 90}, {name: '飞', value: 60}, {name: '起', value: 70}];
         const tint = ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
         const frame = {height: "100%", width: "100%", borderRadius: this.state.rounded}
         return (
             <div className={'Layer'} style={frame}>
                 <RadialBarChart
                     style={{position: 'absolute', left: spacing, top: spacing}}
-                    width={size / 2.75}
-                    height={size / 2.75}
+                    width={size / 2.5}
+                    height={size / 2.5}
                     data={data.slice(0, 1)}
-                    innerRadius={size / 5}
+                    innerRadius={size / 4.75}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -133,10 +133,10 @@ export class Dashboard extends React.Component {
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', right: spacing, top: spacing}}
-                    width={size / 2.75}
-                    height={size / 2.75}
+                    width={size / 2.5}
+                    height={size / 2.5}
                     data={data.slice(1, 2)}
-                    innerRadius={size / 5}
+                    innerRadius={size / 4.75}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -157,10 +157,10 @@ export class Dashboard extends React.Component {
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', left: spacing, bottom: spacing}}
-                    width={size / 2.75}
-                    height={size / 2.75}
+                    width={size / 2.5}
+                    height={size / 2.5}
                     data={data.slice(2, 3)}
-                    innerRadius={size / 5}
+                    innerRadius={size / 4.75}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -181,10 +181,10 @@ export class Dashboard extends React.Component {
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', right: spacing, bottom: spacing}}
-                    width={size / 2.75}
-                    height={size / 2.75}
+                    width={size / 2.5}
+                    height={size / 2.5}
                     data={data.slice(3, 4)}
-                    innerRadius={size / 5}
+                    innerRadius={size / 4.75}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -220,7 +220,7 @@ export class DashboardOne extends React.Component {
         )
     }
     render() {
-        const data = {name: '鸽子力', value: 99};
+        const data = {name: '鸽子力', value: 80};
         const tint = "#137A7F"
         const frame = {height: "100%", width: "100%", borderRadius: this.state.rounded, align: "center"}
         const size = this.props.size
