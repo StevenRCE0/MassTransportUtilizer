@@ -1,7 +1,35 @@
 .SwitchBase {
-    height: 50px;
-    background: aliceblue;
+    z-index: 15;
+    text-align: center;
+    background: rgba(80, 80, 80, 0.1);
+    position: absolute;
+    top: 5px;
+    padding: 3px 0;
+    border-radius: 300px;
+    right: 5px;
 }
-.activatedR {
-    transform: scale(2);
+.SwitchTick {
+    position: relative;
+    transition: 0.25s;
+    background: rgba(255, 255, 255, 0);
+    border: solid 1px rgba(255, 255, 255, 0);
+    border-radius: 3em;
+    padding: 7px 14px;
+    margin: 0 5px;
+    font-size: 11pt;
+    color: #553;
+}
+.SwitchTick.activated {
+    background: rgba(255, 255, 255, 1);
+    border: solid 1px #CCC;
+    color: #220;
+}
+.SwitchTick:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border: solid 1px #EEE;
+    color: inherit;
+    cursor: pointer;
+}
+.SwitchTick.activated:hover {
+    background: rgba(255, 255, 255, 1);
 }

@@ -58,6 +58,7 @@ function linesConstructor(dataArray, tintArray, state) {
                 top: state.rounded * 2,
                 left: state.rounded * 2
             }}
+            style={transformToCentre}
         >
             <Legend />
             {drawn}
@@ -98,9 +99,14 @@ function barConstructor(dataArray, tintArray, state) {
 export class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {size: 240, rounded: 20}
+        this.state = {
+            rounded: 20
+        }
     }
+    showSize() {console.log(this.props.size)}
     render() {
+        this.showSize()
+        const size = this.props.size
         const spacing = this.state.rounded * 1.5
         const data = [{name: '摸鱼', value: 40}, {name: '摸到', value: 90}, {name: '意识', value: 60}, {name: '模糊', value: 70}];
         const tint = ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
@@ -109,10 +115,10 @@ export class Dashboard extends React.Component {
             <div className={'Layer'} style={frame}>
                 <RadialBarChart
                     style={{position: 'absolute', left: spacing, top: spacing}}
-                    width={this.state.size / 2.75}
-                    height={this.state.size / 2.75}
+                    width={size / 2.75}
+                    height={size / 2.75}
                     data={data.slice(0, 1)}
-                    innerRadius={this.state.size / 5}
+                    innerRadius={size / 5}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -133,10 +139,10 @@ export class Dashboard extends React.Component {
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', right: spacing, top: spacing}}
-                    width={this.state.size / 2.75}
-                    height={this.state.size / 2.75}
+                    width={size / 2.75}
+                    height={size / 2.75}
                     data={data.slice(1, 2)}
-                    innerRadius={this.state.size / 5}
+                    innerRadius={size / 5}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -157,10 +163,10 @@ export class Dashboard extends React.Component {
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', left: spacing, bottom: spacing}}
-                    width={this.state.size / 2.75}
-                    height={this.state.size / 2.75}
+                    width={size / 2.75}
+                    height={size / 2.75}
                     data={data.slice(2, 3)}
-                    innerRadius={this.state.size / 5}
+                    innerRadius={size / 5}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -181,10 +187,10 @@ export class Dashboard extends React.Component {
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', right: spacing, bottom: spacing}}
-                    width={this.state.size / 2.75}
-                    height={this.state.size / 2.75}
+                    width={size / 2.75}
+                    height={size / 2.75}
                     data={data.slice(3, 4)}
-                    innerRadius={this.state.size / 5}
+                    innerRadius={size / 5}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -212,8 +218,7 @@ export class Dashboard extends React.Component {
 export class DashboardOne extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {size: 120, rounded: 20}
-        this.setState({size: this.props.size})
+        this.state = {rounded: 20}
     }
     greatLegend(value) {
         return (
@@ -224,13 +229,14 @@ export class DashboardOne extends React.Component {
         const data = {name: '鸽子力', value: 99};
         const tint = "#137A7F"
         const frame = {height: "100%", width: "100%", borderRadius: this.state.rounded, align: "center"}
+        const size = this.props.size / 2
         return (
             <div className={'Layer'} style={frame}>
                 <RadialBarChart
                     data={[data]}
-                    width={this.state.size}
-                    height={this.state.size}
-                    innerRadius={this.state.size / 2}
+                    width={size}
+                    height={size}
+                    innerRadius={size / 2}
                     style={{
                         position: "absolute",
                         top: "50%",
@@ -314,6 +320,7 @@ export class Trends extends React.Component {
                         top: this.state.rounded * 2,
                         left: this.state.rounded * 2
                     }}
+                    style={transformToCentre}
                 >
                     <CartesianGrid/>
                     <XAxis/>

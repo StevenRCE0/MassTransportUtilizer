@@ -15,13 +15,13 @@ class MapSwitch extends React.Component {
         let optionsController = []
         this.state.allOptions.forEach(
             function (perOption) {
-                let acClass = ""
-                console.log(props.activated)
+                let acClass = "SwitchTick"
                 if (props.activated === perOption) {
-                    acClass = "activatedR"
+                    acClass += " activated"
                 }
                 optionsController.push(
                     <button
+                        id={perOption}
                         onClick={() => (
                             setState({"activated": perOption})
                         )}
@@ -37,7 +37,9 @@ class MapSwitch extends React.Component {
 
     render() {
         return(
-            <div className={"SwitchBase"}>
+            <div
+                className={"SwitchBase"}
+            >
                 {this.enumOptions(this.props.state, this.props.setState)}
             </div>
         )

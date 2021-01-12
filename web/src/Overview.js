@@ -2,29 +2,49 @@ import React from "react";
 import * as Widgets from "./widgets";
 
 class Overview extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+
+
+    calculateSize = () => {
+        this.setState({
+            size: Math.min(window.innerHeight, window.innerWidth) / 4
+        })
+    }
+    componentDidMount() {
+        window.addEventListener('resize', this.calculateSize)
+    }
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.calculateSize)
+    }
+
     render() {
+        const {size} = this.state
         return (
             <div className={"GridContainer"}>
                 <div className={"div1"}>
                     <Widgets.MapsBlock />
                 </div>
                 <div className={"div2"}>
-                    <Widgets.DashboardOne />
+                    <Widgets.DashboardOne size={size}/>
                 </div>
                 <div className={"div3"}>
-                    <Widgets.DashboardOne />
+                    <Widgets.DashboardOne size={size}/>
                 </div>
                 <div className={"div4"}>
-                    <Widgets.DashboardOne />
+                    <Widgets.DashboardOne size={size}/>
                 </div>
                 <div className={"div5"}>
-                    <Widgets.DashboardOne />
+                    <Widgets.DashboardOne size={size}/>
                 </div>
                 <div className={"div6"}>
-                    <Widgets.Dashboard />
+                    <Widgets.Dashboard size={size}/>
                 </div>
                 <div className={"div7"}>
-                    <Widgets.Dashboard />
+                    <Widgets.Dashboard size={size}/>
                 </div>
                 <div className={"div8"}>
                     <Widgets.Trends />
