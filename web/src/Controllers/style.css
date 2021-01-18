@@ -1,3 +1,9 @@
+:root {
+    --controlText: #220;
+    --controlBlur: #553;
+}
+
+/*default custom switch selector*/
 .SwitchBase {
     z-index: 15;
     text-align: center;
@@ -5,7 +11,7 @@
     position: absolute;
     top: 5px;
     padding: 3px 0;
-    border-radius: 300px;
+    border-radius: 20px;
     right: 5px;
 }
 .SwitchTick {
@@ -13,16 +19,16 @@
     transition: 0.25s;
     background: rgba(255, 255, 255, 0);
     border: solid 2px rgba(255, 255, 255, 0);
-    border-radius: 3em;
+    border-radius: 20px;
     padding: 7px 14px;
     margin: 0 5px;
     font-size: 11pt;
-    color: #553;
+    color: var(--controlBlur);
 }
 .SwitchTick.activated {
     background: rgba(255, 255, 255, 1);
     border: solid 2px #CCC;
-    color: #220;
+    color: var(--controlText);
 }
 .SwitchTick:hover {
     background: rgba(255, 255, 255, 0.5);
@@ -32,4 +38,25 @@
 }
 .SwitchTick.activated:hover {
     background: rgba(255, 255, 255, 1);
+}
+
+/*default custom button*/
+button {
+    background: #FFF;
+    border: solid 2px rgba(80, 80, 80, 0.1);
+    border-radius: 20px;
+    font-size: 11pt;
+    color: var(--controlText);
+}
+button:hover {
+    border: solid 2px #EEE;
+}
+
+/*default custom field*/
+.InputFunction {
+    display: flex;
+    flex-direction: row;
+}
+input {
+    border-radius: 20px;
 }

@@ -1,0 +1,32 @@
+.BackdropClear {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background: rgba(0, 0, 10, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Panel {
+    display: flex;
+    width: 20rem;
+    flex-direction: column;
+    max-width: 90%;
+    background: #FFF;
+    border-radius: 20px;
+    padding: 1rem 1rem 0.5rem 1rem;
+    border: solid 2px #EEE;
+}
+.Panel * {
+    margin-bottom: 0.5rem;
+}
+.Panel label {
+    margin: 0;
+}
+.Panel .Title {
+    font-size: 21pt;
+    font-weight: bold;
+}
