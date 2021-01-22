@@ -9,7 +9,6 @@ class Popup extends React.Component {
         }
     }
     render() {
-        const title = "Box"
         return(
             <div className={'BackdropClear'}>
                 <div className={'Panel'}>
