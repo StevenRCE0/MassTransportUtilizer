@@ -24,7 +24,7 @@
     margin-bottom: 0.5rem;
 }
 .Panel label {
-    margin: 0;
+    margin: 0 1rem 0 0;
 }
 .Panel .Title {
     font-size: 21pt;

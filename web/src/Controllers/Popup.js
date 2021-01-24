@@ -1,5 +1,6 @@
 import React from "react";
 import './popup.css';
+import { ButtonDone } from "./Button";
 
 class Popup extends React.Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class Popup extends React.Component {
                         {this.props.title}
                     </div>
                     {this.props.children}
+                    <ButtonDone />
                 </div>
             </div>
         )
