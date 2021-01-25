@@ -1,5 +1,5 @@
 import React from 'react';
-import './dashboard.css';
+import './style.css';
 import {
     RadialBarChart,
     RadialBar,
@@ -11,9 +11,9 @@ import {
     XAxis,
     YAxis, Line, BarChart, Bar
 } from "recharts";
-import './Controllers/Switch';
-import MapFuture from "./Map";
-import MapSwitch from "./Controllers/Switch";
+import '../Controllers/Switch';
+import MapFuture from "../Map";
+import MapSwitch from "../Controllers/Switch";
 // import {Layer, Rect, Stage} from "react-konva
 // import {CircularProgress} from "@material-ui/core";
 

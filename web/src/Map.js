@@ -1,6 +1,6 @@
 import React from "react";
 import {Stage, Layer, Circle, Group, Text, Ring, Line, Rect} from "react-konva";
-import "./dashboard.css";
+import "./Overview/style.css";
 
 class Point extends React.Component {
     constructor(props) {

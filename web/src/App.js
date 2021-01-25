@@ -1,21 +1,65 @@
 import React from 'react'
-import {Dock} from "./Sheets"
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+    NavLink,
+    useLocation
+} from "react-router-dom";
+import {TransitionGroup, CSSTransition} from "react-transition-group";
 import Overview from "./Overview";
-import Popup from "./Controllers/Popup";
-import Input from "./Controllers/Input";
+import PassengerAnalytics from "./PassengerAnalytics";
+import './index.css';
 
 function App() {
-  return (
-      <React.Fragment>
-          <Popup title={"测试用的盒子"}>
-              <Input>
-                  "Nyan"
-              </Input>
-          </Popup>
-        <Overview />
-        <Dock />
-      </React.Fragment>
-  );
+    return (
+        <React.Fragment>
+            <Router>
+                <Switch>
+                    <Route exact path={"/"}>
+                        <Redirect to={"/Overview"}/>
+                    </Route>
+                    <Route path={"*"}>
+                        <AnimationApp/>
+                    </Route>
+                </Switch>
+
+            </Router>
+        </React.Fragment>
+    );
+}
+
+function AnimationApp() {
+    let location = useLocation();
+    return (
+        <div>
+            <div className="Dock">
+                <NavLink to={"Overview"} activeClassName={"active"} exact>
+                    <button className={"DockNavigation"}>概览</button>
+                </NavLink>
+                <NavLink to={"PassengerAnalytics"} activeClassName={"active"}>
+                    <button className="DockNavigation">客流情况分析</button>
+                </NavLink>
+            </div>
+            <TransitionGroup>
+                <CSSTransition
+                    key={location}
+                    classNames={"fade"}
+                    timeout={250}
+                >
+                    <Switch>
+                        <Route path={"/Overview"}>
+                            <Overview/>
+                        </Route>
+                        <Route path={"/PassengerAnalytics"}>
+                            <PassengerAnalytics/>
+                        </Route>
+                    </Switch>
+                </CSSTransition>
+            </TransitionGroup>
+        </div>
+    )
 }
 
 export default App;

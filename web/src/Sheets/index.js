@@ -17,7 +17,12 @@ export class Dock extends React.Component {
                 now += " activated"
             }
             return (
-                <button className={now}>{way}</button>
+                <button
+                    className={now}
+                    onClick={() => window.location.href=way}
+                >
+                    {way}
+                </button>
             )
         })
         return elements

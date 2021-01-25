@@ -1,7 +1,8 @@
 import React from "react";
-import * as Widgets from "./widgets";
+import './style.css';
+import * as Widgets from "../Widgets/widgets";
 
-class Overview extends React.Component {
+class Index extends React.Component {
 
     constructor(props) {
         super(props);
@@ -26,7 +27,7 @@ class Overview extends React.Component {
         const {size} = this.state
         return (
             <React.Fragment>
-                <div className={"GridContainer"}>
+                <div className={"OverviewGrid"}>
                     <div className={"div1"}>
                         <Widgets.MapsBlock />
                     </div>
@@ -63,4 +64,4 @@ class Overview extends React.Component {
     }
 }
 
-export default Overview
+export default Index
