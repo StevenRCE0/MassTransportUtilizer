@@ -50,13 +50,20 @@ class Index extends React.Component {
                         <Widgets.Dashboard size={size}/>
                     </div>
                     <div className={"div8"}>
-                        <Widgets.Trends port={{"height": size, "width": size * 2}}/>
+                        <Widgets.Trends
+                            port={{"height": size, "width": size * 2}}
+                        />
                     </div>
                     <div className={"div9"}>
-                        <Widgets.SimpleTrends port={{"height": size, "width": size * 3}}/>
+                        <Widgets.SimpleTrends
+                            port={{"height": size, "width": size * 3}}
+                        />
                     </div>
                     <div className={"div10"}>
-                        <Widgets.SimpleBars port={{"height": size, "width": size * 2}}/>
+                        <Widgets.SimpleBars
+                            port={{"height": size, "width": size * 2}}
+                            tint={["#2196f3", "#8bc34a"]}
+                        />
                     </div>
                 </div>
             </React.Fragment>

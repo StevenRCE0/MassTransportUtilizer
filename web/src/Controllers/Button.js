@@ -1,12 +1,13 @@
 import React from "react";
+import {Button as MNButton} from '@material-ui/core/Button';
 import './style.css';
 
 class Button extends React.Component {
     render() {
         return(
-            <button>
+            <MNButton>
                 {this.props.children}
-            </button>
+            </MNButton>
         )
     }
 }

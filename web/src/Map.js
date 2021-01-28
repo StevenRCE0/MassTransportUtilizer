@@ -1,6 +1,7 @@
 import React from "react";
 import {Stage, Layer, Circle, Group, Text, Ring, Line, Rect} from "react-konva";
 import "./Overview/style.css";
+import * as MapData from './map.json';
 
 class Point extends React.Component {
     constructor(props) {
@@ -49,6 +50,7 @@ class Path extends React.Component {
             line: this.props.line
         }
     }
+
     render() {
         const strokeWidth = 5 + this.state.level * 0.1;
         return(
@@ -113,10 +115,10 @@ class MapFuture extends React.Component {
         let pointSet = [];
         let pathSet = [];
         pointSet.push(
-            <Point x={50} y={500} level={5} station={'sta999'} setPanel={(id, type, pos, activated) => {this.setPanel(id, type, pos, activated)}}/>
+            <Point x={50} y={500} level={5} station={'sta24'} setPanel={(id, type, pos, activated) => {this.setPanel(id, type, pos, activated)}}/>
         )
         pointSet.push(
-            <Point x={100} y={50} level={2} station={'sta666'} setPanel={(id, type, pos, activated) => {this.setPanel(id, type, pos, activated)}}/>
+            <Point x={100} y={50} level={2} station={'sta51'} setPanel={(id, type, pos, activated) => {this.setPanel(id, type, pos, activated)}}/>
         )
         pathSet.push((
             <Path x1={50} y1={500} x2={100} y2={50} level={20}/>

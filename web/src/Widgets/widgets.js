@@ -24,6 +24,23 @@ const transformToCentre = {
     transform: "translate(-50%, -50%)",
 }
 
+function setTintArray(propTintArray) {
+    if (propTintArray !== undefined) {
+        return propTintArray
+    }
+    else return ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
+}
+
+function constructData(propData, sampleData) {
+    if (propData !== undefined) {
+        if (propData == null) {
+            console.warn("Null data received")
+        }
+        return propData
+    }
+    else return sampleData
+}
+
 function linesConstructor(dataArray, tintArray, state) {
     const lines = dataArray.lines
     let converted = []
@@ -376,8 +393,8 @@ export class SimpleBars extends React.Component {
     }
     render() {
         const port = this.props.port
-        const data = {"uv": 900, "pv": 609}
-        const tint = ["#998", "#753"]
+        const tint = setTintArray(this.props.tint)
+        const data = constructData(this.props.data, {"uv": 900, "pv": 609})
         const frame = {
             "width": "100%",
             "height": "100%",

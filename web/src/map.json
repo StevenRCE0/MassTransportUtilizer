@@ -1,5 +1,980 @@
-{
-  "stations": {
-
+[
+  {
+    "id": 1004,
+    "name": "Sta1",
+    "line": "1号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1006,
+    "name": "Sta159",
+    "line": "1号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1008,
+    "name": "Sta108",
+    "line": "1号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1009,
+    "name": "Sta83",
+    "line": "1号线",
+    "dist": "Dist2"
+  },
+  {
+    "id": 1010,
+    "name": "Sta107",
+    "line": "1号线",
+    "dist": "Dist2"
+  },
+  {
+    "id": 1011,
+    "name": "Sta154",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1012,
+    "name": "Sta150",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1013,
+    "name": "Sta64",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1014,
+    "name": "Sta89",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1015,
+    "name": "Sta80",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1016,
+    "name": "Sta97",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1017,
+    "name": "Sta110",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1018,
+    "name": "Sta106",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1019,
+    "name": "Sta34",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1020,
+    "name": "Sta128",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1021,
+    "name": "Sta74",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1022,
+    "name": "Sta149",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1023,
+    "name": "Sta49",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1024,
+    "name": "Sta65",
+    "line": "1号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1025,
+    "name": "Sta9",
+    "line": "2号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1026,
+    "name": "Sta163",
+    "line": "2号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1027,
+    "name": "Sta53",
+    "line": "2号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1028,
+    "name": "Sta78",
+    "line": "2号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1030,
+    "name": "Sta79",
+    "line": "2号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1031,
+    "name": "Sta18",
+    "line": "2号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1032,
+    "name": "Sta123",
+    "line": "2号线",
+    "dist": "Dist2"
+  },
+  {
+    "id": 1033,
+    "name": "Sta127",
+    "line": "2号线",
+    "dist": "Dist2"
+  },
+  {
+    "id": 1034,
+    "name": "Sta81",
+    "line": "2号线",
+    "dist": "Dist2"
+  },
+  {
+    "id": 1035,
+    "name": "Sta27",
+    "line": "2号线",
+    "dist": "Dist2"
+  },
+  {
+    "id": 1036,
+    "name": "Sta48",
+    "line": "2号线",
+    "dist": "Dist2"
+  },
+  {
+    "id": 1037,
+    "name": "Sta151",
+    "line": "2号线",
+    "dist": "Dist2"
+  },
+  {
+    "id": 1038,
+    "name": "Sta68",
+    "line": "2号线",
+    "dist": "Dist4"
+  },
+  {
+    "id": 1039,
+    "name": "Sta52",
+    "line": "2号线",
+    "dist": "Dist4"
+  },
+  {
+    "id": 1040,
+    "name": "Sta76",
+    "line": "2号线",
+    "dist": "Dist4"
+  },
+  {
+    "id": 1041,
+    "name": "Sta57",
+    "line": "2号线",
+    "dist": "Dist4"
+  },
+  {
+    "id": 1042,
+    "name": "Sta71",
+    "line": "2号线",
+    "dist": "Dist4"
+  },
+  {
+    "id": 1043,
+    "name": "Sta139",
+    "line": "2号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1044,
+    "name": "Sta24",
+    "line": "2号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1045,
+    "name": "Sta105",
+    "line": "2号线",
+    "dist": "Dist4"
+  },
+  {
+    "id": 1046,
+    "name": "Sta51",
+    "line": "2号线",
+    "dist": "Dist7"
+  },
+  {
+    "id": 1048,
+    "name": "Sta143",
+    "line": "3号线",
+    "dist": "Dist7"
+  },
+  {
+    "id": 1049,
+    "name": "Sta156",
+    "line": "3号线",
+    "dist": "Dist7"
+  },
+  {
+    "id": 1050,
+    "name": "Sta61",
+    "line": "3号线",
+    "dist": "Dist7"
+  },
+  {
+    "id": 1051,
+    "name": "Sta50",
+    "line": "3号线",
+    "dist": "Dist7"
+  },
+  {
+    "id": 1052,
+    "name": "Sta119",
+    "line": "3号线",
+    "dist": "Dist7"
+  },
+  {
+    "id": 1053,
+    "name": "Sta66",
+    "line": "3号线",
+    "dist": "Dist7"
+  },
+  {
+    "id": 1054,
+    "name": "Sta12",
+    "line": "3号线",
+    "dist": "Dist7"
+  },
+  {
+    "id": 1055,
+    "name": "Sta161",
+    "line": "3号线",
+    "dist": "Dist7"
+  },
+  {
+    "id": 1056,
+    "name": "Sta21",
+    "line": "3号线",
+    "dist": "Dist7"
+  },
+  {
+    "id": 1057,
+    "name": "Sta133",
+    "line": "3号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1058,
+    "name": "Sta22",
+    "line": "3号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1059,
+    "name": "Sta138",
+    "line": "3号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1060,
+    "name": "Sta41",
+    "line": "3号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1061,
+    "name": "Sta30",
+    "line": "3号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1062,
+    "name": "Sta67",
+    "line": "3号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1063,
+    "name": "Sta144",
+    "line": "3号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1064,
+    "name": "Sta29",
+    "line": "3号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1065,
+    "name": "Sta126",
+    "line": "3号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1067,
+    "name": "Sta40",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1068,
+    "name": "Sta131",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1069,
+    "name": "Sta39",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1070,
+    "name": "Sta100",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1072,
+    "name": "Sta167",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1073,
+    "name": "Sta113",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1074,
+    "name": "Sta141",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1075,
+    "name": "Sta142",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1076,
+    "name": "Sta158",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1077,
+    "name": "Sta44",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1078,
+    "name": "Sta117",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1079,
+    "name": "Sta147",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1080,
+    "name": "Sta42",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1081,
+    "name": "Sta35",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1082,
+    "name": "Sta109",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1084,
+    "name": "Sta33",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1085,
+    "name": "Sta112",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1086,
+    "name": "Sta153",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1087,
+    "name": "Sta125",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1088,
+    "name": "Sta121",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1089,
+    "name": "Sta11",
+    "line": "3号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1091,
+    "name": "Sta134",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1092,
+    "name": "Sta59",
+    "line": "4号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1093,
+    "name": "Sta19",
+    "line": "4号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1094,
+    "name": "Sta62",
+    "line": "4号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1095,
+    "name": "Sta165",
+    "line": "4号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1096,
+    "name": "Sta58",
+    "line": "4号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1097,
+    "name": "Sta38",
+    "line": "4号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1098,
+    "name": "Sta43",
+    "line": "5号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1099,
+    "name": "Sta10",
+    "line": "5号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1100,
+    "name": "Sta96",
+    "line": "5号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1101,
+    "name": "Sta132",
+    "line": "5号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1102,
+    "name": "Sta37",
+    "line": "5号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1103,
+    "name": "Sta16",
+    "line": "5号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1104,
+    "name": "Sta69",
+    "line": "5号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1107,
+    "name": "Sta54",
+    "line": "5号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1108,
+    "name": "Sta120",
+    "line": "11号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1109,
+    "name": "Sta130",
+    "line": "11号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1110,
+    "name": "Sta146",
+    "line": "11号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1111,
+    "name": "Sta25",
+    "line": "11号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1112,
+    "name": "Sta3",
+    "line": "11号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1113,
+    "name": "Sta46",
+    "line": "11号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1114,
+    "name": "Sta86",
+    "line": "11号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1115,
+    "name": "Sta15",
+    "line": "11号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1117,
+    "name": "Sta162",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1118,
+    "name": "Sta118",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1119,
+    "name": "Sta20",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1120,
+    "name": "Sta55",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1121,
+    "name": "Sta70",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1122,
+    "name": "Sta13",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1124,
+    "name": "Sta140",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1125,
+    "name": "Sta77",
+    "line": "11号线",
+    "dist": "Dist10"
+  },
+  {
+    "id": 1126,
+    "name": "Sta122",
+    "line": "11号线",
+    "dist": "Dist10"
+  },
+  {
+    "id": 1127,
+    "name": "Sta36",
+    "line": "11号线",
+    "dist": "Dist10"
+  },
+  {
+    "id": 1128,
+    "name": "Sta166",
+    "line": "11号线",
+    "dist": "Dist10"
+  },
+  {
+    "id": 1129,
+    "name": "Sta99",
+    "line": "11号线",
+    "dist": "Dist10"
+  },
+  {
+    "id": 1130,
+    "name": "Sta124",
+    "line": "11号线",
+    "dist": "Dist10"
+  },
+  {
+    "id": 1131,
+    "name": "Sta28",
+    "line": "11号线",
+    "dist": "Dist10"
+  },
+  {
+    "id": 1132,
+    "name": "Sta82",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1133,
+    "name": "Sta164",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1134,
+    "name": "Sta152",
+    "line": "11号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1135,
+    "name": "Sta45",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1136,
+    "name": "Sta75",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1137,
+    "name": "Sta136",
+    "line": "12号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1138,
+    "name": "Sta137",
+    "line": "12号线",
+    "dist": "Dist3"
+  },
+  {
+    "id": 1139,
+    "name": "Sta101",
+    "line": "12号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1140,
+    "name": "Sta17",
+    "line": "12号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1141,
+    "name": "Sta26",
+    "line": "12号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1142,
+    "name": "Sta90",
+    "line": "12号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1143,
+    "name": "Sta95",
+    "line": "12号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1144,
+    "name": "Sta93",
+    "line": "12号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1145,
+    "name": "Sta92",
+    "line": "12号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1146,
+    "name": "Sta32",
+    "line": "12号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1147,
+    "name": "Sta91",
+    "line": "12号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1149,
+    "name": "Sta157",
+    "line": "10号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1150,
+    "name": "Sta168",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1151,
+    "name": "Sta85",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1152,
+    "name": "Sta2",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1153,
+    "name": "Sta4",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1154,
+    "name": "Sta103",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1155,
+    "name": "Sta145",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1156,
+    "name": "Sta88",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1157,
+    "name": "Sta94",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1158,
+    "name": "Sta160",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1159,
+    "name": "Sta7",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1160,
+    "name": "Sta6",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1161,
+    "name": "Sta8",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1162,
+    "name": "Sta102",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1165,
+    "name": "Sta31",
+    "line": "12号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1166,
+    "name": "Sta72",
+    "line": "12号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1169,
+    "name": "Sta116",
+    "line": "12号线",
+    "dist": "Dist6"
+  },
+  {
+    "id": 1170,
+    "name": "Sta129",
+    "line": "2号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1171,
+    "name": "Sta47",
+    "line": "2号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1172,
+    "name": "Sta60",
+    "line": "12号线",
+    "dist": "Dist2"
+  },
+  {
+    "id": 1173,
+    "name": "Sta148",
+    "line": "12号线",
+    "dist": "Dist2"
+  },
+  {
+    "id": 1174,
+    "name": "Sta73",
+    "line": "12号线",
+    "dist": "Dist2"
+  },
+  {
+    "id": 1175,
+    "name": "Sta23",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1176,
+    "name": "Sta56",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1177,
+    "name": "Sta115",
+    "line": "11号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1178,
+    "name": "Sta63",
+    "line": "11号线",
+    "dist": "Dist1"
+  },
+  {
+    "id": 1185,
+    "name": "Sta114",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1186,
+    "name": "Sta135",
+    "line": "10号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1187,
+    "name": "Sta87",
+    "line": "10号线",
+    "dist": "Dist8"
+  },
+  {
+    "id": 1188,
+    "name": "Sta84",
+    "line": "4号线",
+    "dist": "Dist5"
+  },
+  {
+    "id": 1191,
+    "name": "Sta111",
+    "line": "11号线",
+    "dist": "Dist5"
   }
-}
+]
