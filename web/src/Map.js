@@ -5,7 +5,7 @@ import "./Overview/style.css";
 let stationData = require('./stationaryPlaceholder/stations.json');
 let pathData = require('./stationaryPlaceholder/paths.json');
 const lineTintArray = [
-    "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#AF7525", "#8643B5", "#567874", "#227754", "#85468E"
+    "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#000", "#000", "#E67874", "#009734", "#43B7AE"
 ]
 
 class Point extends React.Component {
@@ -24,7 +24,7 @@ class Point extends React.Component {
 
     render() {
         const basis = 2;
-        const multiplier = 2;
+        const multiplier = (this.props.type === "1") ? 3 : 2;
         const radius = this.state.level * multiplier * basis;
         return (
             <Group x={this.state.x} y={this.state.y}>
@@ -36,7 +36,7 @@ class Point extends React.Component {
                 <Ring
                     innerRadius={radius * 0.5}
                     outerRadius={radius}
-                    fill={this.props.tint}
+                    fill={(this.props.type === "1") ? '#171717' : this.props.tint}
                 />
                 <Text
                     text={this.state.station}
@@ -132,7 +132,7 @@ class MapFuture extends React.Component {
     }
 
     render() {
-        const widthIndex = this.props.width / 20000
+        const widthIndex = this.props.width / 17500
         const heightIndex = this.props.height / 20000
         const pathSet = pathData.map(function (path) {
             return (
@@ -152,14 +152,18 @@ class MapFuture extends React.Component {
         const pointSet = stationData.map(function (point) {
             return (
                 <Point
-                    x={point.x * widthIndex} y={point.y * heightIndex} level={1} station={point.station} line={point.line}
+                    x={point.x * widthIndex} y={point.y * heightIndex}
+                    level={1}
+                    type={point.type}
+                    station={point.station}
+                    line={point.line}
                     tint={lineTintArray[point.line.match("^[0-9]+")]}
                 />
             )
         })
 
         return (
-            <Stage height={this.props.height + 50} width={this.props.width + 50}>
+            <Stage height={this.props.height + 50} width={this.props.width + 250}>
                 <Layer id={'FMpaths'}>
                     {pathSet}
                 </Layer>

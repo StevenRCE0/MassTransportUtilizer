@@ -426,7 +426,9 @@ export class MapsBlock extends React.Component {
                 />
                 <div style={transformToCentre}>
                     <Suspense fallback={<div className={"MLPlaceholder"}>Maps loading...</div>}>
-                        <MapFuture height={this.props.port.height} width={this.props.port.width}/>
+                        <div style={{transform: 'translate(+5%, +5%)'}}>
+                            <MapFuture height={this.props.port.height} width={this.props.port.width}/>
+                        </div>
                     </Suspense>
                 </div>
             </div>
