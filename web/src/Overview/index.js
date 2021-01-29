@@ -29,7 +29,9 @@ class Index extends React.Component {
             <React.Fragment>
                 <div className={"OverviewGrid"}>
                     <div className={"div1"}>
-                        <Widgets.MapsBlock />
+                        <Widgets.MapsBlock
+                            port={{"height": size * 4, "width": size * 4}}
+                        />
                     </div>
                     <div className={"div2"}>
                         <Widgets.DashboardOne size={size}/>

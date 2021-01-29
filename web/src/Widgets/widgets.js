@@ -423,7 +423,9 @@ export class MapsBlock extends React.Component {
                 <MapSwitch switchOptions={["无","热力图"]} state={this.state}
                     setState={(e) => (this.setState(e))}
                 />
-                <MapFuture />
+                <div style={transformToCentre}>
+                    <MapFuture height={this.props.port.height} width={this.props.port.width}/>
+                </div>
             </div>
         )
     }
