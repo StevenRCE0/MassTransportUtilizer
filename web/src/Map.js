@@ -17,7 +17,7 @@ class Point extends React.Component {
             y: this.props.y,
             level: this.props.level,
             type: this.props.type,
-            line: this.props.line,
+            line: this.props.line.match('^[0-9]+'),
             station: this.props.station.match('[0-9]+'),
         }
     }
@@ -60,7 +60,7 @@ class Path extends React.Component {
             x2: this.props.x2,
             y2: this.props.y2,
             level: this.props.level,
-            line: this.props.line
+            line: this.props.line.match('^[0-9]+'),
         }
     }
 
@@ -72,7 +72,7 @@ class Path extends React.Component {
                 x={0}
                 y={0}
                 points={coordinates}
-                stroke={'#DDD'}
+                stroke={lineTintArray[this.state.line]}
                 strokeWidth={strokeWidth}
                 lineJoin={'round'}
                 lineCap={'round'}
@@ -132,8 +132,8 @@ class MapFuture extends React.Component {
     }
 
     render() {
-        const widthIndex = this.props.width / 1285
-        const heightIndex = this.props.height / 1037
+        const widthIndex = this.props.width / 20000
+        const heightIndex = this.props.height / 20000
         const pathSet = pathData.map(function (path) {
             return (
                 <Path
@@ -145,6 +145,7 @@ class MapFuture extends React.Component {
                         return((pointIndex / 2 === 0) ? turnPoint * widthIndex : turnPoint * heightIndex)
                     }) : undefined}
                     level={1}
+                    line={path.line}
                 />
             )
         });
