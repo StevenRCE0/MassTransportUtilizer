@@ -2,10 +2,10 @@ import React from "react";
 import {Stage, Layer, Circle, Group, Text, Ring, Line, Rect} from "react-konva";
 import "./Overview/style.css";
 
-const stationData = require('./stationaryPlaceholder/stations.json');
-const pathData = require('./stationaryPlaceholder/paths.json');
+let stationData = require('./stationaryPlaceholder/stations.json');
+let pathData = require('./stationaryPlaceholder/paths.json');
 const lineTintArray = [
-    "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#AF7525", "#8643B5", "#567874", "#227754", "#85468E"
+    "#ADEA7D", "#FBDE5D", "#e23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#AF7525", "#8643B5", "#567874", "#227754", "#85468E"
 ]
 
 class Point extends React.Component {
@@ -41,7 +41,9 @@ class Point extends React.Component {
                 <Text
                     text={this.state.station}
                     fontSize={9}
-                    x={radius * 1.5 + 5}
+                    stroke={'#FFF'}
+                    fillAfterStrokeEnabled={true}
+                    x={-radius}
                 />
             </Group>
         )
@@ -129,18 +131,18 @@ class MapFuture extends React.Component {
     render() {
         const widthIndex = this.props.width / 1285
         const heightIndex = this.props.height / 1037
-        let pathSet = pathData.map(function (path) {
+        const pathSet = pathData.map(function (path) {
             return (
                 <Path
-                    x1={path.x1 * (widthIndex)}
-                    y1={path.y1 * (heightIndex)}
+                    x1={path.x1 * widthIndex}
+                    y1={path.y1 * heightIndex}
                     x2={path.x2 * widthIndex}
                     y2={path.y2 * heightIndex}
                     level={1}
                 />
             )
         });
-        let pointSet = stationData.map(function (point) {
+        const pointSet = stationData.map(function (point) {
             return (
                 <Point
                     x={point.x * widthIndex} y={point.y * heightIndex} level={1} station={point.station} line={point.line}
