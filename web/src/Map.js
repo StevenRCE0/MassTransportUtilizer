@@ -5,7 +5,7 @@ import "./Overview/style.css";
 let stationData = require('./stationaryPlaceholder/stations.json');
 let pathData = require('./stationaryPlaceholder/paths.json');
 const lineTintArray = [
-    "#ADEA7D", "#FBDE5D", "#e23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#AF7525", "#8643B5", "#567874", "#227754", "#85468E"
+    "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#AF7525", "#8643B5", "#567874", "#227754", "#85468E"
 ]
 
 class Point extends React.Component {
@@ -65,14 +65,17 @@ class Path extends React.Component {
     }
 
     render() {
-        const strokeWidth = 5 + this.state.level * 0.1;
+        const strokeWidth = 5 + this.state.level * 0.1
+        const coordinates = (this.props.additionalCoordinates !== undefined) ? [this.state.x1, this.state.y1].concat(this.props.additionalCoordinates).concat([this.state.x2, this.state.y2]) : [this.state.x1, this.state.y1, this.state.x2, this.state.y2]
         return (
             <Line
                 x={0}
                 y={0}
-                points={[this.state.x1, this.state.y1, this.state.x2, this.state.y2]}
+                points={coordinates}
                 stroke={'#DDD'}
                 strokeWidth={strokeWidth}
+                lineJoin={'round'}
+                lineCap={'round'}
             />
         )
     }
@@ -138,6 +141,9 @@ class MapFuture extends React.Component {
                     y1={path.y1 * heightIndex}
                     x2={path.x2 * widthIndex}
                     y2={path.y2 * heightIndex}
+                    additionalCoordinates={(path.additionalCoordinates !== undefined) ? path.additionalCoordinates.map(function (turnPoint, pointIndex) {
+                        return((pointIndex / 2 === 0) ? turnPoint * widthIndex : turnPoint * heightIndex)
+                    }) : undefined}
                     level={1}
                 />
             )
