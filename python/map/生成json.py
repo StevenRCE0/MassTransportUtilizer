@@ -27,7 +27,8 @@ routes = {
     '4号线': ['Sta84', 'Sta59', 'Sta19', 'Sta62', 'Sta165', 'Sta38', 'Sta58'], 
     '5号线': ['Sta43', 'Sta10', 'Sta96', 'Sta132', 'Sta37', 'Sta16', 'Sta69', 'Sta54'], 
     '11号线': ['Sta77', 'Sta122', 'Sta36', 'Sta28', 'Sta124', 'Sta166', 'Sta99', 'Sta45', 'Sta152', 'Sta164', 'Sta82', 'Sta111', 'Sta140', 'Sta13', 'Sta70', 'Sta55', 'Sta20', 'Sta23', 'Sta56', 'Sta118', 'Sta115', 'Sta162', 'Sta15', 'Sta86', 'Sta46', 'Sta63', 'Sta3', 'Sta25', 'Sta146', 'Sta130', 'Sta120'], 
-    '12号线': ['Sta136', 'Sta137', 'Sta101', 'Sta31', 'Sta17', 'Sta26', 'Sta90', 'Sta95', 'Sta72', 'Sta93', 'Sta92', 'Sta116', 'Sta32', 'Sta91', 'Sta60', 'Sta148', 'Sta73']}
+    '12号线': ['Sta136', 'Sta137', 'Sta101', 'Sta31', 'Sta17', 'Sta26', 'Sta90', 'Sta95', 'Sta72', 'Sta93', 'Sta92', 'Sta116', 'Sta32', 'Sta91', 'Sta60', 'Sta148', 'Sta73']
+}
 import csv
 print(len(routes['2号线']))
 coordinate = {
@@ -216,32 +217,31 @@ stations = []
 for route in routes.keys():
     # if route != '1号线':
     #     continue
-    print(route)
-    with open('data/station.csv') as f:
-        f = csv.reader(f)
-        for i,row in enumerate(f):
-            # ['编号', '站点名称', '线路', '行政区域']
-            if i==0:
-                continue
-            
-            sta = row[1]
-            if sta in routes[route]:
-                index = routes[route].index(sta)
-                xy = coordinate[route][index+1]
-                stations.append(
-                    {
-                        'id':int(row[0]),
-                        'x': xy[0],
-                        'y': xy[1],
-                        'leval': '',
-                        'type': '',
-                        'line': row[2],
-                        'station':row[1],
-                        'dist':row[3],
-                    }
-                )
-for item in stations:
-    print(item)
+    for i,needsta in enumerate(routes[route]):
+        with open('data/station.csv') as f:
+            f = csv.reader(f)
+            for row in f:
+                # ['编号', '站点名称', '线路', '行政区域']
+                sta = row[1]
+                if sta==needsta:
+                    if sta in routes[route]:
+                        index = routes[route].index(sta)
+                        xy = coordinate[route][index+1]
+                        stations.append(
+                            {
+                                'id':int(row[0]),
+                                'x': xy[0],
+                                'y': xy[1],
+                                'leval': '',
+                                'type': '',
+                                'line': row[2],
+                                'station':row[1],
+                                'dist':row[3],
+                            }
+                        )
+                        break
+# for i,item in enumerate(stations) :
+#     print(i, ' ' ,item)
 
 
 import json
@@ -255,6 +255,123 @@ def write_list_to_json(list, json_file_name, json_file_save_path):
     :return:
     """
     os.chdir(json_file_save_path)
-    with open(json_file_name, 'w') as  f:
+    with open(json_file_name, 'w', encoding='utf-8') as  f:
         json.dump(list, f)
 write_list_to_json(stations, 'stations.json', './')
+
+
+
+# paths[
+# 	{
+# 		id: id,
+# 		x1: x1,
+# 		y1: y1,
+# 		x2: x2,
+# 		y2: y2,
+# 		level: level,
+# 		line: line
+# 	},
+# 	…
+# ]
+# id 用于识别的标识符
+# x1 起始点在地图上的横坐标（相对）
+# y1 起始点在地图上的纵坐标（相对）
+# x2 结束点在地图上的横坐标（相对）
+# y2 结束点在地图上的纵坐标（相对）
+# level 路径的等级，会以粗细显示
+# line 线路
+routes = {
+    '1号线': ['Sta65', 'Sta49', 'Sta149', 'Sta74', 'Sta128', 'Sta34', 'Sta106', 'Sta110', 'Sta97', 'Sta80', 'Sta89', 'Sta64', 'Sta150', 'Sta154', 'Sta107', 'Sta83', 'Sta108', 'Sta159', 'Sta1'], 
+    '2号线': ['Sta129', 'Sta9', 'Sta163', 'Sta53', 'Sta79', 'Sta18', 'Sta47', 'Sta123', 'Sta127', 'Sta81', 'Sta27', 'Sta48', 'Sta151', 'Sta68', 'Sta52', 'Sta76', 'Sta57', 'Sta71', 'Sta139', 'Sta105', 'Sta51', 'Sta24'], 
+    '3号线': ['Sta143', 'Sta156', 'Sta61', 'Sta50', 'Sta119', 'Sta66', 'Sta12', 'Sta161', 'Sta21', 'Sta133', 'Sta22', 'Sta138', 'Sta41', 'Sta30', 'Sta67', 'Sta144', 'Sta29', 'Sta126', 'Sta40', 'Sta131', 'Sta39', 'Sta100', 'Sta167', 'Sta113', 'Sta141', 'Sta142', 'Sta158', 'Sta44', 'Sta117', 'Sta147', 'Sta42', 'Sta35', 'Sta109', 'Sta33', 'Sta112', 'Sta153', 'Sta125', 'Sta121', 'Sta11'], 
+    '10号线': ['Sta157', 'Sta114', 'Sta168', 'Sta135', 'Sta134', 'Sta85', 'Sta2', 'Sta4', 'Sta103', 'Sta145', 'Sta88', 'Sta87', 'Sta94', 'Sta160', 'Sta7', 'Sta6', 'Sta8', 'Sta75', 'Sta102'], 
+    '4号线': ['Sta84', 'Sta59', 'Sta19', 'Sta62', 'Sta165', 'Sta38', 'Sta58'], 
+    '5号线': ['Sta43', 'Sta10', 'Sta96', 'Sta132', 'Sta37', 'Sta16', 'Sta69', 'Sta54'], 
+    '11号线': ['Sta77', 'Sta122', 'Sta36', 'Sta28', 'Sta124', 'Sta166', 'Sta99', 'Sta45', 'Sta152', 'Sta164', 'Sta82', 'Sta111', 'Sta140', 'Sta13', 'Sta70', 'Sta55', 'Sta20', 'Sta23', 'Sta56', 'Sta118', 'Sta115', 'Sta162', 'Sta15', 'Sta86', 'Sta46', 'Sta63', 'Sta3', 'Sta25', 'Sta146', 'Sta130', 'Sta120'], 
+    '12号线': ['Sta136', 'Sta137', 'Sta101', 'Sta31', 'Sta17', 'Sta26', 'Sta90', 'Sta95', 'Sta72', 'Sta93', 'Sta92', 'Sta116', 'Sta32', 'Sta91', 'Sta60', 'Sta148', 'Sta73']
+}
+paths = []
+middlesta_before = {
+     'Stta136':'Sta89',
+    'Sta108': 'Sta47',
+    'Sta91':'Sta127', 
+    'Sta32':'Sta41',
+    'Sta126':'Sta115',
+    'Sta17':'Sta23', 
+    'Sta63':'Sta129',
+    'Sta93':'Sta3',
+    'Sta162':'Sta114',
+    'Sta72':'Sta15',
+    'Sta95':'Sta134',
+    'Sta90':'Sta84',
+    'Sta100':'Sta135',
+    'Sta35':'Sta87',
+    'Sta99': 'Sta140',
+    'Sta45':'Sta75',
+}
+middlesta_after = {
+    'Sta89':'Sta137',
+    'Sta47':'Sta159',
+    'Sta127':'Sta60',
+    'Sta41':'Sta91',
+    'Sta115':'Sta40',
+    'Sta23':'Sta26',
+
+    'Sta3':'Sta92',
+    'Sta114':'Sta15',
+    'Sta15':'Sta95',
+    'Sta134':'Sta90',
+
+    'Sa135':'Sta167',
+    'Sta87':'Sta109',
+    'Sta75':'152',
+}
+for i,station in enumerate(stations):
+    sta = station['station']
+    
+    if station['station'] in middlesta_before.keys():
+        for nextstation in stations:
+            if nextstation['station']==middlesta_before[station['station']]:
+                paths.append({
+                    'id': i,
+                    'x1': station['x'],
+                    'y1': station['y'],
+                    'x2': nextstation['x'],
+                    'y2': nextstation['y'],
+                    'leval': '',
+                })
+    elif station['station'] in middlesta_after.keys():
+        for nextstation in stations:
+            if nextstation['station']==middlesta_after[station['station']]:
+                paths.append({
+                    'id': i,
+                    'x1': station['x'],
+                    'y1': station['y'],
+                    'x2': nextstation['x'],
+                    'y2': nextstation['y'],
+                    'leval': '',
+                })
+    try:
+        if station['line'] != stations[i+1]['line']:
+            # 这条线路结束
+            continue 
+        else:
+            try:
+                paths.append({
+                    'id': i,
+                    'x1': station['x'],
+                    'y1': station['y'],
+                    'x2': stations[i+1]['x'],
+                    'y2': stations[i+1]['y'],
+                    'leval': '',
+                })
+            except:
+                pass
+    except:
+        pass
+   
+    
+for item in paths:
+    print(item)
+# print(paths)
+write_list_to_json(paths, 'paths.json', './')
