@@ -1,6 +1,6 @@
 import React from "react";
 import './style.css';
-import * as Widgets from '../Widgets/widgets';
+// import * as Widgets from '../Widgets/widgets';
 
 class PassengerAnalytics extends React.Component {
     render() {

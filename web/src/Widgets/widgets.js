@@ -1,4 +1,5 @@
 import React from 'react';
+import {Suspense} from "react";
 import './style.css';
 import {
     RadialBarChart,
@@ -12,10 +13,10 @@ import {
     YAxis, Line, BarChart, Bar
 } from "recharts";
 import '../Controllers/Switch';
-import MapFuture from "../Map";
 import MapSwitch from "../Controllers/Switch";
 // import {Layer, Rect, Stage} from "react-konva
 // import {CircularProgress} from "@material-ui/core";
+const MapFuture = React.lazy(() => import('../Map'));
 
 const transformToCentre = {
     position: "absolute",
@@ -423,7 +424,11 @@ export class MapsBlock extends React.Component {
                 <MapSwitch switchOptions={["无","热力图"]} state={this.state}
                     setState={(e) => (this.setState(e))}
                 />
-                <MapFuture />
+                <div style={transformToCentre}>
+                    <Suspense fallback={<div className={"MLPlaceholder"}>Maps loading...</div>}>
+                        <MapFuture height={this.props.port.height} width={this.props.port.width}/>
+                    </Suspense>
+                </div>
             </div>
         )
     }
