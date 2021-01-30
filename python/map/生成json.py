@@ -128,13 +128,14 @@ coordinate = {
         1: [13490, 10012-598*3],
         2: [13490, 10012-598*2],
         3: [13490, 10012-598],
-
         4: [14034, 10012],
         5: [14444, 10520],
+
         6: [14852, 11094],
         7: [14852+1037, 11094],
-        8: [14852+1037+2, 11094],
+        8: [14852+1037*2, 11094],
         9: [17964, 11094],
+
         10: [17964, (11094+12242)/2],
         11:[17962, 12242],
         12:[(17962+19850)/2, 12242],
@@ -147,13 +148,13 @@ coordinate = {
         19:[19860, 16032],
     },
     '4号线': {
-        1:[13200, 11876],
-        2:[13200, 12378],
-        3:[13200, 12882],
-        4:[13200+784*1, 12882],
-        5:[13200+784*2, 12882],
-        6:[13200+784*3, 12882],
-        7:[16338, 12882],
+        1:[11070+1127*2, 11876],
+        2:[11070+1127*2, 12378],
+        3:[11070+1127*2, 12882],
+        4:[11070+1127*2+784*1, 12882],
+        5:[11070+1127*2+784*2, 12882],
+        6:[11070+1127*2+784*3, 12882],
+        7:[11070+1127*2+784*4, 12882],
     },
     '5号线': {
         8:[11068+941, 10788],
@@ -192,7 +193,7 @@ coordinate = {
         21:[11078, 9618],
 
         # 22:[12136, 9226],9432
-        22:[11704+595, 10012-598*1.5],
+        22:[11704+595, 10012-598*2],
         # 23:[14452, 8408],
         23:[14452, 10012-598*2],
         24:[14452, 10012-598*3],
@@ -212,13 +213,13 @@ coordinate = {
         3:  [7744+665*2, 11382],
         4:  [7744+665*3, 11382],
         5:  [7744+665*4, 11382],
+
         6:  [11070+1127*1, 11384],
         7:  [11070+1127*2, 11384],
-        8:  [14450, 9312],
-        # 9:  [15198, 7986],
-        # 10: [15198, 7508],
-        9:  [15196, 10012-598*3],
-        10: [15196, 10012-598*3],
+
+        8:  [14450, 9312+100],
+        9:  [15196, 10012-598*2.7],
+        10: [15196, 10012-598*4.3],
         11:  [13656, 7024],
         12:  [12750, 7024],
         13:  [11916, 7024],
@@ -298,16 +299,7 @@ write_list_to_json(stations, 'stations.json', './')
 # y2 结束点在地图上的纵坐标（相对）
 # level 路径的等级，会以粗细显示
 # line 线路
-routes = {
-    '1号线': ['Sta65', 'Sta49', 'Sta149', 'Sta74', 'Sta128', 'Sta34', 'Sta106', 'Sta110', 'Sta97', 'Sta80', 'Sta89', 'Sta64', 'Sta150', 'Sta154', 'Sta107', 'Sta83', 'Sta108', 'Sta159', 'Sta1'], 
-    '2号线': ['Sta129', 'Sta9', 'Sta163', 'Sta53', 'Sta79', 'Sta18', 'Sta47', 'Sta123', 'Sta127', 'Sta81', 'Sta27', 'Sta48', 'Sta151', 'Sta68', 'Sta52', 'Sta76', 'Sta57', 'Sta71', 'Sta139', 'Sta105', 'Sta51', 'Sta24'], 
-    '3号线': ['Sta143', 'Sta156', 'Sta61', 'Sta50', 'Sta119', 'Sta66', 'Sta12', 'Sta161', 'Sta21', 'Sta133', 'Sta22', 'Sta138', 'Sta41', 'Sta30', 'Sta67', 'Sta144', 'Sta29', 'Sta126', 'Sta40', 'Sta131', 'Sta39', 'Sta100', 'Sta167', 'Sta113', 'Sta141', 'Sta142', 'Sta158', 'Sta44', 'Sta117', 'Sta147', 'Sta42', 'Sta35', 'Sta109', 'Sta33', 'Sta112', 'Sta153', 'Sta125', 'Sta121', 'Sta11'], 
-    '10号线': ['Sta157', 'Sta114', 'Sta168', 'Sta135', 'Sta134', 'Sta85', 'Sta2', 'Sta4', 'Sta103', 'Sta145', 'Sta88', 'Sta87', 'Sta94', 'Sta160', 'Sta7', 'Sta6', 'Sta8', 'Sta75', 'Sta102'], 
-    '4号线': ['Sta84', 'Sta59', 'Sta19', 'Sta62', 'Sta165', 'Sta38', 'Sta58'], 
-    '5号线': ['Sta43', 'Sta10', 'Sta96', 'Sta132', 'Sta37', 'Sta16', 'Sta69', 'Sta54'], 
-    '11号线': ['Sta77', 'Sta122', 'Sta36', 'Sta28', 'Sta124', 'Sta166', 'Sta99', 'Sta45', 'Sta152', 'Sta164', 'Sta82', 'Sta111', 'Sta140', 'Sta13', 'Sta70', 'Sta55', 'Sta20', 'Sta23', 'Sta56', 'Sta118', 'Sta115', 'Sta162', 'Sta15', 'Sta86', 'Sta46',  'Sta3','Sta63', 'Sta25', 'Sta146', 'Sta130', 'Sta120'], 
-    '12号线': ['Sta136', 'Sta137', 'Sta101', 'Sta31', 'Sta17', 'Sta26', 'Sta90', 'Sta95', 'Sta72', 'Sta93', 'Sta92', 'Sta116', 'Sta32', 'Sta91', 'Sta60', 'Sta148', 'Sta73']
-}
+
 paths = []
 middlesta_before = {
     'Stta136':'Sta89',
@@ -323,6 +315,7 @@ middlesta_before = {
     'Sta35':'Sta87',
     'Sta99': 'Sta140',
     'Sta45':'Sta75',
+    'Sta90':'Sta134',
 
 }
 middlesta_after = {
@@ -338,9 +331,8 @@ middlesta_after = {
     'Sta114':'Sta15',
     'Sta15':'Sta95',
     'Sta134':'Sta95',
-    'Sta129':'Sta63',
+   'Sta63' :'Sta129',
     'Sta15':'Sta72',
-    'Sta90':'Sta134',
 
     'Sta135':'Sta167',
     'Sta87':'Sta109',
@@ -361,7 +353,7 @@ for station in stations:
                         'x2': nextstation['x'],
                         'y2': nextstation['y'],
                         'leval': '',
-                        'line':nextstation['line'],
+                        'line':station['line'],
                         'additionalCoordinates': [nextstation['x'],station['y']]
                     })
                 elif  station['station'] == 'Sta93':
@@ -372,7 +364,7 @@ for station in stations:
                         'x2': nextstation['x'],
                         'y2': nextstation['y'],
                         'leval': '',
-                        'line':nextstation['line'],
+                        'line':station['line'],
                         'additionalCoordinates': [station['x'],nextstation['y']]
                     }) 
                 else:
@@ -393,15 +385,15 @@ for station in stations:
 
         for nextstation in stations:
             if nextstation['station']==middlesta_after[station['station']]:
-                if station['station']== 'Sta129' or station['station']== 'Sta84':
+                if station['station']== 'Sta84':
                     paths.append({
                     'id': i,
                     'x1': station['x'],
                     'y1': station['y'],
-                    'x2': station['x'],
-                    'y2': station['y'],
+                    'x2': nextstation['x'],
+                    'y2': nextstation['y'],
                     'leval': '',
-                    'line':nextstation['line']
+                    'line':station['line']
                 })
                 elif station['station']=='Sta15':
                     paths.append({
@@ -432,27 +424,16 @@ for station in stations:
             continue 
         else:
             try:
-                if station['station']=='Sta168':
-                    paths.append({
-                        'id': i,
-                        'x1': station['x'],
-                        'y1': station['y'],
-                        'x2': nextstation['x'],
-                        'y2': nextstation['y'],
-                        'leval': '',
-                        'line':nextstation['line'],
-                        'additionalCoordinates': [nextstation['x'],station['y']]
-                    })
-                else:
-                    paths.append({
-                        'id': i,
-                        'x1': station['x'],
-                        'y1': station['y'],
-                        'x2': stations[i+1]['x'],
-                        'y2': stations[i+1]['y'],
-                        'level': '',
-                        'line':station['line'],
-                    })
+                
+                paths.append({
+                    'id': i,
+                    'x1': station['x'],
+                    'y1': station['y'],
+                    'x2': stations[i+1]['x'],
+                    'y2': stations[i+1]['y'],
+                    'level': '',
+                    'line':station['line'],
+                })
                 i+=1
             except:
                 pass
