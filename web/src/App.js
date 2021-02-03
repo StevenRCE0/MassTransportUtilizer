@@ -14,26 +14,23 @@ import './index.css';
 
 function App() {
     return (
-        <React.Fragment>
-            <Router>
-                <Switch>
-                    <Route exact path={"/"}>
-                        <Redirect to={"/Overview"}/>
-                    </Route>
-                    <Route path={"*"}>
-                        <AnimationApp/>
-                    </Route>
-                </Switch>
-
-            </Router>
-        </React.Fragment>
+        <Router>
+            <Switch>
+                <Route exact path={"/"}>
+                    <Redirect to={"/Overview"}/>
+                </Route>
+                <Route path={"*"}>
+                    <AnimationApp/>
+                </Route>
+            </Switch>
+        </Router>
     );
 }
 
 function AnimationApp() {
     let location = useLocation();
     return (
-        <div>
+        <React.Fragment>
             <div className="Dock">
                 <NavLink to={"Overview"} activeClassName={"active"} exact>
                     <button className={"DockNavigation"}>概览</button>
@@ -58,7 +55,7 @@ function AnimationApp() {
                     </Switch>
                 </CSSTransition>
             </TransitionGroup>
-        </div>
+        </React.Fragment>
     )
 }
 

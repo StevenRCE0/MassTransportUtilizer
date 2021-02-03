@@ -14,8 +14,6 @@ import {
 } from "recharts";
 import '../Controllers/Switch';
 import MapSwitch from "../Controllers/Switch";
-// import {Layer, Rect, Stage} from "react-konva
-// import {CircularProgress} from "@material-ui/core";
 const MapFuture = React.lazy(() => import('../Map'));
 
 const transformToCentre = {

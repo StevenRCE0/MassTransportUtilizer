@@ -1,6 +1,6 @@
 .OverviewGrid {
-    width: calc(100vw - 20px);
-    height: calc(100vh - 70px);
+    width: max(calc(100vw - 20px), 1366px);
+    height: max(calc(100vh - 70px), 768px);
     margin: 10px 10px;
     display: grid;
     grid-template-columns: repeat(7, 1fr);

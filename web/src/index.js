@@ -4,15 +4,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-      {/*<Popup title={"测试用的盒子"}>*/}
-      {/*    <Input>*/}
-      {/*        "Nyan"*/}
-      {/*    </Input>*/}
-      {/*</Popup>*/}
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <App/>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

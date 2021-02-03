@@ -2,6 +2,8 @@ import React from "react";
 import './style.css';
 import * as Widgets from "../Widgets/widgets";
 
+const body = document.body
+
 class Index extends React.Component {
 
     constructor(props) {
@@ -12,8 +14,9 @@ class Index extends React.Component {
 
     calculateSize = () => {
         this.setState({
-            size: Math.min(window.innerHeight / 6, window.innerWidth / 8)
+            size: Math.min(body.scrollHeight / 6, body.scrollWidth / 8)
         })
+        console.log(this.state.size)
     }
     componentDidMount() {
         this.calculateSize()
@@ -26,7 +29,6 @@ class Index extends React.Component {
     render() {
         const {size} = this.state
         return (
-            <React.Fragment>
                 <div className={"OverviewGrid"}>
                     <div className={"div1"}>
                         <Widgets.MapsBlock
@@ -68,7 +70,6 @@ class Index extends React.Component {
                         />
                     </div>
                 </div>
-            </React.Fragment>
         )
     }
 }
