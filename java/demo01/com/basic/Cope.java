@@ -16,7 +16,7 @@ public class Cope {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             long start = System.currentTimeMillis();
-            conn = DriverManager.getConnection("jdbc:mysql://124.70.94.200:3306/library1", "root", "Maker0000");// 最近会换数据库2333
+            conn = DriverManager.getConnection("jdbc:mysql://rm-bp11labi01950io698o.mysql.rds.aliyuncs.com:3306/library1", "maker0", "Maker0000");// 换好了数据库2333
             long end = System.currentTimeMillis();
             System.out.println(conn);
             System.out.println("建立连接耗时：  " + (end - start) + "ms  毫秒");
