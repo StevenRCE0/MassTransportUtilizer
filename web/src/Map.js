@@ -59,6 +59,7 @@ class Path extends React.Component {
             y1: this.props.y1,
             x2: this.props.x2,
             y2: this.props.y2,
+            additionalCoordinates: this.props.additionalCoordinates,
             level: this.props.level,
             line: this.props.line.match('^[0-9]+'),
         }
@@ -66,7 +67,7 @@ class Path extends React.Component {
 
     render() {
         const strokeWidth = 5 + this.state.level * 0.1
-        const coordinates = (this.props.additionalCoordinates !== undefined) ? [this.state.x1, this.state.y1].concat(this.props.additionalCoordinates).concat([this.state.x2, this.state.y2]) : [this.state.x1, this.state.y1, this.state.x2, this.state.y2]
+        const coordinates = (this.state.additionalCoordinates !== undefined) ? [this.state.x1, this.state.y1].concat(this.state.additionalCoordinates).concat([this.state.x2, this.state.y2]) : [this.state.x1, this.state.y1, this.state.x2, this.state.y2]
         return (
             <Line
                 x={0}
