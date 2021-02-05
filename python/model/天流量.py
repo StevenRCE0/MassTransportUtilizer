@@ -63,7 +63,6 @@ enc_dayprop = sklearn.preprocessing.OneHotEncoder(sparse=False) # Key here is sp
 dayprop_onehot = enc_dayprop.fit_transform(np.array(dayprops).reshape(len(df['sta']),1))
 # print(dayprop_onehot)
 
-
 # 7. 将每月流量进行归一化处理
 daily_flow = df.iloc[:, 3:4].values
 # print(daily_flow.shape)
@@ -120,7 +119,7 @@ print(x_train[0])
 print(x_test[0])
 print(y_train[0])
 
-for i in range(i):
+for i in range(1):
     print("正在搭建模型")
     # 经过反复实验, 一层最靠谱
     model = tf.keras.Sequential([
