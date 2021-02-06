@@ -444,8 +444,8 @@ export class MapsBlock extends React.Component {
     handleOpen() {
         this.setState({datePicker: !this.state.datePicker})
     }
-    handleTime() {
-        this.setState({time: Date()})
+    handleTime(e) {
+        this.setState({time: e})
     }
 
     render() {
@@ -470,7 +470,7 @@ export class MapsBlock extends React.Component {
                                     <MuiPickersUtilsProvider utils={MomentUtils}>
                                         <KeyboardDateTimePicker
                                             value={this.state.time}
-                                            onChange={() => this.handleTime()}
+                                            onChange={(e) => this.handleTime(e)}
                                         />
                                     </MuiPickersUtilsProvider>
                                 </div>
