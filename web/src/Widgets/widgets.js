@@ -1,4 +1,4 @@
-import React, {Suspense, useState} from "react";
+import React, {Suspense} from "react";
 import './style.css';
 import {
     RadialBarChart,
@@ -21,7 +21,8 @@ import {
     CardContent,
     Modal,
     Typography,
-    Button as MaterialButton, useTheme
+    Fade,
+    Button as MaterialButton,
 } from "@material-ui/core";
 import {
     MuiPickersUtilsProvider,
@@ -458,30 +459,31 @@ export class MapsBlock extends React.Component {
                         选择日期
                     </Button>
                     <Modal open={this.state.datePicker}>
-                        <Card className={"Panel"} style={transformToCentre}>
-                            <CardContent>
-                                <Typography gutterBottom variant={"h5"} component={"h2"}>
-                                    选择日期
-                                </Typography>
-                            </CardContent>
-                            <div style={{margin: "0 20px"}}>
-                                <MuiPickersUtilsProvider utils={MomentUtils}>
-                                    <KeyboardDateTimePicker
-                                        value={this.state.time}
-                                        onChange={() => this.handleTime()}
-                                    />
-                                </MuiPickersUtilsProvider>
-                            </div>
-
-                            <CardActions>
-                                <MaterialButton size={"small"} color={"primary"}>
-                                    完成
-                                </MaterialButton>
-                                <MaterialButton size={"small"} color={"default"} onClick={() => this.handleOpen()}>
-                                    取消
-                                </MaterialButton>
-                            </CardActions>
-                        </Card>
+                        <Fade in={this.state.datePicker}>
+                            <Card className={"Panel"} style={transformToCentre}>
+                                <CardContent>
+                                    <Typography gutterBottom variant={"h5"} component={"h2"}>
+                                        选择日期
+                                    </Typography>
+                                </CardContent>
+                                <div style={{margin: "0 20px"}}>
+                                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                                        <KeyboardDateTimePicker
+                                            value={this.state.time}
+                                            onChange={() => this.handleTime()}
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                </div>
+                                <CardActions>
+                                    <MaterialButton size={"small"} color={"primary"}>
+                                        完成
+                                    </MaterialButton>
+                                    <MaterialButton size={"small"} color={"default"} onClick={() => this.handleOpen()}>
+                                        取消
+                                    </MaterialButton>
+                                </CardActions>
+                            </Card>
+                        </Fade>
                     </Modal>
                 </div>
                 <div style={transformToCentre}>
