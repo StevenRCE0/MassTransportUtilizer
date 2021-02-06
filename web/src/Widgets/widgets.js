@@ -1,5 +1,4 @@
-import React from 'react';
-import {Suspense} from "react";
+import React, {Suspense, useState} from "react";
 import './style.css';
 import {
     RadialBarChart,
@@ -14,6 +13,21 @@ import {
 } from "recharts";
 import '../Controllers/Switch';
 import MapSwitch from "../Controllers/Switch";
+import {Button} from "../Controllers/Button";
+import MomentUtils from "@date-io/moment";
+import {
+    Card,
+    CardActions,
+    CardContent,
+    Modal,
+    Typography,
+    Button as MaterialButton, useTheme
+} from "@material-ui/core";
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDateTimePicker
+} from "@material-ui/pickers";
+
 const MapFuture = React.lazy(() => import('../Map'));
 
 const transformToCentre = {
@@ -26,8 +40,7 @@ const transformToCentre = {
 function setTintArray(propTintArray) {
     if (propTintArray !== undefined) {
         return propTintArray
-    }
-    else return ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
+    } else return ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
 }
 
 function constructData(propData, sampleData) {
@@ -36,8 +49,7 @@ function constructData(propData, sampleData) {
             console.warn("Null data received")
         }
         return propData
-    }
-    else return sampleData
+    } else return sampleData
 }
 
 function linesConstructor(dataArray, tintArray, state) {
@@ -45,7 +57,7 @@ function linesConstructor(dataArray, tintArray, state) {
     let converted = []
     let drawn = []
     lines.map(function (line, lineIndex) {
-        line.values.map(function(y, x) {
+        line.values.map(function (y, x) {
             const partPoint = {}
             partPoint["index"] = x;
             partPoint[line.name] = y;
@@ -72,7 +84,7 @@ function linesConstructor(dataArray, tintArray, state) {
             height={state.height}
             style={transformToCentre}
         >
-            <Legend />
+            <Legend/>
             {drawn}
         </LineChart>
     )
@@ -86,8 +98,8 @@ function barConstructor(dataArray, tintArray, state) {
     })
     keys = keys[0]
     console.log(keys)
-     const barContent = keys.map(function (key, index) {
-        return(
+    const barContent = keys.map(function (key, index) {
+        return (
             <Bar
                 dataKey={key}
                 fill={tintArray[index]}
@@ -95,7 +107,7 @@ function barConstructor(dataArray, tintArray, state) {
         )
     })
 
-    return(
+    return (
         <BarChart
             data={dataArray}
             width={state.width}
@@ -103,7 +115,7 @@ function barConstructor(dataArray, tintArray, state) {
             style={transformToCentre}
         >
             {barContent}
-            <Legend />
+            <Legend/>
         </BarChart>
     )
 }
@@ -115,6 +127,7 @@ export class Dashboard extends React.Component {
             rounded: 20
         }
     }
+
     render() {
         const size = this.props.size * 2
         const spacing = size / 8
@@ -145,7 +158,8 @@ export class Dashboard extends React.Component {
                     >
                         <Cell fill={tint[0]}/>
                     </RadialBar>
-                    <Legend verticalAlign={"middle"} align={"center"} iconSize={0} wrapperStyle={{transform: "translateX(4px)"}}/>
+                    <Legend verticalAlign={"middle"} align={"center"} iconSize={0}
+                            wrapperStyle={{transform: "translateX(4px)"}}/>
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', right: spacing, top: spacing}}
@@ -169,7 +183,8 @@ export class Dashboard extends React.Component {
                     >
                         <Cell fill={tint[1]}/>
                     </RadialBar>
-                        <Legend verticalAlign={"middle"} align={"center"} iconSize={0} wrapperStyle={{transform: "translateX(4px)"}}/>
+                    <Legend verticalAlign={"middle"} align={"center"} iconSize={0}
+                            wrapperStyle={{transform: "translateX(4px)"}}/>
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', left: spacing, bottom: spacing}}
@@ -193,7 +208,8 @@ export class Dashboard extends React.Component {
                     >
                         <Cell fill={tint[2]}/>
                     </RadialBar>
-                        <Legend verticalAlign={"middle"} align={"center"} iconSize={0} wrapperStyle={{transform: "translateX(4px)"}}/>
+                    <Legend verticalAlign={"middle"} align={"center"} iconSize={0}
+                            wrapperStyle={{transform: "translateX(4px)"}}/>
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', right: spacing, bottom: spacing}}
@@ -217,7 +233,8 @@ export class Dashboard extends React.Component {
                     >
                         <Cell fill={tint[3]}/>
                     </RadialBar>
-                    <Legend verticalAlign={"middle"} align={"center"} iconSize={0} wrapperStyle={{transform: "translateX(4px)"}}/>
+                    <Legend verticalAlign={"middle"} align={"center"} iconSize={0}
+                            wrapperStyle={{transform: "translateX(4px)"}}/>
                 </RadialBarChart>
 
             </div>
@@ -230,11 +247,13 @@ export class DashboardOne extends React.Component {
         super(props);
         this.state = {rounded: 20}
     }
+
     greatLegend(value) {
         return (
             <span>{value}</span>
         )
     }
+
     render() {
         const data = {name: '鸽子力', value: 80};
         const tint = "#137A7F"
@@ -288,6 +307,7 @@ export class Trends extends React.Component {
             rounded: 20
         }
     }
+
     render() {
         const port = this.props.port
         const frame = {
@@ -344,6 +364,7 @@ export class SimpleTrends extends React.Component {
             rounded: 20
         }
     }
+
     render() {
         const port = this.props.port
         const frame = {
@@ -390,6 +411,7 @@ export class SimpleBars extends React.Component {
             rounded: 20,
         }
     }
+
     render() {
         const port = this.props.port
         const tint = setTintArray(this.props.tint)
@@ -399,7 +421,7 @@ export class SimpleBars extends React.Component {
             "height": "100%",
             "border-radius": this.state.rounded
         }
-        return(
+        return (
             <div className={"Layer"} style={frame}>
                 {barConstructor([data], tint, port)}
             </div>
@@ -412,19 +434,59 @@ export class MapsBlock extends React.Component {
         super(props);
         this.state = {
             rounded: 20,
-            activated: "无"
+            datePicker: false,
+            activated: "无",
+            selectedTime: new Date(),
         }
     }
 
+    handleOpen() {
+        this.setState({datePicker: !this.state.datePicker})
+    }
+    handleTime() {
+        this.setState({time: Date()})
+    }
+
     render() {
-        return(
+        return (
             <div className={"Layer"} style={{borderRadius: this.state.rounded}}>
-                <MapSwitch switchOptions={["无","热力图"]} state={this.state}
-                    setState={(e) => (this.setState(e))}
-                />
+                <div className={"MapControllers"}>
+                    <MapSwitch switchOptions={["无", "热力图"]} state={this.state}
+                               setState={(e) => (this.setState(e))}
+                    />
+                    <Button onClick={() => this.handleOpen()}>
+                        选择日期
+                    </Button>
+                    <Modal open={this.state.datePicker}>
+                        <Card className={"Panel"} style={transformToCentre}>
+                            <CardContent>
+                                <Typography gutterBottom variant={"h5"} component={"h2"}>
+                                    选择日期
+                                </Typography>
+                            </CardContent>
+                            <div style={{margin: "0 20px"}}>
+                                <MuiPickersUtilsProvider utils={MomentUtils}>
+                                    <KeyboardDateTimePicker
+                                        value={this.state.time}
+                                        onChange={() => this.handleTime()}
+                                    />
+                                </MuiPickersUtilsProvider>
+                            </div>
+
+                            <CardActions>
+                                <MaterialButton size={"small"} color={"primary"}>
+                                    完成
+                                </MaterialButton>
+                                <MaterialButton size={"small"} color={"default"} onClick={() => this.handleOpen()}>
+                                    取消
+                                </MaterialButton>
+                            </CardActions>
+                        </Card>
+                    </Modal>
+                </div>
                 <div style={transformToCentre}>
                     <Suspense fallback={<div className={"MLPlaceholder"}>Maps loading...</div>}>
-                        <div style={{transform: 'translate(+5%, +5%)'}}>
+                        <div style={{transform: 'translate(+7%, +5%)'}}>
                             <MapFuture height={this.props.port.height} width={this.props.port.width}/>
                         </div>
                     </Suspense>

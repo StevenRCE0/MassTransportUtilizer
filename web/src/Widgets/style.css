@@ -27,3 +27,21 @@
 svg:not(:root) {
     overflow: visible;
 }
+.MapControllers {
+    z-index: 10;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    flex-direction: column;
+}
+.MapControllers > * {
+    margin-bottom: 5px;
+}
+.MapControllers > *:nth-last-child(1) {
+    margin-bottom: 0;
+}
+.Panel {
+    max-width: 480px;
+    max-height: 256px;
+}

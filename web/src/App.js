@@ -28,9 +28,11 @@ function App() {
 }
 
 function AnimationApp() {
-    let location = useLocation();
+    const location = useLocation();
+    const modalElement = []
     return (
         <React.Fragment>
+            {modalElement}
             <div className="Dock">
                 <NavLink to={"Overview"} activeClassName={"active"} exact>
                     <button className={"DockNavigation"}>概览</button>

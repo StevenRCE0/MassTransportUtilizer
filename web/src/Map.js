@@ -1,5 +1,5 @@
 import React from "react";
-import {Stage, Layer, Circle, Group, Text, Ring, Line, Rect} from "react-konva";
+import {Stage, Layer, Circle, Group, Text, Ring, Line} from "react-konva";
 import "./Overview/style.css";
 
 const stationData = require('./stationaryPlaceholder/stations.json');
@@ -31,7 +31,6 @@ class Point extends React.Component {
                 <Circle
                     radius={radius * 0.5}
                     fill={'#FFF'}
-                    onClick={() => this.props.setPanel(0, 'station', [this.state.x, this.state.y], 1)}
                 />
                 <Ring
                     innerRadius={radius * 0.5}
@@ -82,54 +81,10 @@ class Path extends React.Component {
     }
 }
 
-class Panel extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            x: this.props.x,
-            y: this.props.y,
-        }
-        if (this.props.type === 'station') {
-
-        }
-    }
-
-    render() {
-        const width = 50;
-        const height = 80;
-
-        return (
-            <Group>
-                <Rect width={width} height={height} fill={'#EEE'}/>
-            </Group>
-        )
-    }
-}
-
 class MapFuture extends React.Component {
     constructor(props) {
         super(props);
         this.state = {}
-    }
-
-    setPanel(id, type, pos, activated) {
-        this.setState({panel: {pos, id}});
-        alert('nyan');
-    }
-
-
-    showPanel() {
-        if (this.state.pos === undefined) {
-            return (
-                <React.Fragment/>
-            )
-        }
-        return (
-            <Panel
-                x={this.state.pos[0]}
-                y={this.state.pos[1]}
-            />
-        )
     }
 
     render() {
@@ -170,9 +125,6 @@ class MapFuture extends React.Component {
                 </Layer>
                 <Layer id={'FMstations'}>
                     {pointSet}
-                </Layer>
-                <Layer id={'FMpanels'}>
-                    {this.showPanel()}
                 </Layer>
             </Stage>
         )
