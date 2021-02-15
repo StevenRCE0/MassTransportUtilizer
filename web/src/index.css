@@ -31,6 +31,18 @@ code {
     overflow-x: scroll;
 
 }
+.Dock span {
+    opacity: 0.3;
+    margin-left: 0.5rem;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 9pt;
+}
+.Dock span::before {
+    content: '[';
+}
+.Dock span::after {
+    content: ']';
+}
 .DockNavigation {
     transition: 0.25s;
     background: #FFF;
