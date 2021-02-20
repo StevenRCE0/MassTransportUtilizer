@@ -3,7 +3,7 @@ import {Button as MNButton} from '@material-ui/core';
 
 const MNButtonStyle = {
     borderRadius: '999px',
-    backgroundColor: 'rgba(80, 80, 80, 0.1)'
+    backgroundColor: '#FFF'
 }
 
 export class Button extends React.Component {

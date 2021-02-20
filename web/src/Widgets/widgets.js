@@ -125,16 +125,28 @@ export class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rounded: 20
+            rounded: 20,
+            name: this.props.children
         }
     }
 
     render() {
         const size = this.props.size * 2
         const spacing = size / 8
-        const data = [{name: '摸', value: 40}, {name: '到', value: 90}, {name: '飞', value: 60}, {name: '起', value: 70}];
         const tint = ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
         const frame = {height: "100%", width: "100%", borderRadius: this.state.rounded}
+        let nameLabel;
+        if (this.state.name !== undefined) {
+            nameLabel = [
+                <label className={'widgetLabel'}>
+                    {this.props.children}
+                </label>
+            ]
+        }
+        else {
+            nameLabel = <React.Fragment/>
+        }
+        const data = [{name: '摸', value: 40}, {name: '到', value: 90}, {name: '飞', value: 60}, {name: '起', value: 70}];
         return (
             <div className={'Layer'} style={frame}>
                 <RadialBarChart
@@ -237,7 +249,7 @@ export class Dashboard extends React.Component {
                     <Legend verticalAlign={"middle"} align={"center"} iconSize={0}
                             wrapperStyle={{transform: "translateX(4px)"}}/>
                 </RadialBarChart>
-
+                {nameLabel}
             </div>
         )
     }
@@ -305,7 +317,8 @@ export class Trends extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rounded: 20
+            rounded: 20,
+            name: this.props.children
         }
     }
 
@@ -315,6 +328,17 @@ export class Trends extends React.Component {
             borderRadius: this.state.rounded
         }
         const tint = ["#A00", "#00A"]
+        let nameLabel;
+        if (this.state.name !== undefined) {
+            nameLabel = [
+                <label className={'widgetLabel'}>
+                    {this.props.children}
+                </label>
+            ]
+        }
+        else {
+            nameLabel = <React.Fragment/>
+        }
         const data = [
             {
                 name: 'Page A', key: 4000, pv: 2400, amt: 2400,
@@ -353,6 +377,7 @@ export class Trends extends React.Component {
                     <Line dataKey={"uv"} stroke={tint[0]} strokeWidth={4} dot={{r: 6}}/>
                     <Line dataKey={"pv"} stroke={tint[1]} strokeWidth={4} dot={{r: 6}}/>
                 </LineChart>
+                {nameLabel}
             </div>
         )
     }
@@ -362,7 +387,8 @@ export class SimpleTrends extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rounded: 20
+            rounded: 20,
+            name: this.props.children
         }
     }
 
@@ -374,6 +400,17 @@ export class SimpleTrends extends React.Component {
             borderRadius: this.state.rounded
         }
         const tint = ["#EA0", "#08A"]
+        let nameLabel;
+        if (this.state.name !== undefined) {
+            nameLabel = [
+                <label className={'widgetLabel'}>
+                    {this.props.children}
+                </label>
+            ]
+        }
+        else {
+            nameLabel = <React.Fragment/>
+        }
         const lineData = {
             xAxisMeasurement: "XExample",
             lines: [
@@ -400,6 +437,7 @@ export class SimpleTrends extends React.Component {
         return (
             <div className={"Layer"} style={frame}>
                 {linesConstructor(lineData, tint, port)}
+                {nameLabel}
             </div>
         )
     }
@@ -410,21 +448,34 @@ export class SimpleBars extends React.Component {
         super(props);
         this.state = {
             rounded: 20,
+            name: this.props.children
         }
     }
 
     render() {
         const port = this.props.port
         const tint = setTintArray(this.props.tint)
-        const data = constructData(this.props.data, {"uv": 900, "pv": 609})
+        let nameLabel;
+        if (this.state.name !== undefined) {
+            nameLabel = [
+                <label className={'widgetLabel'}>
+                    {this.props.children}
+                </label>
+            ]
+        }
+        else {
+            nameLabel = <React.Fragment/>
+        }
         const frame = {
             "width": "100%",
             "height": "100%",
             "border-radius": this.state.rounded
         }
+        const data = constructData(this.props.data, {"uv": 900, "pv": 609})
         return (
             <div className={"Layer"} style={frame}>
                 {barConstructor([data], tint, port)}
+                {nameLabel}
             </div>
         )
     }
@@ -438,6 +489,7 @@ export class MapsBlock extends React.Component {
             datePicker: false,
             activated: "无",
             selectedTime: new Date(),
+            flowStats: false
         }
     }
 
@@ -447,16 +499,63 @@ export class MapsBlock extends React.Component {
     handleTime(e) {
         this.setState({time: e})
     }
+    triggerStats() {
+        this.setState({flowStats: !this.state.flowStats})
+    }
+    getStats() {
+        return(
+            <table className={'MapTable'}>
+                <tr>
+                    <td>
+                        线路
+                    </td>
+                    <td>
+                        99
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        客流量
+                    </td>
+                    <td>
+                        99
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        高峰时段
+                    </td>
+                    <td>
+                        9:00
+                    </td>
+                </tr>
+            </table>
+        )
+    }
 
     render() {
         return (
             <div className={"Layer"} style={{borderRadius: this.state.rounded}}>
+                <div
+                    className={"MapStats"}
+                    style={{
+                        opacity: (this.state.flowStats) ? 1 : 0,
+                        userSelect: (this.state.flowStats) ? "text" : "none",
+                        cursor: (this.state.flowStats) ? "text" : "default"
+                    }}
+                >
+                    {this.getStats()}
+                </div>
                 <div className={"MapControllers"}>
                     <MapSwitch switchOptions={["无", "热力图"]} state={this.state}
                                setState={(e) => (this.setState(e))}
                     />
                     <Button onClick={() => this.handleOpen()}>
                         选择日期
+                    </Button>
+                    <Button onClick={() => this.triggerStats()}>
+                        {(this.state.flowStats) ? '隐藏' : '显示'}
+                        数据
                     </Button>
                     <Modal open={this.state.datePicker}>
                         <Fade in={this.state.datePicker}>

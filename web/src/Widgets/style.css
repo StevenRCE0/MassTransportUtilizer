@@ -13,7 +13,6 @@
     background-blend-mode: exclusion;
     text-align: center;
     align-content: center;
-    overflow: hidden;
 }
 .Layer .recharts-wrapper {
     margin : 0 auto;
@@ -27,6 +26,50 @@
 svg:not(:root) {
     overflow: visible;
 }
+
+.MapStats {
+    --TableInset: 5px;
+    transition: .4s cubic-bezier(0.075, 0.82, 0.165, 1);
+    z-index: 10;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background: rgba(80, 80, 80, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+}
+.MapTable {
+    border: none;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 11pt;
+}
+.MapTable > tr > td {
+    padding-top: var(--TableInset);
+    padding-bottom: var(--TableInset);
+}
+.MapTable > tr:nth-child(1) > td {
+    padding-top: calc(var(--TableInset) * 2);
+}
+.MapTable > tr:nth-last-child(1) > td {
+    padding-bottom: calc(var(--TableInset) * 2);
+}
+.MapTable > tr:nth-child(even) {
+    background: rgba(0, 0, 0, .1);
+}
+.MapTable > tr > td:nth-child(1) {
+    padding-left: calc(var(--TableInset) * 2);
+    padding-right: calc(var(--TableInset) * 2);
+}
+.MapTable > tr > td:nth-child(2) {
+    padding-right: calc(var(--TableInset) * 2);
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+
 .MapControllers {
     z-index: 10;
     position: absolute;
@@ -36,12 +79,20 @@ svg:not(:root) {
     flex-direction: column;
 }
 .MapControllers > * {
-    margin-bottom: 5px;
+    margin-bottom: 5px !important;
 }
 .MapControllers > *:nth-last-child(1) {
     margin-bottom: 0;
 }
+
 .Panel {
     max-width: 480px;
     max-height: 256px;
+}
+.widgetLabel {
+    position: absolute;
+    bottom: -1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9pt;
 }

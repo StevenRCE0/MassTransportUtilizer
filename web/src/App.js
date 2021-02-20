@@ -29,24 +29,26 @@ function App() {
 
 function AnimationApp() {
     const location = useLocation();
-    const modalElement = []
 
     window.addEventListener("keydown", function (e) {
         if (e.defaultPrevented) {
             return;
         }
+        function handleShortcutKey(key) {
+            const destination = ['Overview', 'PassengerAnalytics']
+            window.location.replace('/' + destination[key - 1])
+        }
         if (e.key !== undefined) {
-            if (e.key === '1') {window.location.replace('/Overview')}
-            if (e.key === '2') {window.location.replace('./PassengerAnalytics')}
+            if (e.key === '1') {handleShortcutKey(1)}
+            if (e.key === '2') {handleShortcutKey(2)}
         }
         else if (e.code !== undefined) {
-            if (e.code === 'Digit1') {window.location.replace('/Overview')}
-            if (e.code === 'Digit2') {window.location.replace('/PassengerAnalytics')}
+            if (e.code === 'Digit1') {handleShortcutKey(1)}
+            if (e.code === 'Digit2') {handleShortcutKey(2)}
         }
     })
     return (
         <React.Fragment>
-            {modalElement}
             <div className="Dock">
                 <NavLink to={"Overview"} activeClassName={"active"} exact>
                     <button className={"DockNavigation"}>概览<span>1</span></button>

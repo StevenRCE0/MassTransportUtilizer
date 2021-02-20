@@ -20,6 +20,8 @@ code {
     transition: opacity 250ms ease-in;
 }
 .Dock {
+    z-index: 20;
+    transition: .4s cubic-bezier(0.075, 0.82, 0.165, 1);
     position: fixed;
     bottom: 0;
     left: 0;
@@ -27,9 +29,14 @@ code {
     width: 100vw;
     align-content: center;
     text-align: center;
-    background: linear-gradient(0deg, rgba(255, 255, 255, .5) 50%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 1) 45% ,rgba(255, 255, 255, 0) 100%);
     overflow-x: scroll;
-
+    transform: translateY(50%);
+    opacity: .7;
+}
+.Dock:hover {
+    transform: translateY(0);
+    opacity: 1;
 }
 .Dock span {
     opacity: 0.3;
