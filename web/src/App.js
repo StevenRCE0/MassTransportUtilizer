@@ -36,7 +36,7 @@ function AnimationApp() {
         }
         function handleShortcutKey(key) {
             const destination = ['Overview', 'PassengerAnalytics']
-            window.location.replace('/' + destination[key - 1])
+            window.location.replace('./' + destination[key - 1])
         }
         if (e.key !== undefined) {
             if (e.key === '1') {handleShortcutKey(1)}
@@ -64,10 +64,10 @@ function AnimationApp() {
                     timeout={250}
                 >
                     <Switch>
-                        <Route path={"/Overview"}>
+                        <Route path={"./Overview"}>
                             <Overview/>
                         </Route>
-                        <Route path={"/PassengerAnalytics"}>
+                        <Route path={"./PassengerAnalytics"}>
                             <PassengerAnalytics/>
                         </Route>
                     </Switch>
