@@ -401,8 +401,10 @@ public class StationMap {
         return map;
     }
     // 找出最短路径并输出
-    public static LinkedHashSet<String> getMinSizeSet(ArrayList<Rouse> all) {
+    public static ArrayList<LinkedHashSet<String>> getMinSizeSet(ArrayList<Rouse> all) {
         ArrayList<LinkedHashSet<String>> li = new ArrayList<>();
+        ArrayList<LinkedHashSet<String>> lil = new ArrayList<>();
+        ArrayList<Integer> subs = new ArrayList<>();
         int min = 1000,sub=0;
         for (Rouse rouse : all) {
             LinkedHashSet<String> set = new LinkedHashSet<>();
@@ -433,7 +435,16 @@ public class StationMap {
                 sub = i;
             }
         }
-        return li.get(sub);
+        for (int i = 0; i < li.size(); i++) {
+            if (li.get(i).size()<=min+10){ // <- min+10  其中min表示最短路径的站数，10表示得到较近路径相对最短路径的最大长度
+                subs.add(i);
+            }
+        }
+        for (Integer integer : subs) {
+            lil.add(li.get(integer));
+        }
+
+        return lil;
     }
 
 }

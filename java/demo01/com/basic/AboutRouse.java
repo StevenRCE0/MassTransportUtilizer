@@ -6,7 +6,7 @@ public class AboutRouse {
 
     public static ArrayList<Rouse> all = new ArrayList<>();
 
-    public static LinkedHashSet<String> deal(String start, String end) {
+    public static ArrayList<LinkedHashSet<String>> deal(String start, String end) {
         ArrayList<ArrayList<String>> sta = StationMap.getSta();
         // 对站点进行检查
         if (StationMap.noOne(start) == null || StationMap.noOne(end) == null) {
@@ -15,8 +15,10 @@ public class AboutRouse {
         // 判断是否起点和终点一样
         if (start.equals(end)) {
             LinkedHashSet<String> s = new LinkedHashSet<>();
+            ArrayList<LinkedHashSet<String>> list = new ArrayList<>();
             s.add(start);
-            return s;
+            list.add(s);
+            return list;
         }
         // 判断起点和终点在一条路上
         if (StationMap.isSameRouse(start, end)) {
