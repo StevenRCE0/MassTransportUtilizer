@@ -65,6 +65,9 @@ class AnimationApp extends React.Component {
                         <Switch>
                             <Route path={`*/Overview`} component={Overview}/>
                             <Route path={`*/PassengerAnalytics`} component={PassengerAnalytics}/>
+                            <Route path={`*`}>
+                                <Redirect to={"Overview"}/>
+                            </Route>
                         </Switch>
                     </CSSTransition>
                 </TransitionGroup>
