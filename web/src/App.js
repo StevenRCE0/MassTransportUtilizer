@@ -16,8 +16,8 @@ function App() {
     return (
         <Router>
             <Switch>
-                <Route exact path={"/"}>
-                    <Redirect to={"/Overview"}/>
+                <Route exact path={"./"}>
+                    <Redirect to={"Overview"}/>
                 </Route>
                 <Route path={"*"}>
                     <AnimationApp/>
@@ -64,10 +64,10 @@ function AnimationApp() {
                     timeout={250}
                 >
                     <Switch>
-                        <Route path={"./Overview"}>
+                        <Route path={"/Overview"}>
                             <Overview/>
                         </Route>
-                        <Route path={"./PassengerAnalytics"}>
+                        <Route path={"/PassengerAnalytics"}>
                             <PassengerAnalytics/>
                         </Route>
                     </Switch>
