@@ -11,12 +11,13 @@ export class Button extends React.Component {
         super(props);
         this.state = {
             onClick: this.props.onClick,
+            type: (this.props.type !== undefined) ? this.props.type : ""
         }
     }
 
     render() {
         return(
-            <MNButton variant={"contained"} style={MNButtonStyle} onClick={this.state.onClick}>
+            <MNButton variant={"contained"} style={MNButtonStyle} onClick={this.state.onClick} type={this.state.type}>
                 {this.props.children}
             </MNButton>
         )

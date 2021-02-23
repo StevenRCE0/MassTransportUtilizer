@@ -10,6 +10,7 @@ import {
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 import Overview from "./Overview";
 import PassengerAnalytics from "./PassengerAnalytics";
+import Login from "./Authenticate";
 import './index.css';
 
 class App extends React.Component {
@@ -34,16 +35,18 @@ class AnimationApp extends React.Component {
                 return;
             }
             function handleShortcutKey(key) {
-                const destination = ['Overview', 'PassengerAnalytics']
+                const destination = ['Overview', 'PassengerAnalytics', 'Authenticate']
                 window.location.replace('./' + destination[key - 1])
             }
             if (e.key !== undefined) {
                 if (e.key === '1') {handleShortcutKey(1)}
                 if (e.key === '2') {handleShortcutKey(2)}
+                if (e.key === 'L' || e.key === 'l') {handleShortcutKey(3)}
             }
             else if (e.code !== undefined) {
                 if (e.code === 'Digit1') {handleShortcutKey(1)}
                 if (e.code === 'Digit2') {handleShortcutKey(2)}
+                if (e.code === 'KeyL') {handleShortcutKey(3)}
             }
         })
         return (
@@ -53,7 +56,10 @@ class AnimationApp extends React.Component {
                         <button className={"DockNavigation"}>概览<span>1</span></button>
                     </NavLink>
                     <NavLink to={"PassengerAnalytics"} activeClassName={"active"}>
-                        <button className="DockNavigation">客流情况分析<span>2</span></button>
+                        <button className={"DockNavigation"}>客流情况分析<span>2</span></button>
+                    </NavLink>
+                    <NavLink to={"Authenticate"} activeClassName={"active"}>
+                        <button className={"DockNavigation"}>认证<span>L</span></button>
                     </NavLink>
                 </div>
                 <TransitionGroup>
@@ -65,6 +71,7 @@ class AnimationApp extends React.Component {
                         <Switch>
                             <Route path={`*/Overview`} component={Overview}/>
                             <Route path={`*/PassengerAnalytics`} component={PassengerAnalytics}/>
+                            <Route path={`*/Authenticate`} component={Login}/>
                             <Route path={`*`}>
                                 <Redirect to={"Overview"}/>
                             </Route>
