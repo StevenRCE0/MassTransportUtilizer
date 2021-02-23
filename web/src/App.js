@@ -29,6 +29,7 @@ function App() {
 
 function AnimationApp() {
     const location = useLocation();
+    const { match } = this.props;
 
     window.addEventListener("keydown", function (e) {
         if (e.defaultPrevented) {
@@ -64,12 +65,8 @@ function AnimationApp() {
                     timeout={250}
                 >
                     <Switch>
-                        <Route path={"/Overview"}>
-                            <Overview/>
-                        </Route>
-                        <Route path={"/PassengerAnalytics"}>
-                            <PassengerAnalytics/>
-                        </Route>
+                        <Route path={`${match.url}/Overview`} component={Overview}/>
+                        <Route path={`${match.url}/PassengerAnalytics`} component={PassengerAnalytics}/>
                     </Switch>
                 </CSSTransition>
             </TransitionGroup>
