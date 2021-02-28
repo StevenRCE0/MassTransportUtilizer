@@ -1,5 +1,5 @@
 import csv
-from pyasn1.type.univ import Null
+# from pyasn1.type.univ import None
 import sys
 sys.setrecursionlimit(15000)
 def main(stain='Sta65', staout='Sta20'):
@@ -21,11 +21,11 @@ class Station():
         return hash((self.name,))
     # order储存的是能通向该站的站
     ordermap = {}
-    name = Null
-    linename = Null
-    prestation = Null
-    nextstation = Null
-    def __init__(self, name, linename=Null, prestation=Null, nextstation=Null):
+    name = None
+    linename = None
+    prestation = None
+    nextstation = None
+    def __init__(self, name, linename=None, prestation=None, nextstation=None):
         self.name = name
         self.linename = linename
         self.prestation = prestation
@@ -73,7 +73,7 @@ class ReadFile:
     # @staticmethod
     def readTxt(self, filepath = '1.txt'):
         a = []
-        presta = Null
+        presta = None
         with open(filepath, 'r',encoding='utf-8') as f:
             f = f.readlines()
             for line in f:
@@ -91,7 +91,7 @@ class ReadFile:
                 a.append(b)
         return a
     
-    def readCsv(self,filepath=Null):
+    def readCsv(self,filepath=None):
         with open(filepath, 'r', encoding='utf-8') as f:
             f = csv.reader(f)
             return f
@@ -99,8 +99,8 @@ class ReadFile:
 class Dijkstra:
     '''计算路径'''
     # nearestpass = []
-    # stain = Null
-    # staout = Null
+    # stain = None
+    # staout = None
 
     def __init__(self, stain='Sta65', staout='Sta128'): 
         # 初始化 stain staout
@@ -124,7 +124,7 @@ class Dijkstra:
     def getShorterPath(self, station):
         '''获取更近的站点'''
         a = 10000
-        neareststa = Null
+        neareststa = None
         for sta in station.ordermap.keys():
             if sta in self.nearestpass: 
                  continue
