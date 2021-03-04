@@ -35,17 +35,19 @@ class AnimationApp extends React.Component {
                 return;
             }
             function handleShortcutKey(key) {
-                const destination = ['Overview', 'PassengerAnalytics', 'Authenticate']
+                const destination = ['Overview', 'PassengerAnalytics', 'Authenticate', 'LineHeat']
                 window.location.replace('./' + destination[key - 1])
             }
             if (e.key !== undefined) {
                 if (e.key === '1') {handleShortcutKey(1)}
                 if (e.key === '2') {handleShortcutKey(2)}
+                if (e.key === '3') {handleShortcutKey(4)}
                 if (e.key === 'L' || e.key === 'l') {handleShortcutKey(3)}
             }
             else if (e.code !== undefined) {
                 if (e.code === 'Digit1') {handleShortcutKey(1)}
                 if (e.code === 'Digit2') {handleShortcutKey(2)}
+                if (e.code === 'Digit3') {handleShortcutKey(4)}
                 if (e.code === 'KeyL') {handleShortcutKey(3)}
             }
         })
@@ -55,8 +57,11 @@ class AnimationApp extends React.Component {
                     <NavLink to={"Overview"} activeClassName={"active"} exact>
                         <button className={"DockNavigation"}>概览<span>1</span></button>
                     </NavLink>
+                    <NavLink to={"LineHeat"} activeClassName={"active"}>
+                        <button className={"DockNavigation"}>线路分析<span>2</span></button>
+                    </NavLink>
                     <NavLink to={"PassengerAnalytics"} activeClassName={"active"}>
-                        <button className={"DockNavigation"}>客流情况分析<span>2</span></button>
+                        <button className={"DockNavigation"}>客流分析<span>3</span></button>
                     </NavLink>
                     <NavLink to={"Authenticate"} activeClassName={"active"}>
                         <button className={"DockNavigation"}>认证<span>L</span></button>
