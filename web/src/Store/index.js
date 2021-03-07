@@ -1,4 +1,6 @@
 import { createStore } from "redux";
-import reducer from "./methods";
-const  store = createStore()
+import { DefaultState } from "./methods";
+
+const store = createStore(DefaultState)
+
 export default store

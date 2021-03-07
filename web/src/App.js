@@ -12,6 +12,7 @@ import Overview from "./Overview";
 import PassengerAnalytics from "./PassengerAnalytics";
 import Login from "./Authenticate";
 import './index.css';
+import {Authenticate} from "./Store/methods";
 
 class App extends React.Component {
     render() {
@@ -30,6 +31,10 @@ class App extends React.Component {
 
 class AnimationApp extends React.Component {
     render() {
+        // authentication
+        const loginState =
+
+        // keyboard shortcuts
         window.addEventListener("keydown", function (e) {
             if (e.defaultPrevented) {
                 return;
@@ -51,6 +56,7 @@ class AnimationApp extends React.Component {
                 if (e.code === 'KeyL') {handleShortcutKey(3)}
             }
         })
+
         return (
             <React.Fragment>
                 <div className="Dock">
