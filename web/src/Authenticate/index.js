@@ -1,12 +1,23 @@
 import React from "react";
 import {Input, Button} from '../Controllers'
 import './style.css';
+import store from "../Store";
+
+function loginRequest(e) {
+    e.preventDefault()
+    store.dispatch({
+        type: 'login',
+        loginState: true
+    })
+    alert('wow')
+}
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
-
+        console.info(store.getState())
     }
+
 
     render() {
         const hello = "登录"
@@ -19,7 +30,7 @@ class Login extends React.Component {
                     </h1>
                 </div>
                 <div id={'Maze'}/>
-                <form>
+                <form onSubmit={(e) => loginRequest(e)}>
                     <section className={"AuthCard"}>
                         <div className={"AuthForm"}>
                             <div>

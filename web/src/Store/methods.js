@@ -2,14 +2,11 @@ const defaultState = {
     active: "dashboard",
     loginState: false
 }
-
-export var DefaultState = function () {
-    return defaultState
-}
-
-export var Authenticate = function (state, action) {
+export default(state = defaultState, action) => {
     if (action.type === 'login' && action.loginState) {
-        return state.concat({loginState: true})
+        let newState = JSON.parse(JSON.stringify(state))
+        newState.loginState = true
+        return newState
     }
     return state
 }

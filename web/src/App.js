@@ -12,18 +12,43 @@ import Overview from "./Overview";
 import PassengerAnalytics from "./PassengerAnalytics";
 import Login from "./Authenticate";
 import './index.css';
-import {Authenticate} from "./Store/methods";
+import store from "./Store";
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = store.getState()
+        this.storeChange = this.storeChange.bind(this)
+        store.subscribe(this.storeChange)
+    }
+
+    storeChange(){
+        this.setState(store.getState())
+    }
+
     render() {
-        return (
-            <Router>
+        let pagesList = []
+        if (this.state.loginState === true) {
+            pagesList.push(
                 <Switch>
                     <Route exact path={"./"}>
                         <Redirect to={"Overview"}/>
                     </Route>
                     <Route path={"*"} component={AnimationApp}/>
+                </Switch>)
+        }
+        else {
+            pagesList.push(
+                <Switch>
+                    <Route path={"*"}>
+                        <Login />
+                    </Route>
                 </Switch>
+            )
+        }
+        return (
+            <Router>
+                {pagesList}
             </Router>
         )
     }
