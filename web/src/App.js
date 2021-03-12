@@ -5,10 +5,10 @@ import {
     Route,
     Redirect,
     NavLink,
-    useLocation
 } from "react-router-dom";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 import Overview from "./Overview";
+import { LineHeat, HeatTimeline } from "./LineHeat";
 import PassengerAnalytics from "./PassengerAnalytics";
 import Login from "./Authenticate";
 import './index.css';
@@ -56,9 +56,6 @@ class App extends React.Component {
 
 class AnimationApp extends React.Component {
     render() {
-        // authentication
-        const loginState =
-
         // keyboard shortcuts
         window.addEventListener("keydown", function (e) {
             if (e.defaultPrevented) {
@@ -91,6 +88,9 @@ class AnimationApp extends React.Component {
                     <NavLink to={"LineHeat"} activeClassName={"active"}>
                         <button className={"DockNavigation"}>线路分析<span>2</span></button>
                     </NavLink>
+                    <NavLink to={"HeatTimeline"} activeClassName={"active"}>
+                        <button className={"DockNavigation"}>时段分析<span>2</span></button>
+                    </NavLink>
                     <NavLink to={"PassengerAnalytics"} activeClassName={"active"}>
                         <button className={"DockNavigation"}>客流分析<span>3</span></button>
                     </NavLink>
@@ -106,6 +106,8 @@ class AnimationApp extends React.Component {
                     >
                         <Switch>
                             <Route path={`*/Overview`} component={Overview}/>
+                            <Route path={`*/LineHeat`} component={LineHeat}/>
+                            <Route path={`*/HeatTimeline`} component={HeatTimeline}/>
                             <Route path={`*/PassengerAnalytics`} component={PassengerAnalytics}/>
                             <Route path={`*/Authenticate`} component={Login}/>
                             <Route path={`*`}>

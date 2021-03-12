@@ -5,12 +5,10 @@ import * as Widgets from "../Widgets/widgets";
 const body = document.body
 
 class Index extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {}
     }
-
 
     calculateSize = () => {
         this.setState({

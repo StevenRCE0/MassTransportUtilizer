@@ -4,7 +4,25 @@ import * as Widgets from "../Widgets/widgets";
 
 const body = document.body
 
-class LineHeat extends React.Component {
+export class LineHeat extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+    calculateSize = () => {
+        this.setState({
+            size: Math.min(body.scrollHeight / 6, body.scrollWidth / 8)
+        })
+        console.log(this.state.size)
+    }
+    componentDidMount() {
+        this.calculateSize()
+        window.addEventListener('resize', this.calculateSize)
+    }
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.calculateSize)
+    }
+
     render() {
         return(
             <div className={"LHGrid"}>
@@ -28,6 +46,48 @@ class LineHeat extends React.Component {
                 <div className="div18"></div>
                 <div className="div19"></div>
                 <div className="div20"></div>
+            </div>
+        )
+    }
+}
+
+export class HeatTimeline extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    }
+    calculateSize = () => {
+        this.setState({
+            size: Math.min(body.scrollHeight / 4, body.scrollWidth / 2)
+        })
+        console.log(this.state.size)
+    }
+    componentDidMount() {
+        this.calculateSize()
+        window.addEventListener('resize', this.calculateSize)
+    }
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.calculateSize)
+    }
+
+    render() {
+        const {size} = this.state
+        return(
+            <div className={"THGrid"}>
+                <div className="div1">
+                    <Widgets.Trends
+                        port={{'height': size * 1, 'width': body.offsetWidth - 60}}
+                    />
+                </div>
+                <div className="div2">
+                    <Widgets.Trends
+                        port={{'height': size * 1, 'width': body.offsetWidth - 60}}
+                    />
+                </div>
+                <div className="div3"></div>
+                <div className="div4"></div>
+                <div className="div5"></div>
+                <div className="div6"></div>
             </div>
         )
     }
