@@ -22,7 +22,9 @@ export default(state = defaultState, action) => {
         }
     }
     if (action.type === 'hoverUpdate') {
-
+        if (action.request !== undefined) {
+            return defaultState
+        }
     }
 
     return state
