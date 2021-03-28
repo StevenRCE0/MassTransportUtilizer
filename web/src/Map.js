@@ -87,6 +87,7 @@ class Path extends React.Component {
                 lineJoin={'round'}
                 lineCap={'round'}
                 onClick={this.props.onClick}
+                draggable={true}
             />
         )
     }
@@ -95,12 +96,15 @@ class Path extends React.Component {
 class MapFuture extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            mode: this.props.mode
+        }
     }
 
     render() {
         const widthIndex = this.props.width / 17500
         const heightIndex = this.props.height / 20000
+        const heatMode = (this.state.mode === '热力图')
         const pathSet = pathData.map(function (path) {
             return (
                 <Path
@@ -121,12 +125,12 @@ class MapFuture extends React.Component {
             return (
                 <Point
                     x={point.x * widthIndex} y={point.y * heightIndex}
-                    level={1}
+                    level={heatMode ? point.level : 1}
                     type={point.type}
                     station={point.station}
                     line={point.line}
                     tint={lineTintArray[point.line.match("^[0-9]+")]}
-                    onClick={() => hoverResponse('station', point.id, point.line)}
+                    onClick={() => hoverResponse('station', point.station, point.line)}
                 />
             )
         })

@@ -24,6 +24,25 @@ class Index extends React.Component {
         window.removeEventListener('resize', this.calculateSize)
     }
 
+    retrieveData(name) {
+        if (name === 'overall') {
+            return(
+                {
+                    name: '综合压力',
+                    value: 60
+                }
+            )
+        }
+        if (name === 'overloadedStation') {
+            return(
+                {
+                    name: 'Sta99',
+                    value: 99
+                }
+            )
+        }
+    }
+
     render() {
         const {size} = this.state
         return (
@@ -34,10 +53,10 @@ class Index extends React.Component {
                         />
                     </div>
                     <div className={"div2"}>
-                        <Widgets.DashboardOne size={size}/>
+                        <Widgets.DashboardOne size={size} data={this.retrieveData('overall')}/>
                     </div>
                     <div className={"div3"}>
-                        <Widgets.DashboardOne size={size}/>
+                        <Widgets.DashboardOne size={size} data={this.retrieveData('overloadedStation')}/>
                     </div>
                     <div className={"div4"}>
                         <Widgets.DashboardOne size={size}/>

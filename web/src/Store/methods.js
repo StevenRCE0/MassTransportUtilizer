@@ -6,6 +6,7 @@ const defaultState = {
     timeUpToDate: true,
     time: new Date(),
     lineSpectating: 'No',
+    stationSpectating: 'No',
     flowSpectating: -1,
     peakSpectating: -1
 }
@@ -24,6 +25,9 @@ export default(state = defaultState, action) => {
     if (action.type === 'hoverUpdate') {
         let newState = JSON.parse(JSON.stringify(state))
         newState.lineSpectating = action.line
+        if (action.hoverType === 'station') {
+            newState.stationSpectating = action.hoverID
+        }
         return newState
     }
 
