@@ -28,6 +28,7 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDateTimePicker
 } from "@material-ui/pickers";
+import store from "../Store";
 
 const MapFuture = React.lazy(() => import('../Map'));
 
@@ -489,8 +490,15 @@ export class MapsBlock extends React.Component {
             datePicker: false,
             activated: "无",
             selectedTime: new Date(),
-            flowStats: false
+            flowStats: false,
+            lineSpectating: store.getState().lineSpectating
         }
+        this.storeChange = this.storeChange.bind(this)
+        store.subscribe(this.storeChange)
+    }
+
+    storeChange(){
+        this.setState(store.getState())
     }
 
     handleOpen() {
@@ -510,7 +518,7 @@ export class MapsBlock extends React.Component {
                         线路
                     </td>
                     <td>
-                        99
+                        {this.state.lineSpectating}
                     </td>
                 </tr>
                 <tr>
@@ -557,6 +565,9 @@ export class MapsBlock extends React.Component {
                         {(this.state.flowStats) ? '隐藏' : '显示'}
                         数据
                     </Button>
+                    {
+                        this.state.flowStats ? <Button>模拟数据变更</Button> : ''
+                    }
                     <Modal open={this.state.datePicker}>
                         <Fade in={this.state.datePicker}>
                             <Card className={"Panel"} style={transformToCentre}>

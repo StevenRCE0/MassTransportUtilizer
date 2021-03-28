@@ -1,12 +1,22 @@
 import React from "react";
 import {Stage, Layer, Circle, Group, Text, Ring, Line} from "react-konva";
 import "./Overview/style.css";
+import store from './Store';
 
 const stationData = require('./stationaryPlaceholder/stations.json');
 const pathData = require('./stationaryPlaceholder/paths.json');
 const lineTintArray = [
     "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#000", "#000", "#E67874", "#009734", "#43B7AE"
 ]
+
+function hoverResponse(type, id, line) {
+    store.dispatch({
+        type: 'hoverUpdate',
+        hoverType: type,
+        hoverID: id,
+        line: line
+    })
+}
 
 class Point extends React.Component {
     constructor(props) {
@@ -27,7 +37,7 @@ class Point extends React.Component {
         const multiplier = (this.props.type === "1") ? 3 : 2;
         const radius = this.state.level * multiplier * basis;
         return (
-            <Group x={this.state.x} y={this.state.y}>
+            <Group x={this.state.x} y={this.state.y} onClick={this.props.onClick}>
                 <Circle
                     radius={radius * 0.5}
                     fill={'#FFF'}
@@ -76,6 +86,7 @@ class Path extends React.Component {
                 strokeWidth={strokeWidth}
                 lineJoin={'round'}
                 lineCap={'round'}
+                onClick={this.props.onClick}
             />
         )
     }
@@ -102,6 +113,7 @@ class MapFuture extends React.Component {
                     }) : undefined}
                     level={1}
                     line={path.line}
+                    onClick={() => hoverResponse('path', path.id, path.line)}
                 />
             )
         });
@@ -114,6 +126,7 @@ class MapFuture extends React.Component {
                     station={point.station}
                     line={point.line}
                     tint={lineTintArray[point.line.match("^[0-9]+")]}
+                    onClick={() => hoverResponse('station', point.id, point.line)}
                 />
             )
         })

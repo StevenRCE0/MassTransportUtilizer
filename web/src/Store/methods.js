@@ -5,9 +5,9 @@ const defaultState = {
     loginState: false,
     timeUpToDate: true,
     time: new Date(),
-    LineSpectating: 0,
-    FlowSpectating: -1,
-    PeakSpectating: -1
+    lineSpectating: 'No',
+    flowSpectating: -1,
+    peakSpectating: -1
 }
 export default(state = defaultState, action) => {
     if (action.type === 'login' && action.loginState) {
@@ -22,9 +22,9 @@ export default(state = defaultState, action) => {
         }
     }
     if (action.type === 'hoverUpdate') {
-        if (action.request !== undefined) {
-            return defaultState
-        }
+        let newState = JSON.parse(JSON.stringify(state))
+        newState.lineSpectating = action.line
+        return newState
     }
 
     return state
