@@ -4,7 +4,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import './style.css';
-import store from "../Store";
+import store, { setExpiration } from "../Store";
 
 function loginRequest(event) {
     event.preventDefault()
@@ -25,15 +25,21 @@ class CertForm extends React.Component {
     }
     CertChange(event) {
         let feedbackInfo
-        if (this.state.option === 'logout') {feedbackInfo = '注销凭据完成'}
-        if (this.state.option === 'cache') {feedbackInfo = '保存凭据'+22+'天'}
+        if (this.state.option === 'logout') {
+            feedbackInfo = '注销凭据完成'
+            const action = {
+                type: 'certMan',
+                logout: (this.state.option === 'logout')
+            }
+            store.dispatch(action)
+        }
+        if (this.state.option === 'cache') {
+            feedbackInfo = '保存凭据'+22+'天'
+            setExpiration()
+        }
         alert(feedbackInfo)
         event.preventDefault()
-        const action = {
-            type: 'certMan',
-            logout: (this.state.option === 'logout')
-        }
-        store.dispatch(action)
+
     }
 
     render() {
