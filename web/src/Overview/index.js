@@ -1,6 +1,7 @@
 import React from "react";
 import './style.css';
-import * as Widgets from "../Widgets/widgets";
+import * as Widgets from '../Widgets/widgets';
+import { MapsBlock } from '../Widgets/MapsBlock';
 
 const body = document.body
 
@@ -48,7 +49,7 @@ class Index extends React.Component {
         return (
                 <div className={"OverviewGrid"}>
                     <div className={"div1"}>
-                        <Widgets.MapsBlock
+                        <MapsBlock
                             port={{"height": size * 4, "width": size * 4}}
                         />
                     </div>

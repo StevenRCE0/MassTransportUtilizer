@@ -7,12 +7,15 @@ import {
     NavLink,
 } from "react-router-dom";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
+
 import Overview from "./Overview";
 import { LineHeat, HeatTimeline } from "./LineHeat";
 import PassengerAnalytics from "./PassengerAnalytics";
 import Login from "./Authenticate";
 import './index.css';
-import store from "./Store";
+
+import { PersistGate } from 'redux-persist/integration/react';
+import store, { exposedMethods } from "./Store";
 
 class App extends React.Component {
     constructor(props) {
@@ -47,9 +50,11 @@ class App extends React.Component {
             )
         }
         return (
-            <Router>
-                {pagesList}
-            </Router>
+            <PersistGate store={store} persistor={exposedMethods}>
+                <Router>
+                    {pagesList}
+                </Router>
+            </PersistGate>
         )
     }
 }

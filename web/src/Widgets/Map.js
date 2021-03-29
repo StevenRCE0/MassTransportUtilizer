@@ -1,10 +1,10 @@
 import React from "react";
 import {Stage, Layer, Circle, Group, Text, Ring, Line} from "react-konva";
-import "./Overview/style.css";
-import store from './Store';
+import "../Overview/style.css";
+import store from '../Store';
 
-const stationData = require('./stationaryPlaceholder/stations.json');
-const pathData = require('./stationaryPlaceholder/paths.json');
+const stationData = require('../stationaryPlaceholder/stations.json');
+const pathData = require('../stationaryPlaceholder/paths.json');
 const lineTintArray = [
     "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#000", "#000", "#E67874", "#009734", "#43B7AE"
 ]
