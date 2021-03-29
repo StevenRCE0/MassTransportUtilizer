@@ -1,5 +1,3 @@
-import React from "@testing-library/react";
-
 const defaultState = {
     active: "dashboard",
     loginState: false,
@@ -10,7 +8,7 @@ const defaultState = {
     flowSpectating: -1,
     peakSpectating: -1
 }
-export default(state = defaultState, action) => {
+const Store = (state = defaultState, action) => {
     if (action.type === 'login' && action.loginState) {
         let newState = JSON.parse(JSON.stringify(state))
         newState.loginState = true
@@ -33,3 +31,4 @@ export default(state = defaultState, action) => {
 
     return state
 }
+export default Store

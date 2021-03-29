@@ -1,10 +1,9 @@
 import React from "react";
 import {Stage, Layer, Circle, Group, Text, Ring, Line} from "react-konva";
 import "../Overview/style.css";
-import store from '../Store';
+import store, { mapsStore, mapsExposedMethods } from '../Store';
+import { PersistGate } from 'redux-persist/integration/react';
 
-const stationData = require('../stationaryPlaceholder/stations.json');
-const pathData = require('../stationaryPlaceholder/paths.json');
 const lineTintArray = [
     "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#000", "#000", "#E67874", "#009734", "#43B7AE"
 ]
@@ -31,7 +30,6 @@ class Point extends React.Component {
             station: this.props.station.match('[0-9]+'),
         }
     }
-
     render() {
         const basis = 2;
         const multiplier = (this.props.type === "1") ? 3 : 2;
@@ -102,10 +100,11 @@ class MapFuture extends React.Component {
     }
 
     render() {
+        mapsStore.dispatch({type: 'refresh'})
         const widthIndex = this.props.width / 17500
         const heightIndex = this.props.height / 20000
         const heatMode = (this.state.mode === '热力图')
-        const pathSet = pathData.map(function (path) {
+        const pathSet = mapsStore.getState().pathData.map(function (path) {
             return (
                 <Path
                     x1={path.x1 * widthIndex}
@@ -121,7 +120,7 @@ class MapFuture extends React.Component {
                 />
             )
         });
-        const pointSet = stationData.map(function (point) {
+        const pointSet = mapsStore.getState().stationData.map(function (point) {
             return (
                 <Point
                     x={point.x * widthIndex} y={point.y * heightIndex}
@@ -136,14 +135,16 @@ class MapFuture extends React.Component {
         })
 
         return (
-            <Stage height={this.props.height + 50} width={this.props.width + 250}>
-                <Layer id={'FMpaths'}>
-                    {pathSet}
-                </Layer>
-                <Layer id={'FMstations'}>
-                    {pointSet}
-                </Layer>
-            </Stage>
+            <PersistGate store={mapsStore} persistor={mapsExposedMethods}>
+                <Stage height={this.props.height + 50} width={this.props.width + 250}>
+                    <Layer id={'FMpaths'}>
+                        {pathSet}
+                    </Layer>
+                    <Layer id={'FMstations'}>
+                        {pointSet}
+                    </Layer>
+                </Stage>
+            </PersistGate>
         )
     }
 }

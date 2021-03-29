@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import store from "../Store";
+import store, { mapsStore } from "../Store";
 import {
     Button as MaterialButton,
     Card, CardActions,
@@ -143,6 +143,7 @@ export class MapsBlock extends React.Component {
     }
 
     render() {
+        mapsStore.dispatch({type: 'refresh'})
         return (
             <div className={"Layer"} style={{borderRadius: this.state.rounded}}>
                 <div
