@@ -24,10 +24,9 @@ class Index extends React.Component {
     componentWillUnmount() {
         window.removeEventListener('resize', this.calculateSize)
     }
-
     retrieveData(name) {
         if (name === 'overall') {
-            return(
+            return (
                 {
                     name: '综合压力',
                     value: 60
@@ -35,12 +34,20 @@ class Index extends React.Component {
             )
         }
         if (name === 'overloadedStation') {
-            return(
+            return (
                 {
                     name: 'Sta99',
                     value: 99
                 }
             )
+        }
+        if (name === 'distPressure') {
+            return ([
+                {name: 'dist1', value: 85},
+                {name: 'dist3', value: 83},
+                {name: 'dist5', value: 77},
+                {name: 'dist6', value: 66}
+            ])
         }
     }
 
@@ -66,7 +73,9 @@ class Index extends React.Component {
                         <Widgets.DashboardOne size={size}/>
                     </div>
                     <div className={"div6"}>
-                        <Widgets.Dashboard size={size}/>
+                        <Widgets.Dashboard size={size} data={this.retrieveData('distPressure')}>
+                            客流高峰区域
+                        </Widgets.Dashboard>
                     </div>
                     <div className={"div7"}>
                         <Widgets.Dashboard size={size}/>
@@ -81,6 +90,7 @@ class Index extends React.Component {
                     <div className={"div9"}>
                         <Widgets.SimpleTrends
                             port={{"height": size, "width": size * 3}}
+                            tooltip={true}
                         >
                             SimpleTrends
                         </Widgets.SimpleTrends>

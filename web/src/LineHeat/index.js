@@ -84,7 +84,9 @@ export class HeatTimeline extends React.Component {
                         port={{'height': size * 1, 'width': body.offsetWidth - 60}}
                     />
                 </div>
-                <div className="div3"></div>
+                <div className="div3">
+                    <Widgets.AreaChartTrends/>
+                </div>
                 <div className="div4"></div>
                 <div className="div5"></div>
                 <div className="div6"></div>

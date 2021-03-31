@@ -1,10 +1,11 @@
 import React from "react";
 import './style.css';
 import {
+    AreaChart, Area,
     RadialBarChart,
     RadialBar,
     PolarAngleAxis,
-    Legend,
+    Legend, Tooltip,
     Cell,
     LineChart,
     CartesianGrid,
@@ -19,6 +20,7 @@ const transformToCentre = {
     top: "50%",
     transform: "translate(-50%, -50%)",
 }
+const defaultRoundCorner = 20;
 
 function setTintArray(propTintArray) {
     if (propTintArray !== undefined) {
@@ -35,8 +37,9 @@ function constructData(propData, sampleData) {
     } else return sampleData
 }
 
-function linesConstructor(dataArray, tintArray, state) {
+function linesConstructor(dataArray, tintArray, state, tooltip) {
     const lines = dataArray.lines
+    const tooltipElement = tooltip ? [<Tooltip/>] : []
     let converted = []
     let drawn = []
     lines.map(function (line, lineIndex) {
@@ -50,11 +53,11 @@ function linesConstructor(dataArray, tintArray, state) {
         drawn.push(
             <Line
                 type={"monotone"}
-                dot={{r: 6}}
+                dot={{r: 3}}
                 id={lineIndex}
                 dataKey={line.name}
                 stroke={tintArray[lineIndex]}
-                strokeWidth={4}
+                strokeWidth={2}
             />
         )
         return converted
@@ -68,6 +71,7 @@ function linesConstructor(dataArray, tintArray, state) {
             style={transformToCentre}
         >
             <Legend/>
+            {tooltipElement}
             {drawn}
         </LineChart>
     )
@@ -106,9 +110,11 @@ function barConstructor(dataArray, tintArray, state) {
 export class Dashboard extends React.Component {
     constructor(props) {
         super(props);
+        const mockData = [{name: '摸', value: 40}, {name: '到', value: 90}, {name: '飞', value: 60}, {name: '起', value: 70}];
         this.state = {
-            rounded: 20,
-            name: this.props.children
+            rounded: defaultRoundCorner,
+            name: this.props.children,
+            data: this.props.data === undefined ? mockData : this.props.data
         }
     }
 
@@ -128,14 +134,13 @@ export class Dashboard extends React.Component {
         else {
             nameLabel = <React.Fragment/>
         }
-        const data = [{name: '摸', value: 40}, {name: '到', value: 90}, {name: '飞', value: 60}, {name: '起', value: 70}];
         return (
             <div className={'Layer'} style={frame}>
                 <RadialBarChart
                     style={{position: 'absolute', left: spacing, top: spacing}}
                     width={size / 2.5}
                     height={size / 2.5}
-                    data={data.slice(0, 1)}
+                    data={this.state.data.slice(0, 1)}
                     innerRadius={size / 4.75}
                 >
                     <PolarAngleAxis
@@ -160,7 +165,7 @@ export class Dashboard extends React.Component {
                     style={{position: 'absolute', right: spacing, top: spacing}}
                     width={size / 2.5}
                     height={size / 2.5}
-                    data={data.slice(1, 2)}
+                    data={this.state.data.slice(1, 2)}
                     innerRadius={size / 4.75}
                 >
                     <PolarAngleAxis
@@ -185,7 +190,7 @@ export class Dashboard extends React.Component {
                     style={{position: 'absolute', left: spacing, bottom: spacing}}
                     width={size / 2.5}
                     height={size / 2.5}
-                    data={data.slice(2, 3)}
+                    data={this.state.data.slice(2, 3)}
                     innerRadius={size / 4.75}
                 >
                     <PolarAngleAxis
@@ -210,7 +215,7 @@ export class Dashboard extends React.Component {
                     style={{position: 'absolute', right: spacing, bottom: spacing}}
                     width={size / 2.5}
                     height={size / 2.5}
-                    data={data.slice(3, 4)}
+                    data={this.state.data.slice(3, 4)}
                     innerRadius={size / 4.75}
                 >
                     <PolarAngleAxis
@@ -242,7 +247,7 @@ export class DashboardOne extends React.Component {
         super(props);
         const mockData = {name: '鸽子力', value: 80};
         this.state = {
-            rounded: 20,
+            rounded: defaultRoundCorner,
             data: (this.props.data !== undefined) ? this.props.data : mockData
         }
     }
@@ -301,9 +306,33 @@ export class DashboardOne extends React.Component {
 export class Trends extends React.Component {
     constructor(props) {
         super(props);
+        const mockData = [
+            {
+                name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
+            },
+            {
+                name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
+            },
+            {
+                name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
+            },
+            {
+                name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
+            },
+            {
+                name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
+            },
+            {
+                name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
+            },
+            {
+                name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
+            },
+        ]
         this.state = {
-            rounded: 20,
-            name: this.props.children
+            rounded: defaultRoundCorner,
+            name: this.props.children,
+            data: this.props.data === undefined ? mockData : this.props.data
         }
     }
 
@@ -324,33 +353,11 @@ export class Trends extends React.Component {
         else {
             nameLabel = <React.Fragment/>
         }
-        const data = [
-            {
-                name: 'Page A', key: 4000, pv: 2400, amt: 2400,
-            },
-            {
-                name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-            },
-            {
-                name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
-            },
-            {
-                name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
-            },
-            {
-                name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
-            },
-            {
-                name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-            },
-            {
-                name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
-            },
-        ];
+
         return (
             <div className={"Layer"} style={frame}>
                 <LineChart
-                    data={data}
+                    data={this.state.data}
                     width={port.width}
                     height={port.height}
                     style={transformToCentre}
@@ -359,8 +366,8 @@ export class Trends extends React.Component {
                     <XAxis/>
                     <YAxis/>
                     <Legend/>
-                    <Line dataKey={"uv"} stroke={tint[0]} strokeWidth={4} dot={{r: 6}}/>
-                    <Line dataKey={"pv"} stroke={tint[1]} strokeWidth={4} dot={{r: 6}}/>
+                    <Line dataKey={"uv"} stroke={tint[0]} strokeWidth={2} dot={{r: 3}}/>
+                    <Line dataKey={"pv"} stroke={tint[1]} strokeWidth={2} dot={{r: 3}}/>
                 </LineChart>
                 {nameLabel}
             </div>
@@ -371,32 +378,7 @@ export class Trends extends React.Component {
 export class SimpleTrends extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            rounded: 20,
-            name: this.props.children
-        }
-    }
-
-    render() {
-        const port = this.props.port
-        const frame = {
-            height: "100%",
-            width: "100%",
-            borderRadius: this.state.rounded
-        }
-        const tint = ["#EA0", "#08A"]
-        let nameLabel;
-        if (this.state.name !== undefined) {
-            nameLabel = [
-                <label className={'widgetLabel'}>
-                    {this.props.children}
-                </label>
-            ]
-        }
-        else {
-            nameLabel = <React.Fragment/>
-        }
-        const lineData = {
+        const mockData = {
             xAxisMeasurement: "XExample",
             lines: [
                 {
@@ -419,9 +401,36 @@ export class SimpleTrends extends React.Component {
                 },
             ]
         }
+        this.state = {
+            rounded: defaultRoundCorner,
+            name: this.props.children,
+            data: this.props.data === undefined ? mockData : this.props.data,
+        }
+    }
+
+    render() {
+        const port = this.props.port
+        const frame = {
+            height: "100%",
+            width: "100%",
+            borderRadius: this.state.rounded
+        }
+        const tint = ["#EA0", "#08A"]
+        let nameLabel;
+        if (this.state.name !== undefined) {
+            nameLabel = [
+                <label className={'widgetLabel'}>
+                    {this.props.children}
+                </label>
+            ]
+        }
+        else {
+            nameLabel = <React.Fragment/>
+        }
+
         return (
             <div className={"Layer"} style={frame}>
-                {linesConstructor(lineData, tint, port)}
+                {linesConstructor(this.state.data, tint, port, this.props.tooltip)}
                 {nameLabel}
             </div>
         )
@@ -431,9 +440,11 @@ export class SimpleTrends extends React.Component {
 export class SimpleBars extends React.Component {
     constructor(props) {
         super(props);
+        const mockData = constructData(this.props.data, {"uv": 900, "pv": 609})
         this.state = {
-            rounded: 20,
-            name: this.props.children
+            rounded: defaultRoundCorner,
+            name: this.props.children,
+            data: this.props.data === undefined ? mockData : this.props.data
         }
     }
 
@@ -456,12 +467,90 @@ export class SimpleBars extends React.Component {
             "height": "100%",
             "border-radius": this.state.rounded
         }
-        const data = constructData(this.props.data, {"uv": 900, "pv": 609})
         return (
             <div className={"Layer"} style={frame}>
-                {barConstructor([data], tint, port)}
+                {barConstructor([this.state.data], tint, port)}
                 {nameLabel}
             </div>
         )
     }
+}
+
+export class AreaChartTrends extends React.Component {
+    constructor(props) {
+        super(props);
+        const mockData = [
+            {
+                "name": "Page A",
+                "uv": 4000,
+                "pv": 2400,
+                "amt": 2400
+            },
+            {
+                "name": "Page B",
+                "uv": 3000,
+                "pv": 1398,
+                "amt": 2210
+            },
+            {
+                "name": "Page C",
+                "uv": 2000,
+                "pv": 9800,
+                "amt": 2290
+            },
+            {
+                "name": "Page D",
+                "uv": 2780,
+                "pv": 3908,
+                "amt": 2000
+            },
+            {
+                "name": "Page E",
+                "uv": 1890,
+                "pv": 4800,
+                "amt": 2181
+            },
+            {
+                "name": "Page F",
+                "uv": 2390,
+                "pv": 3800,
+                "amt": 2500
+            },
+            {
+                "name": "Page G",
+                "uv": 3490,
+                "pv": 4300,
+                "amt": 2100
+            }
+        ]
+        this.state = {
+            name: this.props.children,
+            data: this.props.data === undefined ? mockData : this.props.data
+        }
+    }
+
+    render() {
+        return (
+            <AreaChart width={730} height={250} data={this.state.data}
+                       margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                    </linearGradient>
+                    <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#82ca9d" stopOpacity={0}/>
+                    </linearGradient>
+                </defs>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" />
+                <Tooltip />
+                <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+                <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
+            </AreaChart>
+        )
+    }
+
 }

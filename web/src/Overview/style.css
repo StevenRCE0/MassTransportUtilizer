@@ -1,12 +1,12 @@
 .OverviewGrid {
-    width: max(calc(100vw - 20px), 1366px);
-    height: max(calc(100vh - 70px), 768px);
+    width: var(--dashboardWidth);
+    height: var(--dashboardHeight);
     margin: 10px 10px;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
+    grid-column-gap: var(--dashboardSpacing);
+    grid-row-gap: var(--dashboardRowSpacing);
 }
 
 .OverviewGrid > .div1 { grid-area: 1 / 3 / 5 / 7; }

@@ -1,12 +1,12 @@
 .LHGrid {
-    width: max(calc(100vw - 20px), 1366px);
-    height: max(calc(100vh - 70px), 768px);
+    width: var(--dashboardWidth);
+    height: var(--dashboardHeight);
     margin: 10px 10px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
+    grid-column-gap: var(--dashboardSpacing);
+    grid-row-gap: var(--dashboardRowSpacing);
 }
 .LHGrid  > .div1 { grid-area: 1 / 1 / 2 / 3; }
 .LHGrid  > .div2 { grid-area: 1 / 3 / 2 / 5; }
@@ -20,14 +20,14 @@
 .LHGrid  > .div10 { grid-area: 5 / 3 / 6 / 5; }
 
 .THGrid {
-    width: max(calc(100vw - 20px), 1366px);
-    height: max(calc(100vh - 70px), 768px);
+    width: var(--dashboardWidth);
+    height: var(--dashboardHeight);
     margin: 10px 10px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
+    grid-column-gap: var(--dashboardSpacing);
+    grid-row-gap: var(--dashboardRowSpacing);
 }
 .THGrid > .div1 { grid-area: 1 / 1 / 2 / 3; }
 .THGrid > .div2 { grid-area: 2 / 1 / 3 / 3; }

@@ -67,20 +67,22 @@ class AnimationApp extends React.Component {
                 return;
             }
             function handleShortcutKey(key) {
-                const destination = ['Overview', 'PassengerAnalytics', 'Authenticate', 'LineHeat']
+                const destination = ['Overview', 'LineHeat', 'HeatTimeline', 'PassengerAnalytics', 'Authenticate']
                 window.location.replace('./' + destination[key - 1])
             }
             if (e.key !== undefined) {
                 if (e.key === '1') {handleShortcutKey(1)}
                 if (e.key === '2') {handleShortcutKey(2)}
-                if (e.key === '3') {handleShortcutKey(4)}
-                if (e.key === 'L' || e.key === 'l') {handleShortcutKey(3)}
+                if (e.key === '3') {handleShortcutKey(3)}
+                if (e.key === '4') {handleShortcutKey(4)}
+                if (e.key === 'L' || e.key === 'l') {handleShortcutKey(5)}
             }
             else if (e.code !== undefined) {
                 if (e.code === 'Digit1') {handleShortcutKey(1)}
                 if (e.code === 'Digit2') {handleShortcutKey(2)}
-                if (e.code === 'Digit3') {handleShortcutKey(4)}
-                if (e.code === 'KeyL') {handleShortcutKey(3)}
+                if (e.code === 'Digit3') {handleShortcutKey(3)}
+                if (e.code === 'Digit4') {handleShortcutKey(4)}
+                if (e.code === 'KeyL') {handleShortcutKey(5)}
             }
         })
 
