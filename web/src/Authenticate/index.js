@@ -3,14 +3,36 @@ import {Input, Button} from '../Controllers';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
+import axios from "axios";
 import './style.css';
 import store, { setExpiration } from "../Store";
 
-function loginRequest(event) {
-    event.preventDefault()
-    store.dispatch({
-        type: 'login',
-        loginState: true
+function loginRequest(username, password) {
+    // axios.post('http://47.110.95.97:8080/log', {
+    //     'username': username,
+    //     'password': password
+    // }).then(function (response) {
+    //     alert(response.data.code)
+    //     if (response.data.code === 200) {
+    //         store.dispatch({
+    //             type: 'login',
+    //             loginState: true
+    //         })
+    //     }
+    //     else alert(':(')
+    // })
+    const getLocation = 'http://47.110.95.97:8080/login/' + username + '/' + password
+    axios.get(getLocation, {}).then(function (response) {
+        if (response.data.msg === '成功') {
+            store.dispatch({
+                type: 'login',
+                loginState: true,
+                session: response.data.data
+            })
+        }
+        else {
+            alert(response.data.msg)
+        }
     })
 }
 
@@ -82,7 +104,11 @@ class CertForm extends React.Component {
 class Login extends React.Component {
     constructor(props) {
         super(props);
-        this.state = store.getState()
+        this.state = {
+            store: store.getState(),
+            username: '',
+            password: ''
+        }
         this.storeChange = this.storeChange.bind(this)
         store.subscribe(this.storeChange)
     }
@@ -90,17 +116,29 @@ class Login extends React.Component {
     storeChange(){
         this.setState(store.getState())
     }
+    handleLogin(event) {
+        event.preventDefault()
+        loginRequest(this.state.username, this.state.password)
+    }
+    handleForm(event, type) {
+        if (type === 'username') {
+            this.setState({username: event.target.value})
+        }
+        if (type === 'password') {
+            this.setState({password: event.target.value})
+        }
+    }
 
     render() {
         let FormSheet, hello
         const LoginForm = [
-            <form onSubmit={(e) => loginRequest(e)}>
+            <form onSubmit={(e) => this.handleLogin(e)}>
                 <div className={"AuthForm"}>
                     <div>
-                        <Input>
+                        <Input handler={(e) => {this.handleForm(e, 'username')}}>
                             用户名称
                         </Input>
-                        <Input type={"password"}>
+                        <Input type={"password"} handler={(e) => {this.handleForm(e, 'password')}}>
                             密码
                         </Input>
                     </div>
@@ -113,7 +151,7 @@ class Login extends React.Component {
             </form>
         ]
 
-        if (this.state.loginState) {
+        if (this.state.store.loginState) {
             FormSheet = [<CertForm/>]
             hello = "认证管理"
         }

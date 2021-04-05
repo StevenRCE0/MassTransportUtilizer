@@ -15,7 +15,7 @@ class Input extends React.Component {
                 <label>
                     {this.props.children}
                 </label>
-                <input type={this.state.type}/>
+                <input type={this.state.type} onChange={(event => this.props.handler(event))}/>
             </div>
         )
     }
