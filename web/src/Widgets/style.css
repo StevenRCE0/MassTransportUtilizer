@@ -4,15 +4,16 @@
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #443;
+    color: var(--themeColor);
     height: 100%;
     width: 100%;
     display: inline-block;
     position: relative;
-    background: rgba(250, 250, 250, 0.8);
+    background: var(--themeLayer);
     background-blend-mode: exclusion;
     text-align: center;
     align-content: center;
+    box-shadow: var(--themeBorder);
 }
 .Layer .recharts-wrapper {
     margin : 0 auto;

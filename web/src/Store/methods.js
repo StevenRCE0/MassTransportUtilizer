@@ -1,5 +1,6 @@
 const defaultState = {
     active: "dashboard",
+    theme: 'light',
     loginState: false,
     timeUpToDate: true,
     time: new Date(),
@@ -26,6 +27,11 @@ const Store = (state = defaultState, action) => {
         if (action.hoverType === 'station') {
             newState.stationSpectating = action.hoverID
         }
+        return newState
+    }
+    if (action.type === 'switchTheme') {
+        let newState = JSON.parse(JSON.stringify(state))
+        newState.theme = action.theme
         return newState
     }
 

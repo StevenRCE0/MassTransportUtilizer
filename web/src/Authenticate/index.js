@@ -14,7 +14,20 @@ function loginRequest(event) {
     })
 }
 
-
+function switchTheme() {
+    if (store.getState().theme === 'light') {
+        store.dispatch({
+            type: 'switchTheme',
+            theme: 'dark'
+        })
+    }
+    else if (store.getState().theme === 'dark') {
+        store.dispatch({
+            type: 'switchTheme',
+            theme: 'light'
+        })
+    }
+}
 
 class CertForm extends React.Component {
     constructor(props) {
@@ -47,15 +60,21 @@ class CertForm extends React.Component {
             this.setState({'option': event.target.value})
         };
         return(
-            <form onSubmit={(event) => this.CertChange(event)}>
-                <RadioGroup name={'manageOption'} value={this.state.option} onChange={handleRadioChange}>
-                    <FormControlLabel value={'logout'} control={<Radio/>} label={"登出"}/>
-                    <FormControlLabel value={'cache'} control={<Radio/>} label={"保存凭据"}/>
-                </RadioGroup>
-                <Button type={'submit'}>
-                    确定
+            <React.Fragment>
+                <Button onClick={() => switchTheme()}>
+                    切换主题
                 </Button>
-            </form>
+                <br /><br />
+                <form onSubmit={(event) => this.CertChange(event)}>
+                    <RadioGroup name={'manageOption'} value={this.state.option} onChange={handleRadioChange}>
+                        <FormControlLabel value={'logout'} control={<Radio/>} label={"登出"}/>
+                        <FormControlLabel value={'cache'} control={<Radio/>} label={"保存凭据"}/>
+                    </RadioGroup>
+                    <Button type={'submit'}>
+                        确定
+                    </Button>
+                </form>
+            </React.Fragment>
         )
     }
 }

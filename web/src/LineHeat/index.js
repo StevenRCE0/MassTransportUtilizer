@@ -9,11 +9,10 @@ export class LineHeat extends React.Component {
         super(props);
         this.state = {}
     }
-    calculateSize = () => {
+    calculateSize() {
         this.setState({
-            size: Math.min(body.scrollHeight / 6, body.scrollWidth / 8)
+            size: Math.min(document.documentElement.clientHeight / 8, body.scrollWidth / 8)
         })
-        console.log(this.state.size)
     }
     componentDidMount() {
         this.calculateSize()
@@ -58,7 +57,7 @@ export class HeatTimeline extends React.Component {
     }
     calculateSize = () => {
         this.setState({
-            size: Math.min(body.scrollHeight / 4, body.scrollWidth / 2)
+            size: body.scrollHeight / 5
         })
         console.log(this.state.size)
     }
@@ -76,16 +75,18 @@ export class HeatTimeline extends React.Component {
             <div className={"THGrid"}>
                 <div className="div1">
                     <Widgets.Trends
-                        port={{'height': size * 1, 'width': body.offsetWidth - 60}}
+                        port={{'height': size * 1, 'width': body.scrollWidth - 60}}
                     />
                 </div>
                 <div className="div2">
                     <Widgets.Trends
-                        port={{'height': size * 1, 'width': body.offsetWidth - 60}}
+                        port={{'height': size * 1, 'width': body.scrollWidth - 60}}
                     />
                 </div>
                 <div className="div3">
-                    <Widgets.AreaChartTrends/>
+                    <Widgets.AreaChartTrends
+                        port={{'height': size * 1, 'width': body.scrollWidth - 60}}
+                    />
                 </div>
                 <div className="div4"></div>
                 <div className="div5"></div>

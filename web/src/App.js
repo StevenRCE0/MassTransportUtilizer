@@ -17,6 +17,39 @@ import './index.css';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { exposedMethods } from "./Store";
 
+const root = document.documentElement
+
+
+function setTheme() {
+    if (store.getState().theme === 'light') {
+        root.style.setProperty('--themeTable', '#E3E3E3')
+        root.style.setProperty('--themeBorder', 'none')
+        root.style.setProperty('--themeColor', '#443')
+        root.style.setProperty('--themeHover', '#220')
+        root.style.setProperty('--themeActive', '#220')
+        root.style.setProperty('--themeLayer', 'rgba(250, 250, 250, 0.8)')
+        root.style.setProperty('--themeFilter', 'screen')
+        root.style.setProperty('--themeDarkFilter', 'brightness(1.17)')
+        root.style.setProperty('--themePure0', 'rgba(255, 255, 255, 1)')
+        root.style.setProperty('--themePure1', 'rgba(255, 255, 255, 0)')
+        root.style.setProperty('--actualFilter', 'rgba(255, 255, 255, .8)')
+    }
+    if (store.getState().theme === 'dark') {
+        root.style.setProperty('--themeTable', '#171717')
+        root.style.setProperty('--themeBorder', '0 0 1.5px #EEE')
+        root.style.setProperty('--themeColor', '#EEE')
+        root.style.setProperty('--themeHover', '#AAB')
+        root.style.setProperty('--themeActive', '#FFF')
+        root.style.setProperty('--themeLayer', 'rgba(53, 53, 53, 0.8)')
+        root.style.setProperty('--themeFilter', 'multiply')
+        root.style.setProperty('--themeDarkFilter', 'brightness(.65)')
+        root.style.setProperty('--themePure0', 'rgba(0, 0, 0, 1)')
+        root.style.setProperty('--themePure1', 'rgba(0, 0, 0, 0)')
+        root.style.setProperty('--actualFilter', 'rgba(0, 0, 25, .15)')
+
+    }
+}
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -30,6 +63,7 @@ class App extends React.Component {
     }
 
     render() {
+        setTheme()
         let pagesList = []
         if (this.state.loginState === true) {
             pagesList.push(

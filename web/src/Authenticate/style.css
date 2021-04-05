@@ -4,9 +4,9 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(255, 255, 255, .8);
+    background: var(--actualFilter);
     border-radius: var(--BoxRadius);
-    mix-blend-mode: screen;
+    mix-blend-mode: var(--themeFilter);
 }
 #ActualCard > h1 {
     color: #000;
@@ -19,7 +19,7 @@
     --TextSize: 14pt;
     --BoxRadius: 20px;
     position: absolute;
-    backdrop-filter: brightness(117%) blur(5px) saturate(70%);
+    backdrop-filter: var(--themeDarkFilter) blur(5px) saturate(70%);
     box-shadow: 0 5px 25px rgba(0, 0, 0, .05);
     top: 40%;
     left: 50%;
