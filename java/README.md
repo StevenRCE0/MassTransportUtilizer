@@ -52,10 +52,19 @@ http://47.110.95.97:8080/log         method:post
     "data": null
 }
 ```
-###### 返回同上
+###### 请求为get时
+```
+{
+    "code": 500100,
+    "msg": "服务端异常",
+    "data": null
+}
+```
+
 http://47.110.95.97:8080/login/{username}/{password} method:get
 
-
+###### 返回同上
+##### 获取当前登陆用户
 http://47.110.95.97:8080/index/getUser method:get
 ###### 返回
 ```
