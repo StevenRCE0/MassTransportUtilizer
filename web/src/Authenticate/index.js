@@ -14,7 +14,7 @@ function loginRequest(username, password) {
             'password': password
         }).then(function (response) {
             alert(response.data.msg)
-            if (response.data.msg === '成功') {
+            if (response.data.code === 200) {
                 store.dispatch({
                     type: 'login',
                     loginState: true,
