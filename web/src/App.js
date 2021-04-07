@@ -32,6 +32,9 @@ function setTheme() {
         root.style.setProperty('--themeDarkFilter', 'brightness(1.17)')
         root.style.setProperty('--themePure0', 'rgba(255, 255, 255, 1)')
         root.style.setProperty('--themePure1', 'rgba(255, 255, 255, 0)')
+        root.style.setProperty('--themeControlBackground', 'rgba(80, 80, 80, 0.1)')
+        root.style.setProperty('--controlBlur', '#553')
+        root.style.setProperty('--dockBorderSize', '1px')
         root.style.setProperty('--actualFilter', 'rgba(255, 255, 255, .8)')
     }
     if (store.getState().theme === 'dark') {
@@ -43,8 +46,11 @@ function setTheme() {
         root.style.setProperty('--themeLayer', 'rgba(53, 53, 53, 0.8)')
         root.style.setProperty('--themeFilter', 'multiply')
         root.style.setProperty('--themeDarkFilter', 'brightness(.65)')
-        root.style.setProperty('--themePure0', 'rgba(0, 0, 0, 1)')
+        root.style.setProperty('--themePure0', 'rgba(64, 64, 64, 1)')
         root.style.setProperty('--themePure1', 'rgba(0, 0, 0, 0)')
+        root.style.setProperty('--themeControlBackground', 'rgba(255, 255, 255, 0.1)')
+        root.style.setProperty('--controlBlur', '#BBC')
+        root.style.setProperty('--dockBorderSize', '2px')
         root.style.setProperty('--actualFilter', 'rgba(0, 0, 25, .15)')
 
     }
@@ -136,7 +142,7 @@ class AnimationApp extends React.Component {
                         <button className={"DockNavigation"}>客流分析<span>3</span></button>
                     </NavLink>
                     <NavLink to={"Authenticate"} activeClassName={"active"}>
-                        <button className={"DockNavigation"}>认证<span>L</span></button>
+                        <button className={"DockNavigation"}>认证与设置<span>L</span></button>
                     </NavLink>
                 </div>
                 <TransitionGroup>

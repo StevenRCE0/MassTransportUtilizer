@@ -1,13 +1,14 @@
 :root {
     --controlText: #220;
     --controlBlur: #553;
+    --themeControlBackground: rgba(80, 80, 80, 0.1);
 }
 
 /*default custom switch selector*/
 .SwitchBase {
     z-index: 15;
     text-align: center;
-    background: rgba(80, 80, 80, 0.1);
+    background: var(--themeControlBackground);
     padding: 3px 0;
     border-radius: 20px;
 }
@@ -30,8 +31,8 @@
 .SwitchTick:hover {
     background: rgba(255, 255, 255, 0.5);
     border: solid 2px #EEE;
-    color: inherit;
     cursor: pointer;
+    color: var(--themeTable);
 }
 .SwitchTick.activated:hover {
     background: rgba(255, 255, 255, 1);

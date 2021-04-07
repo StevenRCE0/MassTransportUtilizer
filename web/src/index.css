@@ -14,6 +14,7 @@
     --themePure0: rgba(255, 255, 255, 1);
     --themePure1: rgba(255, 255, 255, 0);
     --actualFilter: rgba(255, 255, 255, .8);
+    --dockBorderSize: 1px;
     transition: .2s linear;
 }
 body {
@@ -72,7 +73,7 @@ code {
 .DockNavigation {
     transition: 0.25s;
     background: var(--themePure0);
-    border: solid 1px #FFF;
+    border: solid var(--dockBorderSize) #FFF;
     border-radius: 3em;
     padding: 0.5em 1em;
     margin: 0 0.5em;
@@ -81,11 +82,11 @@ code {
     box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
 }
 .active > .DockNavigation {
-    border: solid 1px #5399aa;
+    border: solid var(--dockBorderSize) #5399aa;
     color: var(--themeActive);
 }
 .DockNavigation:hover {
-    border: solid 1px #5399fb;
+    border: solid var(--dockBorderSize) #5399fb;
     color: var(--themeHover);
     cursor: pointer;
 }

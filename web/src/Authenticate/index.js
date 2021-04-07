@@ -8,32 +8,24 @@ import './style.css';
 import store, { setExpiration } from "../Store";
 
 function loginRequest(username, password) {
-    // axios.post('http://47.110.95.97:8080/log', {
-    //     'username': username,
-    //     'password': password
-    // }).then(function (response) {
-    //     alert(response.data.code)
-    //     if (response.data.code === 200) {
-    //         store.dispatch({
-    //             type: 'login',
-    //             loginState: true
-    //         })
-    //     }
-    //     else alert(':(')
-    // })
-    const getLocation = 'http://47.110.95.97:8080/login/' + username + '/' + password
-    axios.get(getLocation, {}).then(function (response) {
-        if (response.data.msg === '成功') {
-            store.dispatch({
-                type: 'login',
-                loginState: true,
-                session: response.data.data
-            })
-        }
-        else {
+    try {
+        axios.post('http://47.110.95.97:8080/log', {
+            'username': username,
+            'password': password
+        }).then(function (response) {
             alert(response.data.msg)
-        }
-    })
+            if (response.data.msg === '成功') {
+                store.dispatch({
+                    type: 'login',
+                    loginState: true,
+                    session: response.data.data
+                })
+            }
+        })
+    }
+    catch (error) {
+        console.error(error);
+    }
 }
 
 function switchTheme() {

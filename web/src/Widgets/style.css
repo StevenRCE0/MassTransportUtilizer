@@ -15,9 +15,6 @@
     align-content: center;
     box-shadow: var(--themeBorder);
 }
-.Layer .recharts-wrapper {
-    margin : 0 auto;
-}
 .Desc {
     height: 100%;
     width: 100%;
@@ -38,7 +35,7 @@ svg:not(:root) {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    background: rgba(80, 80, 80, 0.1);
+    background: var(--themeControlBackground);
     border-radius: 20px;
     overflow: hidden;
 }
