@@ -1,1 +1,0 @@
-forever start -c serve build -l 80

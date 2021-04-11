@@ -201,34 +201,35 @@ export class MapsBlock extends React.Component {
                                     <Typography gutterBottom variant={"h5"} component={"h2"}>
                                         输入参数
                                     </Typography>
-                                    <FormControl component={'fieldset'}>
-                                        <FormLabel component={'legend'}>该时间操作</FormLabel>
-                                        <FormGroup row>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        checked={this.state.userArguments.holiday}
-                                                        onChange={this.state}
-                                                    />
-                                                }
-                                                label={'是假期'}
-                                            />
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        checked={this.state.userArguments.holiday}
-                                                        onChange={this.state}
-                                                    />
-                                                }
-                                                label={'天气'}
-                                            />
-                                        </FormGroup>
-                                    </FormControl>
-                                    <br />
-                                    <FormControl component={'fieldset'}>
-                                        {this.stationArguments()}
-                                    </FormControl>
-
+                                    <div className={'DualPanel'}>
+                                        <FormControl component={'fieldset'}>
+                                            <FormLabel component={'legend'}>该时间操作</FormLabel>
+                                            <FormGroup row>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={this.state.userArguments.holiday}
+                                                            onChange={this.state}
+                                                        />
+                                                    }
+                                                    label={'是假期'}
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={this.state.userArguments.holiday}
+                                                            onChange={this.state}
+                                                        />
+                                                    }
+                                                    label={'天气'}
+                                                />
+                                            </FormGroup>
+                                        </FormControl>
+                                        <br />
+                                        <FormControl component={'fieldset'}>
+                                            {this.stationArguments()}
+                                        </FormControl>
+                                    </div>
                                 </CardContent>
                                 <CardActions>
                                     <MaterialButton size={"small"} color={"primary"}>
