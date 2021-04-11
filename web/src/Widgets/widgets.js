@@ -84,7 +84,6 @@ function barConstructor(dataArray, tintArray, state) {
         return x
     })
     keys = keys[0]
-    console.log(keys)
     const barContent = keys.map(function (key, index) {
         return (
             <Bar

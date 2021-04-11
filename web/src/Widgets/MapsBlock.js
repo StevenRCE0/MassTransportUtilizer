@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import store, { mapsStore } from "../Store";
+import store, { mapsStore, searchObject } from "../Store";
 import {
     Button as MaterialButton,
     Card, CardActions,
@@ -18,7 +18,6 @@ import {KeyboardDateTimePicker, MuiPickersUtilsProvider} from "@material-ui/pick
 import MomentUtils from "@date-io/moment";
 
 const MapFuture = React.lazy(() => import('./Map'));
-
 const transformToCentre = {
     position: "absolute",
     left: "50%",
@@ -36,8 +35,8 @@ export class MapsBlock extends React.Component {
             activated: "无",
             selectedTime: new Date(),
             flowStats: true,
-            lineSpectating: store.getState().lineSpectating,
-            stationSpectating: store.getState().stationSpectating,
+            storeState: store.getState(),
+            mapState: mapsStore.getState(),
             userArguments: {holiday: undefined, boom: {enabled: false, station: undefined, flow: undefined}}
         }
         this.storeChange = this.storeChange.bind(this)
@@ -45,9 +44,8 @@ export class MapsBlock extends React.Component {
     }
 
     storeChange(){
-        this.setState(store.getState())
+        this.setState({storeState: store.getState()})
     }
-
     handleOpen(modal) {
         if (modal === 'datePicker') {this.setState({datePicker: !this.state.datePicker})}
         if (modal === 'argumentPicker') {this.setState({argumentPicker: !this.state.argumentPicker})}
@@ -80,11 +78,11 @@ export class MapsBlock extends React.Component {
             <table className={'MapTable'}>
                 <tr>
                     <td>线路</td>
-                    <td>{this.state.lineSpectating}</td>
+                    <td>{this.state.storeState.lineSpectating}</td>
                 </tr>
                 <tr>
-                    <td>客流量</td>
-                    <td>99</td>
+                    <td>断面客流</td>
+                    <td>{searchObject(this.state.mapState.stationData,'station', this.state.storeState.stationSpectating, 'id')}</td>
                 </tr>
                 <tr>
                     <td>高峰时段</td>
@@ -102,7 +100,7 @@ export class MapsBlock extends React.Component {
         else {
             return (
                 <React.Fragment>
-                    <FormLabel component={'legend'}>{this.state.stationSpectating}</FormLabel>
+                    <FormLabel component={'legend'}>{this.state.storeState.stationSpectating}</FormLabel>
                     <FormGroup>
                         <FormControlLabel
                             control={

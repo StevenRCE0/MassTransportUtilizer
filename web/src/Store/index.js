@@ -37,3 +37,13 @@ const mapsPersistConfig = {
 const mapsMethods = persistReducer(mapsPersistConfig, mapsUpdater)
 export let mapsStore = createStore(mapsMethods, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 export let mapsExposedMethods = persistStore(mapsStore)
+
+export function searchObject(data, searchKey, value, requiredKey) {
+    let result
+    data.forEach(function (theObject) {
+        if (theObject[searchKey] === value) {
+            result = theObject[requiredKey]
+        }
+    })
+    return result
+}
