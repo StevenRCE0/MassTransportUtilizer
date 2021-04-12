@@ -61,7 +61,7 @@ export class MapsBlock extends React.Component {
         }
         if (argument === 'boom') {
             newArguments.boom.station = this.state.stationSpectating
-            newArguments.boom.flow = defaultBoomFlow
+            newArguments.boom.flow = e.target.value
         }
         if (argument === 'weatherTick') {
             newArguments.weather.enabled = e.target.checked
@@ -117,7 +117,7 @@ export class MapsBlock extends React.Component {
                                 control={
                                     <Checkbox
                                         checked={this.state.userArguments.boom.enabled}
-                                        onChange={(e) => this.handleChange(e, 'boom')}
+                                        onChange={(e) => this.handleChange(e, 'boomTick')}
                                     />
                                 }
                                 label={'突发客流'}
@@ -131,6 +131,7 @@ export class MapsBlock extends React.Component {
                                     min={10}
                                     max={110}
                                     disabled={!this.state.userArguments.boom.enabled}
+                                    onChange={(event) => this.handleChange(event, 'boom')}
                                 />
                             </FormGroup>
                         </FormGroup>
