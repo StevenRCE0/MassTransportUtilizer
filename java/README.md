@@ -83,3 +83,9 @@ http://47.110.95.97:8080/index/getUser method:get
 
 ##### 返回当前整体客流强度
 格式: **dashboardOne**
+
+##### 返回客流强度最高站点的客流强度
+格式: **dashboardOne**
+
+##### 返回客流强度最高的四个区
+格式: **dashboard**

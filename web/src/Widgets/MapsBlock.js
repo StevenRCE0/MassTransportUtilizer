@@ -1,16 +1,11 @@
 import React, { Suspense } from "react";
-import store, { mapsStore } from "../Store";
+import store, { mapsStore, searchObject } from "../Store";
 import {
     Button as MaterialButton,
-    Card, CardActions,
-    CardContent,
-    Checkbox,
-    Fade, FormControl,
-    FormControlLabel,
-    FormGroup,
-    FormLabel,
-    Modal,
-    Slider, Typography
+    Card, CardActions, CardContent, Typography,
+    FormControl, FormControlLabel, FormGroup, FormLabel,
+    Fade, Modal,
+    Checkbox, Slider, Select, MenuItem
 } from "@material-ui/core";
 import MapSwitch from "../Controllers/Switch";
 import {Button} from "../Controllers/Button";
@@ -18,7 +13,6 @@ import {KeyboardDateTimePicker, MuiPickersUtilsProvider} from "@material-ui/pick
 import MomentUtils from "@date-io/moment";
 
 const MapFuture = React.lazy(() => import('./Map'));
-
 const transformToCentre = {
     position: "absolute",
     left: "50%",
@@ -36,18 +30,17 @@ export class MapsBlock extends React.Component {
             activated: "无",
             selectedTime: new Date(),
             flowStats: true,
-            lineSpectating: store.getState().lineSpectating,
-            stationSpectating: store.getState().stationSpectating,
-            userArguments: {holiday: undefined, boom: {enabled: false, station: undefined, flow: undefined}}
+            storeState: store.getState(),
+            mapState: mapsStore.getState(),
+            userArguments: {holiday: undefined, weather: {enabled: false, condition: 1}, boom: {enabled: false, station: undefined, flow: undefined}}
         }
         this.storeChange = this.storeChange.bind(this)
         store.subscribe(this.storeChange)
     }
 
     storeChange(){
-        this.setState(store.getState())
+        this.setState({storeState: store.getState()})
     }
-
     handleOpen(modal) {
         if (modal === 'datePicker') {this.setState({datePicker: !this.state.datePicker})}
         if (modal === 'argumentPicker') {this.setState({argumentPicker: !this.state.argumentPicker})}
@@ -63,12 +56,18 @@ export class MapsBlock extends React.Component {
         if (argument === 'holiday') {
             newArguments.holiday = e.target.checked
         }
-        if (argument === 'boom') {
+        if (argument === 'boomTick') {
             newArguments.boom.enabled = e.target.checked
-            if (e.target.checked) {
-                newArguments.boom.station = this.state.stationSpectating
-                newArguments.boom.flow = defaultBoomFlow
-            }
+        }
+        if (argument === 'boom') {
+            newArguments.boom.station = this.state.stationSpectating
+            newArguments.boom.flow = defaultBoomFlow
+        }
+        if (argument === 'weatherTick') {
+            newArguments.weather.enabled = e.target.checked
+        }
+        if (argument === 'weather') {
+            newArguments.weather.condition = e.target.value
         }
         this.setState({userArguments: newArguments})
     }
@@ -80,11 +79,11 @@ export class MapsBlock extends React.Component {
             <table className={'MapTable'}>
                 <tr>
                     <td>线路</td>
-                    <td>{this.state.lineSpectating}</td>
+                    <td>{this.state.storeState.lineSpectating}</td>
                 </tr>
                 <tr>
-                    <td>客流量</td>
-                    <td>99</td>
+                    <td>断面客流</td>
+                    <td>{searchObject(this.state.mapState.stationData,'station', this.state.storeState.stationSpectating, 'id')}</td>
                 </tr>
                 <tr>
                     <td>高峰时段</td>
@@ -102,7 +101,7 @@ export class MapsBlock extends React.Component {
         else {
             return (
                 <React.Fragment>
-                    <FormLabel component={'legend'}>{this.state.stationSpectating}</FormLabel>
+                    <FormLabel component={'legend'}>{this.state.storeState.stationSpectating}</FormLabel>
                     <FormGroup>
                         <FormControlLabel
                             control={
@@ -201,34 +200,55 @@ export class MapsBlock extends React.Component {
                                     <Typography gutterBottom variant={"h5"} component={"h2"}>
                                         输入参数
                                     </Typography>
-                                    <FormControl component={'fieldset'}>
-                                        <FormLabel component={'legend'}>该时间操作</FormLabel>
-                                        <FormGroup row>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        checked={this.state.userArguments.holiday}
-                                                        onChange={this.state}
-                                                    />
-                                                }
-                                                label={'是假期'}
-                                            />
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        checked={this.state.userArguments.holiday}
-                                                        onChange={this.state}
-                                                    />
-                                                }
-                                                label={'天气'}
-                                            />
-                                        </FormGroup>
-                                    </FormControl>
-                                    <br />
-                                    <FormControl component={'fieldset'}>
-                                        {this.stationArguments()}
-                                    </FormControl>
-
+                                    <div className={'DualPanel'}>
+                                        <FormControl component={'fieldset'}>
+                                            <FormLabel component={'legend'}>该时间操作</FormLabel>
+                                            <FormGroup row>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={this.state.userArguments.holiday}
+                                                            onChange={this.state}
+                                                        />
+                                                    }
+                                                    label={'是假期'}
+                                                />
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={this.state.userArguments.weather.enabled}
+                                                            onChange={(event) => this.handleChange(event, 'weatherTick')}
+                                                        />
+                                                    }
+                                                    label={'变更天气'}
+                                                />
+                                                <FormGroup>
+                                                    <Select
+                                                        labelId="天气选择"
+                                                        id="天气选择"
+                                                        value={this.state.userArguments.weather.condition}
+                                                        disabled={!this.state.userArguments.weather.enabled}
+                                                        onChange={(event) => this.handleChange(event, 'weather')}
+                                                    >
+                                                        <MenuItem value={1}>一</MenuItem>
+                                                        <MenuItem value={2}>二</MenuItem>
+                                                        <MenuItem value={3}>三</MenuItem>
+                                                        <MenuItem value={4}>四</MenuItem>
+                                                        <MenuItem value={5}>五</MenuItem>
+                                                        <MenuItem value={6}>六</MenuItem>
+                                                        <MenuItem value={7}>七</MenuItem>
+                                                        <MenuItem value={8}>八</MenuItem>
+                                                    </Select>
+                                                </FormGroup>
+                                            </FormGroup>
+                                        </FormControl>
+                                        <br />
+                                        <FormControl component={'fieldset'}>
+                                            {this.stationArguments()}
+                                        </FormControl>
+                                    </div>
                                 </CardContent>
                                 <CardActions>
                                     <MaterialButton size={"small"} color={"primary"}>

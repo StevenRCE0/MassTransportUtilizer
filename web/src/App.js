@@ -19,7 +19,6 @@ import store, { exposedMethods } from "./Store";
 
 const root = document.documentElement
 
-
 function setTheme() {
     if (store.getState().theme === 'light') {
         root.style.setProperty('--themeTable', '#E3E3E3')

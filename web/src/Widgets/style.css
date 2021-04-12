@@ -87,6 +87,21 @@ svg:not(:root) {
     max-width: 480px;
     max-height: 256px;
 }
+.DualPanel {
+    display: flex;
+    flex-direction: row;
+}
+.DualPanel > fieldset {
+    display: block;
+    width: 10em;
+    max-width: 100%;
+    padding: 0 20px;
+}
+.DualPanel > fieldset:not(:nth-last-child(1)) {
+    margin-right: 20px;
+    border-right: solid 1px #CCCCCC;
+}
+
 .widgetLabel {
     position: absolute;
     bottom: -1.1rem;
