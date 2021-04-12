@@ -95,6 +95,7 @@ svg:not(:root) {
     display: block;
     width: 10em;
     max-width: 100%;
+    padding: 0 20px;
 }
 .DualPanel > fieldset:not(:nth-last-child(1)) {
     margin-right: 20px;

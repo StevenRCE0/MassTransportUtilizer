@@ -2,15 +2,10 @@ import React, { Suspense } from "react";
 import store, { mapsStore, searchObject } from "../Store";
 import {
     Button as MaterialButton,
-    Card, CardActions,
-    CardContent,
-    Checkbox,
-    Fade, FormControl,
-    FormControlLabel,
-    FormGroup,
-    FormLabel,
-    Modal,
-    Slider, Typography
+    Card, CardActions, CardContent, Typography,
+    FormControl, FormControlLabel, FormGroup, FormLabel,
+    Fade, Modal,
+    Checkbox, Slider, Select, MenuItem
 } from "@material-ui/core";
 import MapSwitch from "../Controllers/Switch";
 import {Button} from "../Controllers/Button";
@@ -37,7 +32,7 @@ export class MapsBlock extends React.Component {
             flowStats: true,
             storeState: store.getState(),
             mapState: mapsStore.getState(),
-            userArguments: {holiday: undefined, boom: {enabled: false, station: undefined, flow: undefined}}
+            userArguments: {holiday: undefined, weather: {enabled: false, condition: 1}, boom: {enabled: false, station: undefined, flow: undefined}}
         }
         this.storeChange = this.storeChange.bind(this)
         store.subscribe(this.storeChange)
@@ -61,12 +56,18 @@ export class MapsBlock extends React.Component {
         if (argument === 'holiday') {
             newArguments.holiday = e.target.checked
         }
-        if (argument === 'boom') {
+        if (argument === 'boomTick') {
             newArguments.boom.enabled = e.target.checked
-            if (e.target.checked) {
-                newArguments.boom.station = this.state.stationSpectating
-                newArguments.boom.flow = defaultBoomFlow
-            }
+        }
+        if (argument === 'boom') {
+            newArguments.boom.station = this.state.stationSpectating
+            newArguments.boom.flow = e.target.value
+        }
+        if (argument === 'weatherTick') {
+            newArguments.weather.enabled = e.target.checked
+        }
+        if (argument === 'weather') {
+            newArguments.weather.condition = e.target.value
         }
         this.setState({userArguments: newArguments})
     }
@@ -116,7 +117,7 @@ export class MapsBlock extends React.Component {
                                 control={
                                     <Checkbox
                                         checked={this.state.userArguments.boom.enabled}
-                                        onChange={(e) => this.handleChange(e, 'boom')}
+                                        onChange={(e) => this.handleChange(e, 'boomTick')}
                                     />
                                 }
                                 label={'突发客流'}
@@ -130,6 +131,7 @@ export class MapsBlock extends React.Component {
                                     min={10}
                                     max={110}
                                     disabled={!this.state.userArguments.boom.enabled}
+                                    onChange={(event) => this.handleChange(event, 'boom')}
                                 />
                             </FormGroup>
                         </FormGroup>
@@ -212,15 +214,35 @@ export class MapsBlock extends React.Component {
                                                     }
                                                     label={'是假期'}
                                                 />
+                                            </FormGroup>
+                                            <FormGroup>
                                                 <FormControlLabel
                                                     control={
                                                         <Checkbox
-                                                            checked={this.state.userArguments.holiday}
-                                                            onChange={this.state}
+                                                            checked={this.state.userArguments.weather.enabled}
+                                                            onChange={(event) => this.handleChange(event, 'weatherTick')}
                                                         />
                                                     }
-                                                    label={'天气'}
+                                                    label={'变更天气'}
                                                 />
+                                                <FormGroup>
+                                                    <Select
+                                                        labelId="天气选择"
+                                                        id="天气选择"
+                                                        value={this.state.userArguments.weather.condition}
+                                                        disabled={!this.state.userArguments.weather.enabled}
+                                                        onChange={(event) => this.handleChange(event, 'weather')}
+                                                    >
+                                                        <MenuItem value={1}>一</MenuItem>
+                                                        <MenuItem value={2}>二</MenuItem>
+                                                        <MenuItem value={3}>三</MenuItem>
+                                                        <MenuItem value={4}>四</MenuItem>
+                                                        <MenuItem value={5}>五</MenuItem>
+                                                        <MenuItem value={6}>六</MenuItem>
+                                                        <MenuItem value={7}>七</MenuItem>
+                                                        <MenuItem value={8}>八</MenuItem>
+                                                    </Select>
+                                                </FormGroup>
                                             </FormGroup>
                                         </FormControl>
                                         <br />
