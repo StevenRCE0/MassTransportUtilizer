@@ -15,8 +15,8 @@
       
       # 可选
       flow: 30,
-      time: 1.5,   
-      	//[0, 0.5, 1, 1.5 ...]表示多久后有人群涌入  比如3小时后学校放假
+      time: 'month:day:hour:minute'
+      	//表示多久后有人群涌入  比如3小时后学校放假
       flow_type: 0, 
       	//[0,1,2,3] 表示 in_flow, out_flow, in_flow_plus, out_flow_plus
       dayprop: 1, 
