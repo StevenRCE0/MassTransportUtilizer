@@ -51,7 +51,6 @@ const Store = (state = defaultState, action) => {
         newState.time = action.time
         return newState
     }
-
     return state
 }
 export default Store

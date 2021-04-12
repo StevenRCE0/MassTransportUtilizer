@@ -65,14 +65,14 @@
     text-align: right;
     margin: 2px 1rem 2px 2px;
 }
-input {
+.coilsInput {
     outline-style: none;
     transition: .4s cubic-bezier(0.075, 0.82, 0.165, 1);
     padding: 0 .5rem;
     border-radius: 20px;
     border: solid 2px #EEE;
 }
-input:focus {
+.coilsInput:focus {
     border: solid 2px #5399fb;
     transform: scale(1.05);
 }

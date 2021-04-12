@@ -5,7 +5,7 @@ import {
     Card, CardActions, CardContent, Typography,
     FormControl, FormControlLabel, FormGroup, FormLabel,
     Fade, Modal,
-    Checkbox, Slider, Select, MenuItem
+    Checkbox, Slider, Select, MenuItem, TextField, InputLabel,
 } from "@material-ui/core";
 import MapSwitch from "../Controllers/Switch";
 import {Button} from "../Controllers/Button";
@@ -32,7 +32,7 @@ export class MapsBlock extends React.Component {
             flowStats: true,
             storeState: store.getState(),
             mapState: mapsStore.getState(),
-            userArguments: {holiday: undefined, weather: {enabled: false, condition: 1}, boom: {enabled: false, station: undefined, flow: undefined}}
+            userArguments: {holiday: undefined, weather: {enabled: false, condition: 1, temperature: undefined}, boom: {enabled: false, station: undefined, flow: undefined, type: 0}}
         }
         this.storeChange = this.storeChange.bind(this)
         store.subscribe(this.storeChange)
@@ -49,9 +49,6 @@ export class MapsBlock extends React.Component {
         this.setState({time: e})
     }
     handleChange(e, argument) {
-
-        const defaultBoomFlow = 3000
-
         let newArguments = this.state.userArguments
         if (argument === 'holiday') {
             newArguments.holiday = e.target.checked
@@ -59,12 +56,18 @@ export class MapsBlock extends React.Component {
         if (argument === 'boomTick') {
             newArguments.boom.enabled = e.target.checked
         }
+        if (argument === 'boomType') {
+            newArguments.boom.type = e.target.value
+        }
         if (argument === 'boom') {
             newArguments.boom.station = this.state.stationSpectating
             newArguments.boom.flow = e.target.value
         }
         if (argument === 'weatherTick') {
             newArguments.weather.enabled = e.target.checked
+        }
+        if (argument === 'weatherTemperature') {
+            newArguments.weather.temperature = e.target.value
         }
         if (argument === 'weather') {
             newArguments.weather.condition = e.target.value
@@ -122,6 +125,21 @@ export class MapsBlock extends React.Component {
                                 }
                                 label={'突发客流'}
                             />
+                            <FormGroup row>
+                                <Select
+                                    labelId={'客流类型'}
+                                    id={'客流类型'}
+                                    value={this.state.userArguments.boom.type}
+                                    disabled={!this.state.userArguments.boom.enabled}
+                                    onChange={(event) => this.handleChange(event, 'boomType')}
+                                    style={{width: '100%'}}
+                                >
+                                    <MenuItem value={0}>进站</MenuItem>
+                                    <MenuItem value={1}>出站</MenuItem>
+                                    <MenuItem value={2}>进站加</MenuItem>
+                                    <MenuItem value={3}>出站加</MenuItem>
+                                </Select>
+                            </FormGroup>
                             <FormGroup row>
                                 <Slider
                                     defaultValue={3000}
@@ -212,7 +230,7 @@ export class MapsBlock extends React.Component {
                                                             onChange={this.state}
                                                         />
                                                     }
-                                                    label={'是假期'}
+                                                    label={'放假'}
                                                 />
                                             </FormGroup>
                                             <FormGroup>
@@ -226,22 +244,37 @@ export class MapsBlock extends React.Component {
                                                     label={'变更天气'}
                                                 />
                                                 <FormGroup>
-                                                    <Select
-                                                        labelId="天气选择"
-                                                        id="天气选择"
-                                                        value={this.state.userArguments.weather.condition}
+                                                    <FormControl>
+                                                        <InputLabel id={'天气选择标签'}>
+                                                            天气类型
+                                                        </InputLabel>
+                                                        <Select
+                                                            labelId="天气选择"
+                                                            id="天气选择"
+                                                            value={this.state.userArguments.weather.condition}
+                                                            disabled={!this.state.userArguments.weather.enabled}
+                                                            onChange={(event) => this.handleChange(event, 'weather')}
+                                                        >
+                                                            <MenuItem value={'阴'}>阴</MenuItem>
+                                                            <MenuItem value={'晴'}>晴</MenuItem>
+                                                            <MenuItem value={'多云'}>多云</MenuItem>
+                                                            <MenuItem value={'小雨'}>小雨</MenuItem>
+                                                            <MenuItem value={'中雨'}>中雨</MenuItem>
+                                                            <MenuItem value={'大雨'}>大雨</MenuItem>
+                                                            <MenuItem value={'中雨'}>暴雨</MenuItem>
+                                                            <MenuItem value={'雷阵雨'}>雷阵雨</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                    
+                                                    <TextField
+                                                        id={'温度输入'}
+                                                        label={'输入摄氏温度'}
+                                                        type={'number'}
+                                                        style={{marginTop: 15}}
+                                                        InputLabelProps={{shrink: true,}}
                                                         disabled={!this.state.userArguments.weather.enabled}
-                                                        onChange={(event) => this.handleChange(event, 'weather')}
-                                                    >
-                                                        <MenuItem value={1}>一</MenuItem>
-                                                        <MenuItem value={2}>二</MenuItem>
-                                                        <MenuItem value={3}>三</MenuItem>
-                                                        <MenuItem value={4}>四</MenuItem>
-                                                        <MenuItem value={5}>五</MenuItem>
-                                                        <MenuItem value={6}>六</MenuItem>
-                                                        <MenuItem value={7}>七</MenuItem>
-                                                        <MenuItem value={8}>八</MenuItem>
-                                                    </Select>
+                                                        onChange={(event) => this.handleChange(event, 'weatherTemperature')}
+                                                    />
                                                 </FormGroup>
                                             </FormGroup>
                                         </FormControl>
