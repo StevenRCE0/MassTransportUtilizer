@@ -49,7 +49,7 @@ export function searchObject(data, searchKey, value, requiredKey) {
     }
     catch(error)
     {
-        return undefined
+        return result
     }
 
     return result

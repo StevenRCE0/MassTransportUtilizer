@@ -8,7 +8,7 @@ const defaultState = {
     time: givenDate,
     timePeriod: '实时',
     lineSpectating: 'No',
-    stationSpectating: 'No',
+    stationSpectating: {station: '没有选中站点', flow: 0},
     flowSpectating: -1,
     peakSpectating: -1
 }
@@ -27,7 +27,8 @@ const Store = (state = defaultState, action) => {
     if (action.type === 'hoverUpdate') {
         newState.lineSpectating = action.line
         if (action.hoverType === 'station') {
-            newState.stationSpectating = action.hoverID
+            newState.stationSpectating.station = action.hoverID
+            newState.stationSpectating.flow = action.flow
         }
         return newState
     }

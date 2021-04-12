@@ -8,12 +8,13 @@ const lineTintArray = [
     "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#000", "#000", "#E67874", "#009734", "#43B7AE"
 ]
 
-function hoverResponse(type, id, line) {
+function hoverResponse(type, id, line, flow) {
     store.dispatch({
         type: 'hoverUpdate',
         hoverType: type,
         hoverID: id,
-        line: line
+        line: line,
+        flow: flow,
     })
 }
 
@@ -115,7 +116,7 @@ class MapFuture extends React.Component {
                     }) : undefined}
                     level={1}
                     line={path.line}
-                    onClick={() => hoverResponse('path', path.id, path.line)}
+                    onClick={() => hoverResponse('path', path.id, path.line, path.id)} //last one to be changed
                 />
             )
         });
@@ -128,7 +129,7 @@ class MapFuture extends React.Component {
                     station={point.station}
                     line={point.line}
                     tint={lineTintArray[point.line.match("^[0-9]+")]}
-                    onClick={() => hoverResponse('station', point.station, point.line)}
+                    onClick={() => hoverResponse('station', point.station, point.line, point.id)} //last one to be changed
                 />
             )
         })

@@ -86,7 +86,7 @@ export class MapsBlock extends React.Component {
                 </tr>
                 <tr>
                     <td>断面客流</td>
-                    <td>{searchObject(this.state.mapState.stationData,'station', this.state.storeState.stationSpectating, 'id')}</td>
+                    <td>{this.state.storeState.stationSpectating.flow}</td>
                 </tr>
                 <tr>
                     <td>高峰时段</td>

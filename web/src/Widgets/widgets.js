@@ -565,5 +565,4 @@ export class AreaChartTrends extends React.Component {
             </div>
         )
     }
-
 }
