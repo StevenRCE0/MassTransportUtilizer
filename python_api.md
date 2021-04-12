@@ -4,7 +4,7 @@
 
 - #### 请求URL 
 
-  ######  `http://localhost:9999/python/get`
+  ######  `http://localhost:9999/python/predict`
 
 - #### 请求参数
 
