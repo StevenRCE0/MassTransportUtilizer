@@ -85,7 +85,6 @@ class Path extends React.Component {
                 lineJoin={'round'}
                 lineCap={'round'}
                 onClick={this.props.onClick}
-                draggable={true}
             />
         )
     }

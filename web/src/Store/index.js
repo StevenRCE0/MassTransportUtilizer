@@ -40,10 +40,17 @@ export let mapsExposedMethods = persistStore(mapsStore)
 
 export function searchObject(data, searchKey, value, requiredKey) {
     let result
-    data.forEach(function (theObject) {
-        if (theObject[searchKey] === value) {
-            result = theObject[requiredKey]
-        }
-    })
+    try {
+        data.forEach(function (theObject) {
+            if (theObject[searchKey] === value) {
+                result = theObject[requiredKey]
+            }
+        })
+    }
+    catch(error)
+    {
+        return undefined
+    }
+
     return result
 }
