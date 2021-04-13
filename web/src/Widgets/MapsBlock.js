@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import store, { mapsStore, searchObject } from "../Store";
+import store, { mapsStore } from "../Store";
 import {
     Button as MaterialButton,
     Card, CardActions, CardContent, Typography,
@@ -11,6 +11,7 @@ import MapSwitch from "../Controllers/Switch";
 import {Button} from "../Controllers/Button";
 import {KeyboardDateTimePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
+import axios from "axios";
 
 const MapFuture = React.lazy(() => import('./Map'));
 const transformToCentre = {
@@ -18,6 +19,21 @@ const transformToCentre = {
     left: "50%",
     top: "50%",
     transform: "translate(-50%, -50%)",
+}
+
+function predictionRequest(userArguments) {
+    try {
+        axios.post('http://47.110.95.97:9999/python/predict', {
+            station: userArguments.boom.station,
+            flow: userArguments.boom.flow,
+            dayprop: userArguments.holiday,
+            weather: userArguments.weather.condition,
+            temperatures: [userArguments.weather.temperature.low, userArguments.weather.temperature.high],
+        })
+    }
+    catch (error) {
+        console.error(error);
+    }
 }
 
 export class MapsBlock extends React.Component {
@@ -32,7 +48,24 @@ export class MapsBlock extends React.Component {
             flowStats: true,
             storeState: store.getState(),
             mapState: mapsStore.getState(),
-            userArguments: {holiday: undefined, weather: {enabled: false, condition: 1, temperature: undefined}, boom: {enabled: false, station: undefined, flow: undefined, type: 0}}
+            userArguments: {
+                holiday: undefined,
+                weather: {
+                    enabled: false,
+                    condition: 1,
+                    temperature: {
+                        low: undefined,
+                        high: undefined
+                    }
+                },
+                boom: {
+                    enabled: false,
+                    station: undefined,
+                    flow: undefined,
+                    type: 0,
+                    failure: false,
+                }
+            }
         }
         this.storeChange = this.storeChange.bind(this)
         store.subscribe(this.storeChange)
@@ -66,14 +99,27 @@ export class MapsBlock extends React.Component {
         if (argument === 'weatherTick') {
             newArguments.weather.enabled = e.target.checked
         }
-        if (argument === 'weatherTemperature') {
-            newArguments.weather.temperature = e.target.value
+        if (argument === 'weatherTemperatureLow') {
+            newArguments.weather.temperature.low = e.target.value
+        }
+        if (argument === 'weatherTemperatureHigh') {
+            newArguments.weather.temperature.high = e.target.value
         }
         if (argument === 'weather') {
             newArguments.weather.condition = e.target.value
         }
-        this.setState({userArguments: newArguments})
+        if (argument === 'failure') {
+            newArguments.boom.failure = e.target.checked
+        }
+        // this.setState({userArguments: newArguments})
     }
+
+    handlePredictionUpdate(type) {
+        predictionRequest(this.state.userArguments, type)
+        alert('预测请求已经提交')
+        this.handleOpen('argumentPicker')
+    }
+
     triggerStats() {
         this.setState({flowStats: !this.state.flowStats})
     }
@@ -104,13 +150,13 @@ export class MapsBlock extends React.Component {
         else {
             return (
                 <React.Fragment>
-                    <FormLabel component={'legend'}>{this.state.storeState.stationSpectating}</FormLabel>
+                    <FormLabel component={'legend'}>{this.state.storeState.stationSpectating.station}</FormLabel>
                     <FormGroup>
                         <FormControlLabel
                             control={
                                 <Checkbox
                                     checked={this.state.userArguments.holiday}
-                                    onChange={this.state}
+                                    onChange={(event) => this.handleChange(event, 'failure')}
                                 />
                             }
                             label={'故障'}
@@ -120,7 +166,7 @@ export class MapsBlock extends React.Component {
                                 control={
                                     <Checkbox
                                         checked={this.state.userArguments.boom.enabled}
-                                        onChange={(e) => this.handleChange(e, 'boomTick')}
+                                        onChange={(event) => this.handleChange(event, 'boomTick')}
                                     />
                                 }
                                 label={'突发客流'}
@@ -265,15 +311,24 @@ export class MapsBlock extends React.Component {
                                                             <MenuItem value={'雷阵雨'}>雷阵雨</MenuItem>
                                                         </Select>
                                                     </FormControl>
-                                                    
+
                                                     <TextField
-                                                        id={'温度输入'}
-                                                        label={'输入摄氏温度'}
+                                                        id={'最低温度输入'}
+                                                        label={'输入最低摄氏温度'}
                                                         type={'number'}
                                                         style={{marginTop: 15}}
                                                         InputLabelProps={{shrink: true,}}
                                                         disabled={!this.state.userArguments.weather.enabled}
-                                                        onChange={(event) => this.handleChange(event, 'weatherTemperature')}
+                                                        onChange={(event) => this.handleChange(event, 'weatherTemperatureLow')}
+                                                    />
+                                                    <TextField
+                                                        id={'最高温度输入'}
+                                                        label={'输入最高摄氏温度'}
+                                                        type={'number'}
+                                                        style={{marginTop: 15}}
+                                                        InputLabelProps={{shrink: true,}}
+                                                        disabled={!this.state.userArguments.weather.enabled}
+                                                        onChange={(event) => this.handleChange(event, 'weatherTemperatureHigh')}
                                                     />
                                                 </FormGroup>
                                             </FormGroup>
@@ -285,7 +340,7 @@ export class MapsBlock extends React.Component {
                                     </div>
                                 </CardContent>
                                 <CardActions>
-                                    <MaterialButton size={"small"} color={"primary"}>
+                                    <MaterialButton size={"small"} color={"primary"} onClick={() => this.handlePredictionUpdate('meow')}>
                                         完成
                                     </MaterialButton>
                                     <MaterialButton size={"small"} color={"default"} onClick={() => this.handleOpen('argumentPicker')}>

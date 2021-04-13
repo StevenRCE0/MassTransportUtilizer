@@ -77,7 +77,8 @@ class App extends React.Component {
                         <Redirect to={"Overview"}/>
                     </Route>
                     <Route path={"*"} component={AnimationApp}/>
-                </Switch>)
+                </Switch>
+            )
         }
         else {
             pagesList.push(
