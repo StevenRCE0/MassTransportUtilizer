@@ -11,14 +11,12 @@
   ```json
   {
   	# 必选
-      station: 'Sta65',
+      无
       
       # 可选
-      flow: 30,
+  
       time: 'month:day:hour:minute'
       	//表示多久后有人群涌入  比如3小时后学校放假
-      flow_type: 0, 
-      	//[0,1,2,3] 表示 in_flow, out_flow, in_flow_plus, out_flow_plus
       dayprop: 1, 
       	//[0,1,2]表示是否放假
       weather: ['多云', '晴'], 
@@ -26,10 +24,18 @@
       	//['多云', '中雨', '阴', '晴', '雷阵雨', '暴雨', '大雨', '小雨']
       temperatures: [9, 22], 
       	//最低气温,最高气温
-      type: 1, 
-      	//[0,1]表示是否为换乘站
-      station_classify: 3, 
-      	//[0,1,2,3,4]表示站点分类
+      station: {
+          # 必选
+   		name: 'Sta65',
+          # 可选
+    		flow: [30, 0],
+  		// flow 和 flow_type 合并了 
+           //[0,1,2,3] 表示 in_flow, out_flow, in_flow_plus, out_flow_plus
+           type: 1, 
+           //[0,1]表示是否为换乘站
+           station_classify: 3, 
+           //[0,1,2,3,4]表示站点分类
+      }
   }
   ```
 
