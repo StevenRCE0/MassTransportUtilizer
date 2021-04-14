@@ -52,7 +52,7 @@ export class MapsBlock extends React.Component {
                 holiday: undefined,
                 weather: {
                     enabled: false,
-                    condition: 1,
+                    condition: undefined,
                     temperature: {
                         low: undefined,
                         high: undefined
@@ -111,7 +111,7 @@ export class MapsBlock extends React.Component {
         if (argument === 'failure') {
             newArguments.boom.failure = e.target.checked
         }
-        // this.setState({userArguments: newArguments})
+        this.setState({userArguments: newArguments})
     }
 
     handlePredictionUpdate(type) {
@@ -351,15 +351,13 @@ export class MapsBlock extends React.Component {
                         </Fade>
                     </Modal>
                 </div>
-                <div style={transformToCentre}>
+                <div className={'Huge'} style={transformToCentre}>
                     <Suspense fallback={<div className={"MLPlaceholder"}>Maps loading...</div>}>
-                        <div style={{transform: 'translate(+7%, +5%)'}}>
-                            <MapFuture
-                                height={this.props.port.height}
-                                width={this.props.port.width}
-                                mode={this.state.activated}
-                            />
-                        </div>
+                        <MapFuture
+                            height={this.props.port.height}
+                            width={this.props.port.width}
+                            mode={this.state.activated}
+                        />
                     </Suspense>
                 </div>
             </div>

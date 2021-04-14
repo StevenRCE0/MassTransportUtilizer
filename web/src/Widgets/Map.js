@@ -7,6 +7,12 @@ import { PersistGate } from 'redux-persist/integration/react';
 const lineTintArray = [
     "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#000", "#000", "#E67874", "#009734", "#43B7AE"
 ]
+const transformToCentre = {
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+}
 
 function hoverResponse(type, id, line, flow) {
     store.dispatch({
@@ -95,7 +101,9 @@ class MapFuture extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: this.props.mode
+            mode: this.props.mode,
+            width: this.props.width,
+            height: this.props.height,
         }
     }
 
@@ -136,7 +144,7 @@ class MapFuture extends React.Component {
 
         return (
             <PersistGate store={mapsStore} persistor={mapsExposedMethods}>
-                <Stage height={this.props.height + 50} width={this.props.width + 250}>
+                <Stage style={transformToCentre} width={this.state.width + 250} height={this.state.height + 50}>
                     <Layer id={'FMpaths'}>
                         {pathSet}
                     </Layer>

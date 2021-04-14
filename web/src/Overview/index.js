@@ -56,53 +56,57 @@ class Index extends React.Component {
         return (
                 <div className={"OverviewGrid"}>
                     <div className={"div1"}>
-                        <MapsBlock
-                            port={{"height": size * 4, "width": size * 4}}
-                        />
+                        <Widgets.DashboardOne size={size} data={this.retrieveData('overloadedStation')}/>
                     </div>
                     <div className={"div2"}>
                         <Widgets.DashboardOne size={size} data={this.retrieveData('overall')}/>
                     </div>
                     <div className={"div3"}>
-                        <Widgets.DashboardOne size={size} data={this.retrieveData('overloadedStation')}/>
-                    </div>
-                    <div className={"div4"}>
-                        <Widgets.DashboardOne size={size}/>
-                    </div>
-                    <div className={"div5"}>
-                        <Widgets.DashboardOne size={size}/>
-                    </div>
-                    <div className={"div6"}>
                         <Widgets.Dashboard size={size} data={this.retrieveData('distPressure')}>
                             客流高峰区域
                         </Widgets.Dashboard>
                     </div>
-                    <div className={"div7"}>
-                        <Widgets.Dashboard size={size}/>
+                    <div className={"div4"}>
+                        <Widgets.Dashboard size={size} data={this.retrieveData('distPressure')}>
+                            客流高峰区域
+                        </Widgets.Dashboard>
                     </div>
-                    <div className={"div8"}>
-                        <Widgets.Trends
-                            port={{"height": size, "width": size * 2}}
-                        >
-                            Trends
-                        </Widgets.Trends>
+                    <div className={"div5"}>
+                        <MapsBlock
+                            port={{"height": size * 4, "width": size * 4}}
+                        />
                     </div>
-                    <div className={"div9"}>
-                        <Widgets.SimpleTrends
-                            port={{"height": size, "width": size * 3}}
-                            tooltip={true}
-                        >
-                            SimpleTrends
-                        </Widgets.SimpleTrends>
-                    </div>
-                    <div className={"div10"}>
-                        <Widgets.SimpleBars
-                            port={{"height": size, "width": size * 2}}
-                            tint={["#2196f3", "#8bc34a"]}
-                        >
-                            Simple Bars
-                        </Widgets.SimpleBars>
-                    </div>
+                    {/*<div className={"div6"}>*/}
+                    {/*    <Widgets.Dashboard size={size} data={this.retrieveData('distPressure')}>*/}
+                    {/*        客流高峰区域*/}
+                    {/*    </Widgets.Dashboard>*/}
+                    {/*</div>*/}
+                    {/*<div className={"div7"}>*/}
+                    {/*    <Widgets.Dashboard size={size}/>*/}
+                    {/*</div>*/}
+                    {/*<div className={"div8"}>*/}
+                    {/*    <Widgets.Trends*/}
+                    {/*        port={{"height": size, "width": size * 2}}*/}
+                    {/*    >*/}
+                    {/*        Trends*/}
+                    {/*    </Widgets.Trends>*/}
+                    {/*</div>*/}
+                    {/*<div className={"div9"}>*/}
+                    {/*    <Widgets.SimpleTrends*/}
+                    {/*        port={{"height": size, "width": size * 3}}*/}
+                    {/*        tooltip={true}*/}
+                    {/*    >*/}
+                    {/*        SimpleTrends*/}
+                    {/*    </Widgets.SimpleTrends>*/}
+                    {/*</div>*/}
+                    {/*<div className={"div10"}>*/}
+                    {/*    <Widgets.SimpleBars*/}
+                    {/*        port={{"height": size, "width": size * 2}}*/}
+                    {/*        tint={["#2196f3", "#8bc34a"]}*/}
+                    {/*    >*/}
+                    {/*        Simple Bars*/}
+                    {/*    </Widgets.SimpleBars>*/}
+                    {/*</div>*/}
                 </div>
         )
     }
