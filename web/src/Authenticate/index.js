@@ -5,27 +5,27 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import axios from "axios";
 import './style.css';
-import store, { mapsStore, setExpiration } from "../Store";
+import store, { setExpiration } from "../Store";
 
 function loginRequest(username, password) {
     try {
-        axios.post('api/log', {
+        axios.post('/api/log', {
             'username': username,
             'password': password
         }).then(function (response) {
-            alert(response.data.msg.msg)
-            if (response.status === 200) {
+            alert(response.data.data)
+            if (response.data.code === 200) {
                 store.dispatch({
                     type: 'login',
                     loginState: true,
-                    session: response.data.data,
-                })
-                mapsStore.dispatch({
-                    type: 'heatRevamp',
-                    heatData: response.data,
+                    session: response.data.data
                 })
             }
         })
+        // store.dispatch({
+        //     type: 'login',
+        //     loginState: true,
+        // })
     }
     catch (error) {
         console.error(error);

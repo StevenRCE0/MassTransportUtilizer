@@ -8,8 +8,8 @@ import {
     Checkbox, Slider, Select, MenuItem, TextField, InputLabel,
 } from "@material-ui/core";
 import MapSwitch from "../Controllers/Switch";
-import {Button} from "../Controllers/Button";
-import {KeyboardDateTimePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import { Button } from "../Controllers/Button";
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import axios from "axios";
 
@@ -21,40 +21,19 @@ const transformToCentre = {
     transform: "translate(-50%, -50%)",
 }
 
-function predictionRequest(userArguments, type) {
-    let request, responseReturn
-    if (type === 'update') {
-        request = {
+function predictionRequest(userArguments) {
+    try {
+        axios.post('/python/predict', {
             station: userArguments.boom.station,
             flow: userArguments.boom.flow,
             dayprop: userArguments.holiday,
             weather: userArguments.weather.condition,
             temperatures: [userArguments.weather.temperature.low, userArguments.weather.temperature.high],
-        }
-    }
-    if (type === 'station') {
-        request = {
-            station: {
-                name: userArguments
-            }
-        }
-    }
-    try {
-        axios.post('/python/predict', {request})
-            .then(response => {
-                if (response.status === 200) {
-                    console.log(response)
-                    if (type === 'station') {
-                        // responseReturn = response.data.list1[1].flow
-                    }
-                }
-            })
-            .catch(error => console.error(error))
+        })
     }
     catch (error) {
         console.error(error);
     }
-    return responseReturn
 }
 
 export class MapsBlock extends React.Component {
@@ -73,7 +52,7 @@ export class MapsBlock extends React.Component {
                 holiday: undefined,
                 weather: {
                     enabled: false,
-                    condition: '阴',
+                    condition: undefined,
                     temperature: {
                         low: undefined,
                         high: undefined
@@ -93,7 +72,7 @@ export class MapsBlock extends React.Component {
     }
 
     storeChange(){
-        this.setState({storeState: store.getState()})
+        this.setState({storeState: store.getState(), mapsStore: mapsStore.getState()})
     }
     handleOpen(modal) {
         if (modal === 'datePicker') {this.setState({datePicker: !this.state.datePicker})}
@@ -135,8 +114,8 @@ export class MapsBlock extends React.Component {
         this.setState({userArguments: newArguments})
     }
 
-    handlePredictionUpdate() {
-        predictionRequest(this.state.userArguments, 'update')
+    handlePredictionUpdate(type) {
+        predictionRequest(this.state.userArguments, type)
         alert('预测请求已经提交')
         this.handleOpen('argumentPicker')
     }
@@ -153,7 +132,7 @@ export class MapsBlock extends React.Component {
                 </tr>
                 <tr>
                     <td>断面客流</td>
-                    <td>{predictionRequest(this.state.storeState.stationSpectating, 'station')}</td>
+                    <td>{this.state.storeState.stationSpectating.flow}</td>
                 </tr>
                 <tr>
                     <td>高峰时段</td>
@@ -361,7 +340,7 @@ export class MapsBlock extends React.Component {
                                     </div>
                                 </CardContent>
                                 <CardActions>
-                                    <MaterialButton size={"small"} color={"primary"} onClick={() => this.handlePredictionUpdate()}>
+                                    <MaterialButton size={"small"} color={"primary"} onClick={() => this.handlePredictionUpdate('meow')}>
                                         完成
                                     </MaterialButton>
                                     <MaterialButton size={"small"} color={"default"} onClick={() => this.handleOpen('argumentPicker')}>

@@ -1,25 +1,16 @@
 import React from "react";
-import axios from "axios";
 import './style.css';
 import * as Widgets from '../Widgets/widgets';
 import { MapsBlock } from '../Widgets/MapsBlock';
-import { mapsStore } from "../Store";
 
 const body = document.body
 
 class Index extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            mapsStore: mapsStore.getState()
-        }
-        this.storeChange = this.storeChange.bind(this)
-        mapsStore.subscribe(this.storeChange)
+        this.state = {}
     }
 
-    storeChange() {
-        this.setState({mapsStore: mapsStore.getState})
-    }
     calculateSize = () => {
         this.setState({
             size: Math.min(body.scrollHeight / 6, body.scrollWidth / 8)
@@ -43,13 +34,12 @@ class Index extends React.Component {
             )
         }
         if (name === 'overloadedStation') {
-            let result = {
-                name: 'Sta233',
-                flow: 50
-            }
-            console.log(this.state.mapsStore)
-            return result
-            // return (this.state.mapsStore.heatData.highestFlow)
+            return (
+                {
+                    name: 'Sta99',
+                    value: 99
+                }
+            )
         }
         if (name === 'distPressure') {
             return ([
@@ -58,15 +48,6 @@ class Index extends React.Component {
                 {name: 'dist5', value: 77},
                 {name: 'dist6', value: 66}
             ])
-        }
-        if (name === 'lineStats') {
-            let lineStatsResponse
-            try {
-                axios.post('/python/predict', {})
-                    .then(response => {lineStatsResponse = response})
-            }
-            catch (error) {console.error(error)}
-            return lineStatsResponse
         }
     }
 
