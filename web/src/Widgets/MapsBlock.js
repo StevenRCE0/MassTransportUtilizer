@@ -1,16 +1,17 @@
 import React, { Suspense } from "react";
-import store, { mapsStore, searchObject } from "../Store";
+import store, { mapsStore } from "../Store";
 import {
     Button as MaterialButton,
     Card, CardActions, CardContent, Typography,
     FormControl, FormControlLabel, FormGroup, FormLabel,
     Fade, Modal,
-    Checkbox, Slider, Select, MenuItem
+    Checkbox, Slider, Select, MenuItem, TextField, InputLabel,
 } from "@material-ui/core";
 import MapSwitch from "../Controllers/Switch";
 import {Button} from "../Controllers/Button";
 import {KeyboardDateTimePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
+import axios from "axios";
 
 const MapFuture = React.lazy(() => import('./Map'));
 const transformToCentre = {
@@ -18,6 +19,21 @@ const transformToCentre = {
     left: "50%",
     top: "50%",
     transform: "translate(-50%, -50%)",
+}
+
+function predictionRequest(userArguments) {
+    try {
+        axios.post('http://47.110.95.97:9999/python/predict', {
+            station: userArguments.boom.station,
+            flow: userArguments.boom.flow,
+            dayprop: userArguments.holiday,
+            weather: userArguments.weather.condition,
+            temperatures: [userArguments.weather.temperature.low, userArguments.weather.temperature.high],
+        })
+    }
+    catch (error) {
+        console.error(error);
+    }
 }
 
 export class MapsBlock extends React.Component {
@@ -32,7 +48,24 @@ export class MapsBlock extends React.Component {
             flowStats: true,
             storeState: store.getState(),
             mapState: mapsStore.getState(),
-            userArguments: {holiday: undefined, weather: {enabled: false, condition: 1}, boom: {enabled: false, station: undefined, flow: undefined}}
+            userArguments: {
+                holiday: undefined,
+                weather: {
+                    enabled: false,
+                    condition: undefined,
+                    temperature: {
+                        low: undefined,
+                        high: undefined
+                    }
+                },
+                boom: {
+                    enabled: false,
+                    station: undefined,
+                    flow: undefined,
+                    type: 0,
+                    failure: false,
+                }
+            }
         }
         this.storeChange = this.storeChange.bind(this)
         store.subscribe(this.storeChange)
@@ -49,15 +82,15 @@ export class MapsBlock extends React.Component {
         this.setState({time: e})
     }
     handleChange(e, argument) {
-
-        const defaultBoomFlow = 3000
-
         let newArguments = this.state.userArguments
         if (argument === 'holiday') {
             newArguments.holiday = e.target.checked
         }
         if (argument === 'boomTick') {
             newArguments.boom.enabled = e.target.checked
+        }
+        if (argument === 'boomType') {
+            newArguments.boom.type = e.target.value
         }
         if (argument === 'boom') {
             newArguments.boom.station = this.state.stationSpectating
@@ -66,11 +99,27 @@ export class MapsBlock extends React.Component {
         if (argument === 'weatherTick') {
             newArguments.weather.enabled = e.target.checked
         }
+        if (argument === 'weatherTemperatureLow') {
+            newArguments.weather.temperature.low = e.target.value
+        }
+        if (argument === 'weatherTemperatureHigh') {
+            newArguments.weather.temperature.high = e.target.value
+        }
         if (argument === 'weather') {
             newArguments.weather.condition = e.target.value
         }
+        if (argument === 'failure') {
+            newArguments.boom.failure = e.target.checked
+        }
         this.setState({userArguments: newArguments})
     }
+
+    handlePredictionUpdate(type) {
+        predictionRequest(this.state.userArguments, type)
+        alert('预测请求已经提交')
+        this.handleOpen('argumentPicker')
+    }
+
     triggerStats() {
         this.setState({flowStats: !this.state.flowStats})
     }
@@ -83,7 +132,7 @@ export class MapsBlock extends React.Component {
                 </tr>
                 <tr>
                     <td>断面客流</td>
-                    <td>{searchObject(this.state.mapState.stationData,'station', this.state.storeState.stationSpectating, 'id')}</td>
+                    <td>{this.state.storeState.stationSpectating.flow}</td>
                 </tr>
                 <tr>
                     <td>高峰时段</td>
@@ -101,13 +150,13 @@ export class MapsBlock extends React.Component {
         else {
             return (
                 <React.Fragment>
-                    <FormLabel component={'legend'}>{this.state.storeState.stationSpectating}</FormLabel>
+                    <FormLabel component={'legend'}>{this.state.storeState.stationSpectating.station}</FormLabel>
                     <FormGroup>
                         <FormControlLabel
                             control={
                                 <Checkbox
                                     checked={this.state.userArguments.holiday}
-                                    onChange={this.state}
+                                    onChange={(event) => this.handleChange(event, 'failure')}
                                 />
                             }
                             label={'故障'}
@@ -117,11 +166,26 @@ export class MapsBlock extends React.Component {
                                 control={
                                     <Checkbox
                                         checked={this.state.userArguments.boom.enabled}
-                                        onChange={(e) => this.handleChange(e, 'boomTick')}
+                                        onChange={(event) => this.handleChange(event, 'boomTick')}
                                     />
                                 }
                                 label={'突发客流'}
                             />
+                            <FormGroup row>
+                                <Select
+                                    labelId={'客流类型'}
+                                    id={'客流类型'}
+                                    value={this.state.userArguments.boom.type}
+                                    disabled={!this.state.userArguments.boom.enabled}
+                                    onChange={(event) => this.handleChange(event, 'boomType')}
+                                    style={{width: '100%'}}
+                                >
+                                    <MenuItem value={0}>进站</MenuItem>
+                                    <MenuItem value={1}>出站</MenuItem>
+                                    <MenuItem value={2}>进站加</MenuItem>
+                                    <MenuItem value={3}>出站加</MenuItem>
+                                </Select>
+                            </FormGroup>
                             <FormGroup row>
                                 <Slider
                                     defaultValue={3000}
@@ -212,7 +276,7 @@ export class MapsBlock extends React.Component {
                                                             onChange={this.state}
                                                         />
                                                     }
-                                                    label={'是假期'}
+                                                    label={'放假'}
                                                 />
                                             </FormGroup>
                                             <FormGroup>
@@ -226,22 +290,46 @@ export class MapsBlock extends React.Component {
                                                     label={'变更天气'}
                                                 />
                                                 <FormGroup>
-                                                    <Select
-                                                        labelId="天气选择"
-                                                        id="天气选择"
-                                                        value={this.state.userArguments.weather.condition}
+                                                    <FormControl>
+                                                        <InputLabel id={'天气选择标签'}>
+                                                            天气类型
+                                                        </InputLabel>
+                                                        <Select
+                                                            labelId="天气选择"
+                                                            id="天气选择"
+                                                            value={this.state.userArguments.weather.condition}
+                                                            disabled={!this.state.userArguments.weather.enabled}
+                                                            onChange={(event) => this.handleChange(event, 'weather')}
+                                                        >
+                                                            <MenuItem value={'阴'}>阴</MenuItem>
+                                                            <MenuItem value={'晴'}>晴</MenuItem>
+                                                            <MenuItem value={'多云'}>多云</MenuItem>
+                                                            <MenuItem value={'小雨'}>小雨</MenuItem>
+                                                            <MenuItem value={'中雨'}>中雨</MenuItem>
+                                                            <MenuItem value={'大雨'}>大雨</MenuItem>
+                                                            <MenuItem value={'中雨'}>暴雨</MenuItem>
+                                                            <MenuItem value={'雷阵雨'}>雷阵雨</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+
+                                                    <TextField
+                                                        id={'最低温度输入'}
+                                                        label={'输入最低摄氏温度'}
+                                                        type={'number'}
+                                                        style={{marginTop: 15}}
+                                                        InputLabelProps={{shrink: true,}}
                                                         disabled={!this.state.userArguments.weather.enabled}
-                                                        onChange={(event) => this.handleChange(event, 'weather')}
-                                                    >
-                                                        <MenuItem value={1}>一</MenuItem>
-                                                        <MenuItem value={2}>二</MenuItem>
-                                                        <MenuItem value={3}>三</MenuItem>
-                                                        <MenuItem value={4}>四</MenuItem>
-                                                        <MenuItem value={5}>五</MenuItem>
-                                                        <MenuItem value={6}>六</MenuItem>
-                                                        <MenuItem value={7}>七</MenuItem>
-                                                        <MenuItem value={8}>八</MenuItem>
-                                                    </Select>
+                                                        onChange={(event) => this.handleChange(event, 'weatherTemperatureLow')}
+                                                    />
+                                                    <TextField
+                                                        id={'最高温度输入'}
+                                                        label={'输入最高摄氏温度'}
+                                                        type={'number'}
+                                                        style={{marginTop: 15}}
+                                                        InputLabelProps={{shrink: true,}}
+                                                        disabled={!this.state.userArguments.weather.enabled}
+                                                        onChange={(event) => this.handleChange(event, 'weatherTemperatureHigh')}
+                                                    />
                                                 </FormGroup>
                                             </FormGroup>
                                         </FormControl>
@@ -252,7 +340,7 @@ export class MapsBlock extends React.Component {
                                     </div>
                                 </CardContent>
                                 <CardActions>
-                                    <MaterialButton size={"small"} color={"primary"}>
+                                    <MaterialButton size={"small"} color={"primary"} onClick={() => this.handlePredictionUpdate('meow')}>
                                         完成
                                     </MaterialButton>
                                     <MaterialButton size={"small"} color={"default"} onClick={() => this.handleOpen('argumentPicker')}>
@@ -263,15 +351,13 @@ export class MapsBlock extends React.Component {
                         </Fade>
                     </Modal>
                 </div>
-                <div style={transformToCentre}>
+                <div className={'Huge'} style={transformToCentre}>
                     <Suspense fallback={<div className={"MLPlaceholder"}>Maps loading...</div>}>
-                        <div style={{transform: 'translate(+7%, +5%)'}}>
-                            <MapFuture
-                                height={this.props.port.height}
-                                width={this.props.port.width}
-                                mode={this.state.activated}
-                            />
-                        </div>
+                        <MapFuture
+                            height={this.props.port.height}
+                            width={this.props.port.width}
+                            mode={this.state.activated}
+                        />
                     </Suspense>
                 </div>
             </div>

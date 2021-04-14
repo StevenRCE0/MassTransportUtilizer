@@ -20,6 +20,7 @@
     --BoxRadius: 20px;
     position: absolute;
     backdrop-filter: var(--themeDarkFilter) blur(5px) saturate(70%);
+    --webkit-backdrop-filter: var(--themeDarkFilter) blur(5px) saturate(70%);
     box-shadow: 0 5px 25px rgba(0, 0, 0, .05);
     top: 40%;
     left: 50%;

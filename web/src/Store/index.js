@@ -49,8 +49,14 @@ export function searchObject(data, searchKey, value, requiredKey) {
     }
     catch(error)
     {
-        return undefined
+        return result
     }
 
     return result
+}
+
+export function moodyTimeDifference(givenTime) {
+    const moodyHour = givenTime.getHours() + (givenTime.getMinutes() > 30 ? 1 : 0)
+    const moodyMin = givenTime.getMinutes() > 15 && givenTime.getMinutes() <= 45 ? 30 : 0
+    return givenTime.getMonth()+1 + ':' + givenTime.getDate() + ':' + moodyHour + ':' + moodyMin
 }

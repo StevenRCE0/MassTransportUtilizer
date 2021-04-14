@@ -7,13 +7,20 @@ import { PersistGate } from 'redux-persist/integration/react';
 const lineTintArray = [
     "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#000", "#000", "#E67874", "#009734", "#43B7AE"
 ]
+const transformToCentre = {
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+}
 
-function hoverResponse(type, id, line) {
+function hoverResponse(type, id, line, flow) {
     store.dispatch({
         type: 'hoverUpdate',
         hoverType: type,
         hoverID: id,
-        line: line
+        line: line,
+        flow: flow,
     })
 }
 
@@ -94,7 +101,9 @@ class MapFuture extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: this.props.mode
+            mode: this.props.mode,
+            width: this.props.width,
+            height: this.props.height,
         }
     }
 
@@ -115,7 +124,7 @@ class MapFuture extends React.Component {
                     }) : undefined}
                     level={1}
                     line={path.line}
-                    onClick={() => hoverResponse('path', path.id, path.line)}
+                    onClick={() => hoverResponse('path', path.id, path.line, path.id)} //last one to be changed
                 />
             )
         });
@@ -128,14 +137,14 @@ class MapFuture extends React.Component {
                     station={point.station}
                     line={point.line}
                     tint={lineTintArray[point.line.match("^[0-9]+")]}
-                    onClick={() => hoverResponse('station', point.station, point.line)}
+                    onClick={() => hoverResponse('station', point.station, point.line, point.id)} //last one to be changed
                 />
             )
         })
 
         return (
             <PersistGate store={mapsStore} persistor={mapsExposedMethods}>
-                <Stage height={this.props.height + 50} width={this.props.width + 250}>
+                <Stage style={transformToCentre} width={this.state.width + 250} height={this.state.height + 50}>
                     <Layer id={'FMpaths'}>
                         {pathSet}
                     </Layer>

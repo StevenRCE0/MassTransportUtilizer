@@ -77,7 +77,8 @@ class App extends React.Component {
                         <Redirect to={"Overview"}/>
                     </Route>
                     <Route path={"*"} component={AnimationApp}/>
-                </Switch>)
+                </Switch>
+            )
         }
         else {
             pagesList.push(
@@ -128,19 +129,19 @@ class AnimationApp extends React.Component {
         return (
             <React.Fragment>
                 <div className="Dock">
-                    <NavLink to={"Overview"} activeClassName={"active"} exact>
+                    <NavLink key={"Overview"} to={"Overview"} activeClassName={"active"} exact>
                         <button className={"DockNavigation"}>概览<span>1</span></button>
                     </NavLink>
-                    <NavLink to={"LineHeat"} activeClassName={"active"}>
+                    <NavLink key={"LineHeat"} to={"LineHeat"} activeClassName={"active"}>
                         <button className={"DockNavigation"}>线路分析<span>2</span></button>
                     </NavLink>
-                    <NavLink to={"HeatTimeline"} activeClassName={"active"}>
+                    <NavLink key={"HeatTimeline"} to={"HeatTimeline"} activeClassName={"active"}>
                         <button className={"DockNavigation"}>时段分析<span>2</span></button>
                     </NavLink>
-                    <NavLink to={"PassengerAnalytics"} activeClassName={"active"}>
+                    <NavLink key={"PassengerAnalytics"} to={"PassengerAnalytics"} activeClassName={"active"}>
                         <button className={"DockNavigation"}>客流分析<span>3</span></button>
                     </NavLink>
-                    <NavLink to={"Authenticate"} activeClassName={"active"}>
+                    <NavLink key={"Authenticate"} to={"Authenticate"} activeClassName={"active"}>
                         <button className={"DockNavigation"}>认证与设置<span>L</span></button>
                     </NavLink>
                 </div>
