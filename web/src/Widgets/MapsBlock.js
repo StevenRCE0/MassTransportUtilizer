@@ -94,7 +94,7 @@ export class MapsBlock extends React.Component {
         }
         if (argument === 'boom') {
             newArguments.boom.station = this.state.stationSpectating
-            newArguments.boom.flow = e.target.value
+            newArguments.boom.flow = e
         }
         if (argument === 'weatherTick') {
             newArguments.weather.enabled = e.target.checked
@@ -116,7 +116,7 @@ export class MapsBlock extends React.Component {
 
     handlePredictionUpdate(type) {
         predictionRequest(this.state.userArguments, type)
-        alert('预测请求已经提交')
+        alert('预测请求已经提交'+this.state.userArguments.boom.flow)
         this.handleOpen('argumentPicker')
     }
 
@@ -195,7 +195,7 @@ export class MapsBlock extends React.Component {
                                     min={10}
                                     max={110}
                                     disabled={!this.state.userArguments.boom.enabled}
-                                    onChange={(event) => this.handleChange(event, 'boom')}
+                                    onChange={(foo, event) => this.handleChange(event, 'boom')}
                                 />
                             </FormGroup>
                         </FormGroup>
@@ -221,8 +221,10 @@ export class MapsBlock extends React.Component {
                     {this.getStats()}
                 </div>
                 <div className={"MapControllers"}>
-                    <MapSwitch switchOptions={["无", "热力图"]} state={this.state}
-                               setState={(e) => (this.setState(e))}
+                    <MapSwitch
+                        switchOptions={["无", "热力图"]}
+                        setState={(e) => (this.setState(e))}
+                        state={this.state}
                     />
                     <Button onClick={() => this.handleOpen('datePicker')}>
                         选择日期

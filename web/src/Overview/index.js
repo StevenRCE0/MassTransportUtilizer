@@ -100,12 +100,7 @@ class Index extends React.Component {
                     {/*    </Widgets.SimpleTrends>*/}
                     {/*</div>*/}
                     {/*<div className={"div10"}>*/}
-                    {/*    <Widgets.SimpleBars*/}
-                    {/*        port={{"height": size, "width": size * 2}}*/}
-                    {/*        tint={["#2196f3", "#8bc34a"]}*/}
-                    {/*    >*/}
-                    {/*        Simple Bars*/}
-                    {/*    </Widgets.SimpleBars>*/}
+
                     {/*</div>*/}
                 </div>
         )

@@ -33,7 +33,10 @@ const Store = (state = defaultState, action) => {
         return newState
     }
     if (action.type === 'switchTheme') {
-        newState.theme = action.theme
+        newState.theme = 'light'
+        if (state.theme === 'light') {
+            newState.theme = 'dark'
+        }
         return newState
     }
     if (action.type === 'timeUpdate') {

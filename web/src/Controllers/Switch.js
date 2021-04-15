@@ -1,4 +1,5 @@
 import React from "react";
+import store from "../Store";
 import "./style.css";
 
 class MapSwitch extends React.Component {
@@ -44,6 +45,62 @@ class MapSwitch extends React.Component {
                 className={"SwitchBase"}
             >
                 {this.enumOptions(this.props.state, this.props.setState)}
+            </div>
+        )
+    }
+}
+
+export class ThemeSwitch extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            store: store.getState()
+        }
+    }
+    themeNames = ['深色', '浅色']
+    enumOptions() {
+        let optionsController = []
+        let index = 0
+        this.themeNames.forEach(
+            function (perOption) {
+                const {theme} = store.getState()
+                const themeOptions = ['dark', 'light']
+                let acClass = "SwitchTick"
+                if (theme === themeOptions[index]) {
+                    acClass += " activated"
+                }
+                optionsController.push(
+                    <button
+                        id={perOption}
+                        key={index}
+                        onClick={() => {
+                            store.dispatch({
+                                type: 'switchTheme'
+                            })
+                        }}
+                        className={acClass}
+                    >
+                        {perOption}
+                    </button>
+                )
+                index++;
+            }
+        )
+        return optionsController
+    }
+    dispatchTheme(value) {
+        store.dispatch({
+            type: 'switchTheme',
+            theme: value
+        })
+    }
+
+    render() {
+        return(
+            <div
+                className={"SwitchBase"}
+            >
+                {this.enumOptions()}
             </div>
         )
     }
