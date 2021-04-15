@@ -21,19 +21,40 @@ const transformToCentre = {
     transform: "translate(-50%, -50%)",
 }
 
-function predictionRequest(userArguments) {
-    try {
-        axios.post('http://47.110.95.97:9999/python/predict', {
+function predictionRequest(userArguments, type) {
+    let request, responseReturn
+    if (type === 'update') {
+        request = {
             station: userArguments.boom.station,
             flow: userArguments.boom.flow,
             dayprop: userArguments.holiday,
             weather: userArguments.weather.condition,
             temperatures: [userArguments.weather.temperature.low, userArguments.weather.temperature.high],
-        })
+        }
+    }
+    if (type === 'station') {
+        request = {
+            station: {
+                name: userArguments
+            }
+        }
+    }
+    try {
+        axios.post('/python/predict', {request})
+            .then(response => {
+                if (response.status === 200) {
+                    console.log(response)
+                    if (type === 'station') {
+                        responseReturn = response.data.list1[1].flow
+                    }
+                }
+            })
+            .catch(error => console.error(error))
     }
     catch (error) {
         console.error(error);
     }
+    return responseReturn
 }
 
 export class MapsBlock extends React.Component {
@@ -52,7 +73,7 @@ export class MapsBlock extends React.Component {
                 holiday: undefined,
                 weather: {
                     enabled: false,
-                    condition: undefined,
+                    condition: '阴',
                     temperature: {
                         low: undefined,
                         high: undefined
@@ -114,8 +135,8 @@ export class MapsBlock extends React.Component {
         this.setState({userArguments: newArguments})
     }
 
-    handlePredictionUpdate(type) {
-        predictionRequest(this.state.userArguments, type)
+    handlePredictionUpdate() {
+        predictionRequest(this.state.userArguments, 'update')
         alert('预测请求已经提交')
         this.handleOpen('argumentPicker')
     }
@@ -132,7 +153,7 @@ export class MapsBlock extends React.Component {
                 </tr>
                 <tr>
                     <td>断面客流</td>
-                    <td>{this.state.storeState.stationSpectating.flow}</td>
+                    <td>{predictionRequest(this.state.storeState.stationSpectating, 'station')}</td>
                 </tr>
                 <tr>
                     <td>高峰时段</td>
@@ -340,7 +361,7 @@ export class MapsBlock extends React.Component {
                                     </div>
                                 </CardContent>
                                 <CardActions>
-                                    <MaterialButton size={"small"} color={"primary"} onClick={() => this.handlePredictionUpdate('meow')}>
+                                    <MaterialButton size={"small"} color={"primary"} onClick={() => this.handlePredictionUpdate()}>
                                         完成
                                     </MaterialButton>
                                     <MaterialButton size={"small"} color={"default"} onClick={() => this.handleOpen('argumentPicker')}>

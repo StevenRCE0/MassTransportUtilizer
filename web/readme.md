@@ -28,5 +28,8 @@
 1. redux  
 为 React 框架提供了统一的状态管理。
 
-1. redux-persist
+1. redux-persist  
 自动管理 Redux 状态在浏览器中的存储。
+   
+1. http-proxy-middleware  
+请求反向代理。

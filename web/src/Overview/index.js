@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import './style.css';
 import * as Widgets from '../Widgets/widgets';
 import { MapsBlock } from '../Widgets/MapsBlock';
@@ -48,6 +49,15 @@ class Index extends React.Component {
                 {name: 'dist5', value: 77},
                 {name: 'dist6', value: 66}
             ])
+        }
+        if (name === 'lineStats') {
+            let lineStatsResponse
+            try {
+                axios.post('/python/predict', {})
+                    .then(response => {lineStatsResponse = response})
+            }
+            catch (error) {console.error(error)}
+            return lineStatsResponse
         }
     }
 

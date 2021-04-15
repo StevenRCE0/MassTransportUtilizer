@@ -1,13 +1,22 @@
 const defaultValue = {
     stationData: {},
-    pathData: {}
+    pathData: {},
+    heatData: {}
 }
 const Store = (state = defaultValue, action) => {
+    let newMapState = JSON.parse(JSON.stringify(state))
+
     if (action.type === 'refresh') {
-        let newMapState = JSON.parse(JSON.stringify(state))
         newMapState.stationData = require('../stationaryPlaceholder/stations.json')
         newMapState.pathData = require('../stationaryPlaceholder/paths.json')
         return newMapState
+    }
+    if (action.type === 'push') {
+        newMapState.stationData = action.stationData
+        newMapState.pathData = action.pathData
+    }
+    if (action.type === 'heatRevamp') {
+        newMapState.heatData = action.data
     }
     return state
 }
