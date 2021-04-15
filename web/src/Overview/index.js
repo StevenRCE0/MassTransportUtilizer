@@ -43,7 +43,12 @@ class Index extends React.Component {
             )
         }
         if (name === 'overloadedStation') {
+            let result = {
+                name: 'Sta233',
+                flow: 50
+            }
             console.log(this.state.mapsStore)
+            return result
             // return (this.state.mapsStore.heatData.highestFlow)
         }
         if (name === 'distPressure') {

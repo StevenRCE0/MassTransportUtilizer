@@ -45,7 +45,7 @@ function predictionRequest(userArguments, type) {
                 if (response.status === 200) {
                     console.log(response)
                     if (type === 'station') {
-                        responseReturn = response.data.list1[1].flow
+                        // responseReturn = response.data.list1[1].flow
                     }
                 }
             })

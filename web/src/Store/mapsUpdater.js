@@ -16,7 +16,7 @@ const Store = (state = defaultValue, action) => {
         newMapState.pathData = action.pathData
     }
     if (action.type === 'heatRevamp') {
-        newMapState.heatData = action.data
+        newMapState.heatData = action.heatData
     }
     return state
 }
