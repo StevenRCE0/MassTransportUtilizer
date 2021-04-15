@@ -22,7 +22,7 @@ function loginRequest(username, password) {
                 })
                 mapsStore.dispatch({
                     type: 'heatRevamp',
-                    data: response,
+                    data: response.data,
                 })
             }
         })
