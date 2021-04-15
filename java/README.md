@@ -89,3 +89,43 @@ http://47.110.95.97:8080/index/getUser method:get
 
 ##### 返回客流强度最高的四个区
 格式: **dashboard**
+
+##### 登陆时返回
+时间为默认时间
+```json
+{
+    "msg":{"code": 200,"msg": "成功","data": "3f4d0154d03d48b08ac4e1e3a68f3b50"},
+    "overallFlow": 50,
+    "highestTime": "9:00",
+    "highestFlow": {"name": "Sta5","value": 50},
+    "highestDist4": [{"name": "dist1","value": 50},...],
+    "hotPowerGraph":[{"id": 1004,"level": 50,"station": "Sta5"},..],
+    "lineFlow": [{"linename": "1号线","flow": 50},...]
+}
+
+```
+##### 用户选择时间时
+
+http://localhost:8080/time/{yyyy-MM-dd HH:mm} metmod:get
+http://localhost:8080/time/json metmod:post
+```
+{
+    "year":"2020",
+    "month":"Apr",
+    "day":"15",
+    "AMPM":"AM",
+    "hour":"01"
+    "minute":"30"
+}
+```
+###### 返回
+```json
+{
+    "overallFlow": 50,
+    "highestTime": "9:00",
+    "highestFlow": {"name": "Sta5","value": 50},
+    "highestDist4": [{"name": "dist1","value": 50},...],
+    "hotPowerGraph":[{"id": 1004,"level": 50,"station": "Sta5"},..],
+    "lineFlow": [{"linename": "1号线","flow": 50},...]
+}
+```
