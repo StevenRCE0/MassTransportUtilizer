@@ -13,7 +13,7 @@ function loginRequest(username, password) {
             'username': username,
             'password': password
         }).then(function (response) {
-            alert(response.data.msg)
+            alert(response.data.msg.msg)
             if (response.status === 200) {
                 store.dispatch({
                     type: 'login',
