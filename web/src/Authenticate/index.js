@@ -12,6 +12,7 @@ function loginRequest(username, password) {
             'username': username,
             'password': password
         }).then(function (response) {
+            console.log(response)
             alert(response.data.msg)
             if (response.data.code === 200) {
                 store.dispatch({
