@@ -63,7 +63,6 @@ class Point extends React.Component {
         )
     }
 }
-
 class Path extends React.Component {
     constructor(props) {
         super(props);
@@ -108,7 +107,6 @@ class MapFuture extends React.Component {
     }
 
     render() {
-        mapsStore.dispatch({type: 'refresh'})
         const widthIndex = this.props.width / 17500
         const heightIndex = this.props.height / 20000
         const heatMode = (this.state.mode === '热力图')

@@ -1,13 +1,11 @@
-import axios from "axios";
-
-const givenDate = new Date('July 1, 2020 00:00:00')
 const defaultState = {
     active: "dashboard",
     theme: 'light',
     loginState: false,
     sessionData: '',
     timeUpToDate: true,
-    time: givenDate,
+    now: new Date('June 1, 2020 22:30:00'),
+    timeline: new Date('June 1, 2020 22:30:00'),
     timePeriod: '实时',
     lineSpectating: 'No',
     stationSpectating: {station: '没有选中站点', flow: 0},
@@ -16,32 +14,6 @@ const defaultState = {
     dashboardData: {}
 }
 const Store = (state = defaultState, action) => {
-    function refreshDashboard(statePass) {
-        const date = new Date(statePass.time)
-        console.log(date)
-        const data = {
-            year: date.getYear(),
-            month: date.getMonth() + 1,
-            day: date.getDate(),
-            hour: date.getHours(),
-            minute: date.getMinutes()
-        }
-        let result
-        try {
-            axios.post('/api/time/json', {data})
-                .then(response => {
-                    result = response
-                    console.log(result)
-                })
-                .catch(error => console.error(error))
-        }
-        catch (error) {
-            console.log(error)
-            alert('网络通讯存在问题，组件更新不力')
-        }
-
-        return result
-    }
     let newState = JSON.parse(JSON.stringify(state))
     if (action.type === 'login' && action.loginState) {
         newState.loginState = true
@@ -69,17 +41,16 @@ const Store = (state = defaultState, action) => {
         return newState
     }
     if (action.type === 'timeUpdate') {
-        if (action.time > givenDate) {
+        if (action.time > state.now) {
             newState.timePeriod = '预测'
         }
-        else if (action.time < givenDate) {
+        else if (action.time < state.now) {
             newState.timePeriod = '历史'
         }
         else if (action.now) {
             newState.timePeriod = '实时'
         }
-        newState.time = action.time
-        newState.dashboardData = refreshDashboard(state)
+        newState.timeline = action.time
         return newState
     }
     return state

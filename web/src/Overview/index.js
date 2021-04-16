@@ -2,13 +2,23 @@ import React from "react";
 import './style.css';
 import * as Widgets from '../Widgets/widgets';
 import { MapsBlock } from '../Widgets/MapsBlock';
+import { mapsStore, refreshDashboard } from "../Store";
 
 const body = document.body
 
 class Index extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            mapsState: mapsStore.getState().dashboardData,
+            size: undefined
+        }
+        this.storeChange = this.storeChange.bind(this)
+        mapsStore.subscribe(this.storeChange)
+    }
+
+    storeChange() {
+        this.setState({mapsState: mapsStore.getState().dashboardData})
     }
 
     calculateSize = () => {
@@ -17,28 +27,22 @@ class Index extends React.Component {
         })
     }
     componentDidMount() {
-        this.calculateSize()
         window.addEventListener('resize', this.calculateSize)
+        this.calculateSize()
     }
     componentWillUnmount() {
         window.removeEventListener('resize', this.calculateSize)
     }
-    retrieveData(name) {
+    setData(name) {
         if (name === 'overall') {
-            return (
-                {
-                    name: '综合压力',
-                    value: 60
-                }
-            )
+            const data = this.state.mapsState.highestFlow
+            if (data !== undefined) {return data}
+            return ({name: '数据暂缺', value: 0})
         }
         if (name === 'overloadedStation') {
-            return (
-                {
-                    name: 'Sta99',
-                    value: 99
-                }
-            )
+            const data = this.state.mapsState.highestFlow
+            if (data !== undefined) {return data}
+            return ({name: '数据暂缺', value: 0})
         }
         if (name === 'distPressure') {
             return ([
@@ -55,18 +59,18 @@ class Index extends React.Component {
         return (
                 <div className={"OverviewGrid"}>
                     <div className={"div1"}>
-                        <Widgets.DashboardOne size={size} data={this.retrieveData('overloadedStation')}/>
+                        <Widgets.DashboardOne size={size} data={undefined}/>
                     </div>
                     <div className={"div2"}>
-                        <Widgets.DashboardOne size={size} data={this.retrieveData('overall')}/>
+                        <Widgets.DashboardOne size={size} data={undefined}/>
                     </div>
                     <div className={"div3"}>
-                        <Widgets.Dashboard size={size} data={this.retrieveData('distPressure')}>
+                        <Widgets.Dashboard size={size} data={undefined}>
                             客流高峰区域
                         </Widgets.Dashboard>
                     </div>
                     <div className={"div4"}>
-                        <Widgets.Dashboard size={size} data={this.retrieveData('distPressure')}>
+                        <Widgets.Dashboard size={size} data={undefined}>
                             客流高峰区域
                         </Widgets.Dashboard>
                     </div>
@@ -75,32 +79,6 @@ class Index extends React.Component {
                             port={{"height": size * 4, "width": size * 4}}
                         />
                     </div>
-                    {/*<div className={"div6"}>*/}
-                    {/*    <Widgets.Dashboard size={size} data={this.retrieveData('distPressure')}>*/}
-                    {/*        客流高峰区域*/}
-                    {/*    </Widgets.Dashboard>*/}
-                    {/*</div>*/}
-                    {/*<div className={"div7"}>*/}
-                    {/*    <Widgets.Dashboard size={size}/>*/}
-                    {/*</div>*/}
-                    {/*<div className={"div8"}>*/}
-                    {/*    <Widgets.Trends*/}
-                    {/*        port={{"height": size, "width": size * 2}}*/}
-                    {/*    >*/}
-                    {/*        Trends*/}
-                    {/*    </Widgets.Trends>*/}
-                    {/*</div>*/}
-                    {/*<div className={"div9"}>*/}
-                    {/*    <Widgets.SimpleTrends*/}
-                    {/*        port={{"height": size, "width": size * 3}}*/}
-                    {/*        tooltip={true}*/}
-                    {/*    >*/}
-                    {/*        SimpleTrends*/}
-                    {/*    </Widgets.SimpleTrends>*/}
-                    {/*</div>*/}
-                    {/*<div className={"div10"}>*/}
-
-                    {/*</div>*/}
                 </div>
         )
     }

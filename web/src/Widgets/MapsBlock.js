@@ -44,7 +44,7 @@ export class MapsBlock extends React.Component {
             datePicker: false,
             argumentPicker: false,
             activated: "无",
-            selectedTime: new Date(),
+            selectedTime: new Date(store.getState().timeline),
             flowStats: true,
             storeState: store.getState(),
             mapState: mapsStore.getState(),
@@ -52,7 +52,7 @@ export class MapsBlock extends React.Component {
                 holiday: undefined,
                 weather: {
                     enabled: false,
-                    condition: undefined,
+                    condition: '阴',
                     temperature: {
                         low: undefined,
                         high: undefined
@@ -70,22 +70,16 @@ export class MapsBlock extends React.Component {
         this.storeChange = this.storeChange.bind(this)
         store.subscribe(this.storeChange)
     }
-    componentDidMount() {
-        store.dispatch({
-            type: 'timeUpdate'
-        })
-    }
-
 
     storeChange(){
-        this.setState({storeState: store.getState(), mapsStore: mapsStore.getState()})
+        this.setState({storeState: store.getState()})
     }
     handleOpen(modal) {
         if (modal === 'datePicker') {this.setState({datePicker: !this.state.datePicker})}
         if (modal === 'argumentPicker') {this.setState({argumentPicker: !this.state.argumentPicker})}
     }
     handleTime(e) {
-        this.setState({time: e})
+        this.setState({selectedTime: e})
     }
     handleChange(e, argument) {
         let newArguments = this.state.userArguments
@@ -119,17 +113,20 @@ export class MapsBlock extends React.Component {
         }
         this.setState({userArguments: newArguments})
     }
-
     handlePredictionUpdate(type) {
         predictionRequest(this.state.userArguments, type)
         alert('预测请求已经提交'+this.state.userArguments.boom.flow)
         this.handleOpen('argumentPicker')
     }
-    handleTimeUpdate(time) {
+    handleTimeUpdate() {
         store.dispatch({
             type: 'timeUpdate',
-            time: time
+            time: this.state.selectedTime
         })
+        mapsStore.dispatch({
+            type: 'refresh'
+        })
+        this.handleOpen('datePicker')
     }
     triggerStats() {
         this.setState({flowStats: !this.state.flowStats})
@@ -218,7 +215,6 @@ export class MapsBlock extends React.Component {
     }
 
     render() {
-        mapsStore.dispatch({type: 'refresh'})
         return (
             <div className={"Layer"} style={{borderRadius: this.state.rounded}}>
                 <div
@@ -255,7 +251,7 @@ export class MapsBlock extends React.Component {
                                 <div style={{margin: "0 20px"}}>
                                     <MuiPickersUtilsProvider utils={MomentUtils}>
                                         <KeyboardDateTimePicker
-                                            value={this.state.time}
+                                            value={this.state.selectedTime}
                                             onChange={(e) => this.handleTime(e)}
                                         />
                                     </MuiPickersUtilsProvider>
@@ -264,7 +260,7 @@ export class MapsBlock extends React.Component {
                                     <MaterialButton
                                         size={"small"}
                                         color={"primary"}
-                                        onClick={() => this.handleTimeUpdate(this.state.time)}
+                                        onClick={() => this.handleTimeUpdate(this.state.storeState.time)}
                                     >
                                         完成
                                     </MaterialButton>

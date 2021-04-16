@@ -29,7 +29,6 @@ function loginRequest(username, password) {
     }
 }
 
-
 class CertForm extends React.Component {
     constructor(props) {
         super(props);
