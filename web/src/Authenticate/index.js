@@ -23,6 +23,7 @@ function loginRequest(username, password) {
         })
     }
     catch (error) {
+        alert('网络连接出现了一些问题')
         console.error(error);
     }
 }

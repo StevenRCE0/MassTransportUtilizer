@@ -15,7 +15,6 @@ class Index extends React.Component {
         this.setState({
             size: Math.min(body.scrollHeight / 6, body.scrollWidth / 8)
         })
-        console.log(this.state.size)
     }
     componentDidMount() {
         this.calculateSize()

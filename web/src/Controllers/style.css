@@ -2,6 +2,7 @@
     --controlText: #220;
     --controlBlur: #553;
     --themeControlBackground: rgba(80, 80, 80, 0.1);
+    --themeButtonBackground: #FFF;
 }
 
 /*default custom switch selector*/

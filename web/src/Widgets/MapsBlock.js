@@ -70,6 +70,12 @@ export class MapsBlock extends React.Component {
         this.storeChange = this.storeChange.bind(this)
         store.subscribe(this.storeChange)
     }
+    componentDidMount() {
+        store.dispatch({
+            type: 'timeUpdate'
+        })
+    }
+
 
     storeChange(){
         this.setState({storeState: store.getState(), mapsStore: mapsStore.getState()})
@@ -119,7 +125,12 @@ export class MapsBlock extends React.Component {
         alert('预测请求已经提交'+this.state.userArguments.boom.flow)
         this.handleOpen('argumentPicker')
     }
-
+    handleTimeUpdate(time) {
+        store.dispatch({
+            type: 'timeUpdate',
+            time: time
+        })
+    }
     triggerStats() {
         this.setState({flowStats: !this.state.flowStats})
     }
@@ -250,10 +261,17 @@ export class MapsBlock extends React.Component {
                                     </MuiPickersUtilsProvider>
                                 </div>
                                 <CardActions>
-                                    <MaterialButton size={"small"} color={"primary"}>
+                                    <MaterialButton
+                                        size={"small"}
+                                        color={"primary"}
+                                        onClick={() => this.handleTimeUpdate(this.state.time)}
+                                    >
                                         完成
                                     </MaterialButton>
-                                    <MaterialButton size={"small"} color={"default"} onClick={() => this.handleOpen('datePicker')}>
+                                    <MaterialButton
+                                        size={"small"}
+                                        color={"default"}
+                                        onClick={() => this.handleOpen('datePicker')}>
                                         取消
                                     </MaterialButton>
                                 </CardActions>
