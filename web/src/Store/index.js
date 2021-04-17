@@ -50,6 +50,7 @@ export function searchObject(data, searchKey, value, requiredKey) {
     }
     catch(error)
     {
+        console.error(error)
         return result
     }
 

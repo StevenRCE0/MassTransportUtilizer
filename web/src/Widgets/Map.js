@@ -1,7 +1,7 @@
 import React from "react";
 import {Stage, Layer, Circle, Group, Text, Ring, Line} from "react-konva";
 import "../Overview/style.css";
-import store, { mapsStore, mapsExposedMethods } from '../Store';
+import store, {mapsStore, mapsExposedMethods} from '../Store';
 import { PersistGate } from 'redux-persist/integration/react';
 
 const lineTintArray = [
@@ -128,15 +128,18 @@ class MapFuture extends React.Component {
         });
         const pointSet = mapsStore.getState().stationData.map(function (point) {
             return (
-                <Point
-                    x={point.x * widthIndex} y={point.y * heightIndex}
-                    level={heatMode ? point.level : 1}
-                    type={point.type}
-                    station={point.station}
-                    line={point.line}
-                    tint={lineTintArray[point.line.match("^[0-9]+")]}
-                    onClick={() => hoverResponse('station', point.station, point.line, point.id)} //last one to be changed
-                />
+                <React.Suspense fallback={<Point/>}>
+                    <Point
+                        x={point.x * widthIndex} y={point.y * heightIndex}
+                        level={heatMode ? 1 : 1}
+                        type={point.type}
+                        station={point.station}
+                        line={point.line}
+                        tint={lineTintArray[point.line.match("^[0-9]+")]}
+                        onClick={() => hoverResponse('station', point.station, point.line, point.id)} //last one to be changed
+                    />
+                </React.Suspense>
+
             )
         })
 
