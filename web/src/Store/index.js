@@ -78,7 +78,7 @@ export function refreshDashboard(timeline) {
             })
         })
         .catch(error => {
-            alert(error)
+            console.error(error)
         })
 }
 export function moodyTimeDifference(givenTime) {

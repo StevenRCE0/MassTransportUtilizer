@@ -7,7 +7,6 @@ import {
     NavLink,
 } from "react-router-dom";
 import {TransitionGroup, CSSTransition} from "react-transition-group";
-
 import Overview from "./Overview";
 import { LineHeat, HeatTimeline } from "./LineHeat";
 import PassengerAnalytics from "./PassengerAnalytics";

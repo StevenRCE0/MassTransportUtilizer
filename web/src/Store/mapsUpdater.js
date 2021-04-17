@@ -1,6 +1,7 @@
 import store, {refreshDashboard} from "./index";
 
 const defaultValue = {
+    initiated: 0,
     stationData: {},
     pathData: {},
     heatData: {},
@@ -10,8 +11,11 @@ const defaultValue = {
 const Store = (state = defaultValue, action) => {
     let newMapState = JSON.parse(JSON.stringify(state))
     if (action.type === 'refresh') {
-        newMapState.stationData = require('../stationaryPlaceholder/stations.json')
-        newMapState.pathData = require('../stationaryPlaceholder/paths.json')
+        if (!newMapState.initiated) {
+            newMapState.dashboardData = require('../stationaryPlaceholder/dashboard.json')
+            newMapState.stationData = require('../stationaryPlaceholder/stations.json')
+            newMapState.pathData = require('../stationaryPlaceholder/paths.json')
+        }
         refreshDashboard(store.getState().timeline)
         return newMapState
     }

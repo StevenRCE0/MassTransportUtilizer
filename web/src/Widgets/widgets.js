@@ -27,7 +27,6 @@ function setTintArray(propTintArray) {
         return propTintArray
     } else return ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
 }
-
 function constructData(propData, sampleData) {
     if (propData !== undefined) {
         if (propData == null) {
@@ -36,7 +35,6 @@ function constructData(propData, sampleData) {
         return propData
     } else return sampleData
 }
-
 function linesConstructor(dataArray, tintArray, state, tooltip) {
     const lines = dataArray.lines
     const tooltipElement = tooltip ? [<Tooltip/>] : []
@@ -76,7 +74,6 @@ function linesConstructor(dataArray, tintArray, state, tooltip) {
         </LineChart>
     )
 }
-
 function barConstructor(dataArray, tintArray, state) {
     let keys = []
     dataArray.map(function (x) {
@@ -105,6 +102,15 @@ function barConstructor(dataArray, tintArray, state) {
         </BarChart>
     )
 }
+function keepAlive(setStateProps) {
+    setStateProps({keepAlive: new Date()})
+    return setInterval(function (setStateProps) {
+        if (setStateProps !== undefined) {
+            setStateProps({keepAlive: new Date()})
+            console.log('alive')
+        }
+    }, 5000, setStateProps)
+}
 
 export class Dashboard extends React.Component {
     constructor(props) {
@@ -115,6 +121,13 @@ export class Dashboard extends React.Component {
             name: this.props.children,
             data: this.props.data === undefined ? mockData : this.props.data
         }
+    }
+    
+    componentDidMount() {
+        this.setState({alive: keepAlive((e) => this.setState(e))})
+    }
+    componentWillUnmount() {
+        clearInterval(this.state.alive)
     }
 
     render() {
@@ -257,10 +270,18 @@ export class DashboardOne extends React.Component {
         )
     }
 
+    componentDidMount() {
+        this.setState({alive: keepAlive((e) => this.setState(e))})
+    }
+    componentWillUnmount() {
+        clearInterval(this.state.alive)
+    }
+
     render() {
         const tint = "#137A7F"
         const frame = {height: "100%", width: "100%", borderRadius: this.state.rounded, align: "center"}
         const size = this.props.size
+
         return (
             <div className={'Layer'} style={frame}>
                 <RadialBarChart
@@ -335,6 +356,13 @@ export class Trends extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({alive: keepAlive((e) => this.setState(e))})
+    }
+    componentWillUnmount() {
+        clearInterval(this.state.alive)
+    }
+
     render() {
         const port = this.props.port
         const frame = {
@@ -407,6 +435,13 @@ export class SimpleTrends extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({alive: keepAlive((e) => this.setState(e))})
+    }
+    componentWillUnmount() {
+        clearInterval(this.state.alive)
+    }
+
     render() {
         const port = this.props.port
         const frame = {
@@ -445,6 +480,13 @@ export class SimpleBars extends React.Component {
             name: this.props.children,
             data: this.props.data === undefined ? mockData : this.props.data
         }
+    }
+
+    componentDidMount() {
+        this.setState({alive: keepAlive((e) => this.setState(e))})
+    }
+    componentWillUnmount() {
+        clearInterval(this.state.alive)
     }
 
     render() {
@@ -527,6 +569,13 @@ export class AreaChartTrends extends React.Component {
             name: this.props.children,
             data: this.props.data === undefined ? mockData : this.props.data
         }
+    }
+
+    componentDidMount() {
+        this.setState({alive: keepAlive((e) => this.setState(e))})
+    }
+    componentWillUnmount() {
+        clearInterval(this.state.alive)
     }
 
     render() {
