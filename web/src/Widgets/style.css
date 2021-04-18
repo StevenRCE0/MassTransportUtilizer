@@ -56,8 +56,8 @@ svg:not(:root) {
     margin-right: 5px;
     font-size: .8em;
 }
-.MapTimestamp > span .noGo {
-    color: #933;
+.MapTimestamp > span.noGo {
+    color: #F66;
 }
 .MapTable {
     border: none;

@@ -115,11 +115,10 @@ export class Dashboard extends React.Component {
         try {
             this.props.data.map(function wow(value, index) {
                 data[index] = {'name': value[theKeys[0]], 'value': value[theKeys[1]] * zoom}
-                console.log(data)
                 return true
             }, theKeys)
         }
-        catch (e) {console.error(e)}
+        catch (e) {}
         const size = this.props.size * 2
         const spacing = size / 8
         const tint = this.props.tint === undefined ? ["#137A7F", "#373B3E", "#E12885", "#66CCFF"] : this.props.tint
