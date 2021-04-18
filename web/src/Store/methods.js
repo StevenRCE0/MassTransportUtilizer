@@ -7,6 +7,7 @@ const defaultState = {
     now: new Date('June 1, 2020 22:30:00'),
     timeline: new Date('June 1, 2020 22:30:00'),
     timePeriod: '实时',
+    timeNoGo: '数据加载中',
     lineSpectating: 'No',
     stationSpectating: {station: '没有选中站点', flow: 0},
     flowSpectating: -1,
@@ -51,6 +52,10 @@ const Store = (state = defaultState, action) => {
             newState.timePeriod = '实时'
         }
         newState.timeline = action.time
+        return newState
+    }
+    if (action.type === 'noGo') {
+        newState.timeNoGo = action.value === '成功'
         return newState
     }
     return state

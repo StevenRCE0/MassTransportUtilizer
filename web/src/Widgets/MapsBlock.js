@@ -12,6 +12,7 @@ import { Button } from "../Controllers/Button";
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import axios from "axios";
+import moment from "moment";
 
 const MapFuture = React.lazy(() => import('./Map'));
 const transformToCentre = {
@@ -30,6 +31,7 @@ function predictionRequest(userArguments) {
             weather: userArguments.weather.condition,
             temperatures: [userArguments.weather.temperature.low, userArguments.weather.temperature.high],
         })
+            .then(response => {console.log(response)})
     }
     catch (error) {
         console.error(error);
@@ -226,6 +228,11 @@ export class MapsBlock extends React.Component {
                     }}
                 >
                     {this.getStats()}
+                </div>
+                <div className={'MapTimestamp'}>
+                    <span>预览时间线</span>
+                    <span className={this.state.storeState.timeNoGo === true ? 'noGo' : ''}>{this.state.storeState.timeNoGo === true ? '数据可用' : '该时间无数据'}</span>
+                    {moment(this.state.storeState.timeline).format('MM-DD-YYYY HH:MM')}
                 </div>
                 <div className={"MapControllers"}>
                     <MapSwitch

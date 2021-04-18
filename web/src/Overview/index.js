@@ -21,9 +21,6 @@ class Index extends React.Component {
             this.forceUpdate()
         })
     }
-    mapsStoreListener() {
-        this.setState({mapsState: mapsStore.getState().dashboardData})
-    }
     calculateSize = () => {
         this.setState({
             size: Math.min(body.scrollHeight / 6, body.scrollWidth / 8)
@@ -41,12 +38,10 @@ class Index extends React.Component {
 
     render() {
         const {size, mapsState} = this.state
-        console.log(this.state.mapsState.highestFlow)
         if (mapsState === undefined) {
             setTimeout(function () {
                 return (<Redirect to={'.'}/>)
             },1000)
-
         }
         return (
             <div className={"OverviewGrid"}>
@@ -56,16 +51,18 @@ class Index extends React.Component {
                     </Widgets.DashboardOne>
                 </div>
                 <div className={"div2"}>
-                    <Widgets.DashboardOne size={size} data={undefined}/>
+                    <Widgets.GreatLegends type={'straight'} name={'全网客流量指数'} value={mapsState.overallFlow}>
+                        重点客流量
+                    </Widgets.GreatLegends>
                 </div>
                 <div className={"div3"}>
-                    <Widgets.Dashboard size={size} data={mapsState.highestDist4}>
+                    <Widgets.Dashboard size={size} data={mapsState.highestDist4} zoom={0.1}>
                         客流高峰区域
                     </Widgets.Dashboard>
                 </div>
                 <div className={"div4"}>
-                    <Widgets.Dashboard size={size} data={undefined}>
-                        客流高峰区域
+                    <Widgets.Dashboard size={size} data={mapsState.lineFlow} keys={['linename', 'flow']}>
+                        客流高峰线路
                     </Widgets.Dashboard>
                 </div>
                 <div className={"div5"}>

@@ -27,6 +27,10 @@ function setTintArray(propTintArray) {
         return propTintArray
     } else return ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
 }
+function makeAvailable(thing) {
+    if (thing !== undefined) {return thing}
+    return (<React.Fragment/>)
+}
 function constructData(propData, sampleData) {
     if (propData !== undefined) {
         if (propData == null) {
@@ -104,26 +108,22 @@ function barConstructor(dataArray, tintArray, state) {
 }
 
 export class Dashboard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            rounded: defaultRoundCorner,
-        }
-    }
-
     render() {
         let data = [{}, {}, {}, {}]
+        const theKeys = this.props.keys === undefined ? ['name', 'value'] : this.props.keys
+        const zoom = this.props.zoom === undefined ? 1 : this.props.zoom
         try {
-            this.props.data.map(function (value, index) {
-                data[index] = value
+            this.props.data.map(function wow(value, index) {
+                data[index] = {'name': value[theKeys[0]], 'value': value[theKeys[1]] * zoom}
+                console.log(data)
                 return true
-            })
+            }, theKeys)
         }
-        catch (e) {console.log('not yet okay... ')}
+        catch (e) {console.error(e)}
         const size = this.props.size * 2
         const spacing = size / 8
-        const tint = ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
-        const frame = {height: "100%", width: "100%", borderRadius: this.state.rounded}
+        const tint = this.props.tint === undefined ? ["#137A7F", "#373B3E", "#E12885", "#66CCFF"] : this.props.tint
+        const frame = {height: "100%", width: "100%", borderRadius: defaultRoundCorner}
         let nameLabel;
         if (this.props.children !== undefined) {
             nameLabel = [
@@ -244,20 +244,13 @@ export class Dashboard extends React.Component {
 }
 
 export class DashboardOne extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            rounded: defaultRoundCorner
-        }
-    }
-
     greatLegend(value) {
         return (<span>{value}</span>)
     }
 
     render() {
         const tint = "#137A7F"
-        const frame = {height: "100%", width: "100%", borderRadius: this.state.rounded, align: "center"}
+        const frame = {height: "100%", width: "100%", borderRadius: defaultRoundCorner, align: "center"}
         const size = this.props.size
         let nameLabel;
         if (this.props.children !== undefined) {
@@ -339,7 +332,6 @@ export class Trends extends React.Component {
             },
         ]
         this.state = {
-            rounded: defaultRoundCorner,
             name: this.props.children,
             data: this.props.data === undefined ? mockData : this.props.data
         }
@@ -348,9 +340,7 @@ export class Trends extends React.Component {
 
     render() {
         const port = this.props.port
-        const frame = {
-            borderRadius: this.state.rounded
-        }
+        const frame = {borderRadius: defaultRoundCorner}
         const tint = ["#A00", "#00A"]
         let nameLabel;
         if (this.state.name !== undefined) {
@@ -412,7 +402,6 @@ export class SimpleTrends extends React.Component {
             ]
         }
         this.state = {
-            rounded: defaultRoundCorner,
             name: this.props.children,
             data: this.props.data === undefined ? mockData : this.props.data,
         }
@@ -424,7 +413,7 @@ export class SimpleTrends extends React.Component {
         const frame = {
             height: "100%",
             width: "100%",
-            borderRadius: this.state.rounded
+            borderRadius: defaultRoundCorner
         }
         const tint = ["#EA0", "#08A"]
         let nameLabel;
@@ -453,8 +442,6 @@ export class SimpleBars extends React.Component {
         super(props);
         const mockData = constructData(this.props.data, {"uv": 900, "pv": 609})
         this.state = {
-            rounded: defaultRoundCorner,
-            name: this.props.children,
             data: this.props.data === undefined ? mockData : this.props.data
         }
     }
@@ -464,7 +451,7 @@ export class SimpleBars extends React.Component {
         const port = this.props.port
         const tint = setTintArray(this.props.tint)
         let nameLabel;
-        if (this.state.name !== undefined) {
+        if (this.props.children !== undefined) {
             nameLabel = [
                 <label className={'widgetLabel'}>
                     {this.props.children}
@@ -477,7 +464,7 @@ export class SimpleBars extends React.Component {
         const frame = {
             "width": "100%",
             "height": "100%",
-            "border-radius": this.state.rounded
+            "border-radius": defaultRoundCorner
         }
         return (
             <div className={"Layer"} style={frame}>
@@ -536,7 +523,6 @@ export class AreaChartTrends extends React.Component {
             }
         ]
         this.state = {
-            rounded: defaultRoundCorner,
             name: this.props.children,
             data: this.props.data === undefined ? mockData : this.props.data
         }
@@ -546,13 +532,10 @@ export class AreaChartTrends extends React.Component {
     render() {
         const port = this.props.port
         const frame = {
-            borderRadius: this.state.rounded
+            borderRadius: defaultRoundCorner
         }
         return (
-            <div
-                className={'Layer'}
-                style={frame}
-            >
+            <div className={'Layer'} style={frame}>
                 <AreaChart
                     width={port.width}
                     height={port.height}
@@ -576,7 +559,59 @@ export class AreaChartTrends extends React.Component {
                     <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
                     <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
                 </AreaChart>
+                <label className={'widgetLabel'}>
+                    {makeAvailable(this.props.children)}
+                </label>
             </div>
         )
+    }
+}
+
+export class GreatLegends extends React.Component {
+    getFromData(data, index, key) {
+        try {return data[index][key]}
+        catch (error) {}
+        return undefined
+    }
+    render() {
+        const frame = {
+            "width": "100%",
+            "height": "100%",
+            "border-radius": defaultRoundCorner
+        }
+        if (this.props.type === 'array')
+        return (
+            <div className={"Layer"} style={frame}>
+                <div className={'GLContainer'}>
+                    <div className={'GLName'}>
+                        {this.getFromData(this.props.data, this.props.index, this.props.keys[0])}
+                    </div>
+                    <div className={'GLValue'}>
+                        {this.getFromData(this.props.data, this.props.index, this.props.keys[1])}
+                    </div>
+                </div>
+                <label className={'widgetLabel'}>
+                    {makeAvailable(this.props.children)}
+                </label>
+            </div>
+        )
+        if (this.props.type === 'straight') {
+            return (
+                <div className={'Layer'} style={frame}>
+                    <div className={'GLContainer'}>
+                        <div className="GLName">
+                            {this.props.name}
+                        </div>
+                        <div className="GLValue">
+                            {this.props.value}
+                        </div>
+                    </div>
+                    <label className={'widgetLabel'}>
+                        {makeAvailable(this.props.children)}
+                    </label>
+                </div>
+            )
+        }
+        return (<React.Fragment/>)
     }
 }

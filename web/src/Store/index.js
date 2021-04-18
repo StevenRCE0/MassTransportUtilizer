@@ -77,6 +77,10 @@ export function refreshDashboard(timeline) {
                 type: 'loadDashboard',
                 data: response.data
             })
+            store.dispatch({
+                type: 'noGo',
+                value: response.data.result.msg
+            })
         })
         .catch(error => {
             console.error(error)

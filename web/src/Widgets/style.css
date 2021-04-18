@@ -39,6 +39,26 @@ svg:not(:root) {
     border-radius: 20px;
     overflow: hidden;
 }
+.MapTimestamp {
+    z-index: 10;
+    position: absolute;
+    display: block;
+    bottom: 5px;
+    left: 5px;
+    padding: 5px 10px 5px 10px;
+    font-size: 15pt;
+    background: var(--themeControlBackground);
+    border-radius: 20px;
+    overflow: hidden;
+}
+.MapTimestamp > span {
+    opacity: .6;
+    margin-right: 5px;
+    font-size: .8em;
+}
+.MapTimestamp > span .noGo {
+    color: #933;
+}
 .MapTable {
     border: none;
     border-collapse: collapse;
@@ -103,9 +123,25 @@ svg:not(:root) {
 }
 
 .widgetLabel {
+    white-space: nowrap;
     position: absolute;
     bottom: -1.1rem;
     left: 50%;
     transform: translateX(-50%);
     font-size: 9pt;
+}
+.GLContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.GLName {
+    font-size: 12pt;
+    opacity: .8;
+}
+.GLValue {
+    font-size: 15pt;
+    font-weight: bold;
+    line-height: 2em;
 }
