@@ -148,7 +148,6 @@ class AnimationApp extends React.Component {
                 if (e.key === '3') {handleShortcutKey(3)}
                 if (e.key === '4') {handleShortcutKey(4)}
                 if (e.key === 'L' || e.key === 'l') {handleShortcutKey(5)}
-                console.log(redirect.handling)
             }
             else if (e.code !== undefined) {
                 if (e.code === 'Digit1') {handleShortcutKey(1)}

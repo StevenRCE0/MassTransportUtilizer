@@ -52,7 +52,6 @@ function makeDictionaryPairs(data, theKeys) {
             newDictionary[key] = value[theKeys[1]]
             return true
         }, theKeys)
-        console.log(newDictionary)
     }
     catch (e) {}
     return newDictionary
