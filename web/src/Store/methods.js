@@ -1,3 +1,5 @@
+import {mapsStore} from "./index";
+
 const defaultState = {
     active: "dashboard",
     theme: 'light',
@@ -45,6 +47,7 @@ const Store = (state = defaultState, action) => {
         if (action.live === true) {
             newState.timePeriod = '实时'
             newState.timeline = state.now
+            mapsStore.dispatch({type: 'refresh'})
             return newState
         }
         if (action.time > state.now) {
