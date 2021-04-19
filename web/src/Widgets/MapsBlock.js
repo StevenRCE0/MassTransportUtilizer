@@ -243,9 +243,16 @@ export class MapsBlock extends React.Component {
                         setState={(e) => (this.setState(e))}
                         state={this.state}
                     />
-                    <Button onClick={() => this.handleOpen('datePicker')}>
-                        选择日期
-                    </Button>
+                    <div style={{display: "flex", flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Button onClick={() => this.handleOpen('datePicker')}>
+                            日期
+                        </Button>
+                        <div style={{width: '.5em'}}/>
+                        <Button onClick={() => store.dispatch({type: 'timeUpdate', live: true})}>
+                            实时
+                        </Button>
+                    </div>
+
                     <Button onClick={() => this.triggerStats()}>
                         {(this.state.flowStats) ? '隐藏' : '显示'}数据
                     </Button>

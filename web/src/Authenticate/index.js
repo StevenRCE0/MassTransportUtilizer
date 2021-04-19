@@ -1,9 +1,9 @@
 import React from "react";
 import { Input, Button } from '../Controllers';
-import { FormGroup, Slider, FormLabel } from '@material-ui/core'
+import { FormGroup, FormLabel, Slider, Button as MaterialButton } from '@material-ui/core'
 import axios from "axios";
 import './style.css';
-import store, { setExpiration } from "../Store";
+import store, { setExpiration, clearStorage } from "../Store";
 import { ThemeSwitch } from "../Controllers/Switch";
 
 function loginRequest(username, password) {
@@ -60,6 +60,9 @@ class CertForm extends React.Component {
         return(
             <React.Fragment>
                 <ThemeSwitch/>
+                <div className={'Description'}>
+                    可以按 [K] 快速切换主题
+                </div>
                 <form
                     style={{marginTop: '2em'}}
                     onSubmit={() => this.CertChange('cache', this.state.duration)}
@@ -78,15 +81,23 @@ class CertForm extends React.Component {
                             />
                         </div>
                     </FormGroup>
-                    <Button type={'submit'}>
-                        保存凭据
-                    </Button>
-                    <br />
-                    <div style={{marginTop: '20px'}}>
+                    <div style={{display: "flex", flexDirection: 'row'}}>
+                        <Button type={'submit'}>
+                            保存凭据
+                        </Button>
+                        <div style={{width: '.5em'}}/>
                         <Button onClick={() => this.CertChange('logout')}>
-                            注销凭据
+                            注销
                         </Button>
                     </div>
+                    <br />
+                    <MaterialButton
+                        size={'small'}
+                        style={{color: '#F66'}}
+                        onClick={() => clearStorage()}
+                    >
+                        清除本地数据并注销
+                    </MaterialButton>
                 </form>
             </React.Fragment>
         )

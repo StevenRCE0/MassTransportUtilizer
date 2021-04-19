@@ -4,28 +4,28 @@
     "msg": "成功",
     "data": null
   },
-  "overallFlow": 261.1378,
+  "overallFlow": "加载中",
   "highestTime": "1:8:0",
   "highestFlow": {
-    "name": "Sta115",
-    "value": 36.59034
+    "name": "加载中",
+    "value": 0
   },
   "highestDist4": [
     {
-      "name": "Dist5",
-      "value": 529.0434
+      "name": "加载中",
+      "value": 0
     },
     {
-      "name": "Dist3",
-      "value": 188.78413
+      "name": "加载中",
+      "value": 0
     },
     {
-      "name": "Dist8",
-      "value": 172.15623
+      "name": "加载中",
+      "value": 0
     },
     {
-      "name": "Dist6",
-      "value": 169.19588
+      "name": "加载中",
+      "value": 0
     }
   ],
   "hotPowerGraph": [
@@ -848,15 +848,15 @@
   "lineFlow": [
     {
       "linename": "全网",
-      "flow": 1
+      "flow": 0
     },
     {
       "linename": "10号线",
-      "flow": 24.4774
+      "flow": 0
     },
     {
       "linename": "11号线",
-      "flow": 59.5083
+      "flow": 0
     },
     {
       "linename": "3号线",
@@ -868,23 +868,23 @@
     },
     {
       "linename": "3号线",
-      "flow": 46.3439
+      "flow": 0
     },
     {
       "linename": "2号线",
-      "flow": 26.6447
+      "flow": 0
     },
     {
       "linename": "1号线",
-      "flow": 37.4221
+      "flow": 0
     },
     {
       "linename": "4号线",
-      "flow": 3
+      "flow": 0
     },
     {
       "linename": "5号线",
-      "flow": 4
+      "flow": 0
     }
   ]
 }

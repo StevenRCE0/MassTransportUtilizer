@@ -29,6 +29,9 @@ const Store = (state = defaultValue, action) => {
         newMapState.dashboardData = action.data
         return newMapState
     }
+    if (action.type === 'clear') {
+        return defaultValue
+    }
     return state
 }
 export default Store

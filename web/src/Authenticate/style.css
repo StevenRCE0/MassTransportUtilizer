@@ -20,7 +20,7 @@
     --BoxRadius: 20px;
     position: absolute;
     backdrop-filter: var(--themeDarkFilter) blur(5px) saturate(70%);
-    --webkit-backdrop-filter: var(--themeDarkFilter) blur(5px) saturate(70%);
+    -webkit-backdrop-filter: var(--themeDarkFilter) blur(5px) saturate(70%);
     box-shadow: 0 5px 25px rgba(0, 0, 0, .05);
     top: 40%;
     left: 50%;
@@ -76,4 +76,9 @@
     width: max(30vw, 1em);
     background: url("../ImageStuff/MTU.png");
     background-size: contain;
+}
+.Description {
+    font-size: 9pt;
+    margin: .5em 0 0 .5em;
+    opacity: .6;
 }

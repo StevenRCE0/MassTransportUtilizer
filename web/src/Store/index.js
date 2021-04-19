@@ -91,3 +91,7 @@ export function moodyTimeDifference(givenTime) {
     const moodyMin = givenTime.getMinutes() > 15 && givenTime.getMinutes() <= 45 ? 30 : 0
     return givenTime.getMonth()+1 + ':' + givenTime.getDate() + ':' + moodyHour + ':' + moodyMin
 }
+export function clearStorage() {
+    mapsStore.dispatch({type: 'clear'})
+    store.dispatch({type: 'clear'})
+}

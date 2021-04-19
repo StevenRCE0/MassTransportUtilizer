@@ -97,11 +97,16 @@ export class ThemeSwitch extends React.Component {
 
     render() {
         return(
-            <div
-                className={"SwitchBase"}
-            >
-                {this.enumOptions()}
-            </div>
+            <React.Fragment>
+                <div
+                    id={'controller-theme-switch'}
+                    className={"SwitchBase"}
+                    style={{position: 'absolute'}}
+                >
+                    {this.enumOptions()}
+                </div>
+                <div style={{height: 'calc(11pt + 30px)'}}/>
+            </React.Fragment>
         )
     }
 }

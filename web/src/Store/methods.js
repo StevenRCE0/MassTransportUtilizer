@@ -4,8 +4,8 @@ const defaultState = {
     loginState: false,
     sessionData: '',
     timeUpToDate: true,
-    now: new Date('June 1, 2020 22:30:00'),
-    timeline: new Date('June 1, 2020 22:30:00'),
+    now: new Date('May 29, 2020 22:30:00'),
+    timeline: new Date('May 29, 2020 22:30:00'),
     timePeriod: '实时',
     timeNoGo: '数据加载中',
     lineSpectating: 'No',
@@ -42,14 +42,16 @@ const Store = (state = defaultState, action) => {
         return newState
     }
     if (action.type === 'timeUpdate') {
+        if (action.live === true) {
+            newState.timePeriod = '实时'
+            newState.timeline = state.now
+            return newState
+        }
         if (action.time > state.now) {
             newState.timePeriod = '预测'
         }
         else if (action.time < state.now) {
             newState.timePeriod = '历史'
-        }
-        else if (action.now) {
-            newState.timePeriod = '实时'
         }
         newState.timeline = action.time
         return newState
@@ -57,6 +59,9 @@ const Store = (state = defaultState, action) => {
     if (action.type === 'noGo') {
         newState.timeNoGo = action.value === '成功'
         return newState
+    }
+    if (action.type === 'clear') {
+        return defaultState
     }
     return state
 }

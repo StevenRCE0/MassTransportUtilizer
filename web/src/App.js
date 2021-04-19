@@ -14,7 +14,7 @@ import Login from "./Authenticate";
 import './index.css';
 
 import { PersistGate } from 'redux-persist/integration/react';
-import store, { exposedMethods } from "./Store";
+import store, {exposedMethods, mapsStore} from "./Store";
 
 const root = document.documentElement
 
@@ -44,7 +44,7 @@ function setTheme() {
         root.style.setProperty('--themeActive', '#FFF')
         root.style.setProperty('--themeLayer', 'rgba(53, 53, 53, 0.8)')
         root.style.setProperty('--themeFilter', 'multiply')
-        root.style.setProperty('--themeDarkFilter', 'brightness(.65)')
+        root.style.setProperty('--themeDarkFilter', 'brightness(.25)')
         root.style.setProperty('--themePure0', 'rgba(64, 64, 64, 1)')
         root.style.setProperty('--themePure1', 'rgba(0, 0, 0, 0)')
         root.style.setProperty('--themeControlBackground', 'rgba(255, 255, 255, 0.1)')
@@ -55,7 +55,6 @@ function setTheme() {
 
     }
 }
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -65,6 +64,9 @@ class App extends React.Component {
     }
 
     storeChange(){this.setState({storeState: store.getState()})}
+    componentDidMount() {
+        mapsStore.dispatch({type: 'refresh'})
+    }
 
     render() {
         setTheme()
@@ -114,31 +116,43 @@ class AnimationApp extends React.Component {
         this.setState({redirect: e})
         this.setState({redirect: undefined})
     }
+    themeSwitcherWary() {
+        if (this.state.handling === 1) {
+            return
+        }
+        this.setState({handling: 1})
+        store.dispatch({type: 'switchTheme'})
+    }
 
     componentDidMount() {
         let done = () => {
             this.setState({handling: 0})
         }
-
+        store.subscribe(() => {
+            setTimeout(done, 500, done)
+        })
         this.props.history.listen(location => {
+            mapsStore.dispatch({type: 'refresh'})
             if (this.props.location.pathname !== location.pathname) {
                 setTimeout(done, 500, done)
             }
         })
     }
     render() {
-        let redirect = {
+        const redirect = {
             state: this.state.redirect,
             handling: this.state.handling,
             set: (e) => this.wary(e),
             done: () => this.done()
         }
+        const themeSwitchKey = () => this.themeSwitcherWary()
+
         function handleShortcutKey(key) {
             const destination = ['Overview', 'LineHeat', 'HeatTimeline', 'PassengerAnalytics', 'Authenticate']
             redirect.set(<Redirect to={destination[key - 1]}/>)
         }
         // keyboard shortcuts
-        window.addEventListener("keydown", function (e) {
+        window.addEventListener("keyup", function (e) {
             if (e.defaultPrevented) {
                 return;
             }
@@ -148,6 +162,8 @@ class AnimationApp extends React.Component {
                 if (e.key === '3') {handleShortcutKey(3)}
                 if (e.key === '4') {handleShortcutKey(4)}
                 if (e.key === 'L' || e.key === 'l') {handleShortcutKey(5)}
+                if (e.key === 'K' || e.key === 'k') {themeSwitchKey()}
+                return;
             }
             else if (e.code !== undefined) {
                 if (e.code === 'Digit1') {handleShortcutKey(1)}
@@ -155,6 +171,8 @@ class AnimationApp extends React.Component {
                 if (e.code === 'Digit3') {handleShortcutKey(3)}
                 if (e.code === 'Digit4') {handleShortcutKey(4)}
                 if (e.code === 'KeyL') {handleShortcutKey(5)}
+                if (e.code === 'KeyK') {themeSwitchKey()}
+                return;
             }
         })
 
@@ -172,7 +190,7 @@ class AnimationApp extends React.Component {
                         <button className={"DockNavigation"}>时段分析<span>2</span></button>
                     </NavLink>
                     <NavLink key={"PassengerAnalytics"} to={"PassengerAnalytics"} activeClassName={"active"}>
-                        <button className={"DockNavigation"}>客流分析<span>3</span></button>
+                        <button className={"DockNavigation"}>用户画像<span>3</span></button>
                     </NavLink>
                     <NavLink key={"Authenticate"} to={"Authenticate"} activeClassName={"active"}>
                         <button className={"DockNavigation"}>认证与设置<span>L</span></button>

@@ -7,6 +7,7 @@
 
 /*default custom switch selector*/
 .SwitchBase {
+    white-space: nowrap;
     z-index: 15;
     text-align: center;
     background: var(--themeControlBackground);
@@ -34,6 +35,9 @@
     border: solid 2px #EEE;
     cursor: pointer;
     color: var(--themeTable);
+}
+.SwitchTick:not(.activated):hover {
+    color: #220;
 }
 .SwitchTick.activated:hover {
     background: rgba(255, 255, 255, 1);
