@@ -3,7 +3,6 @@ import './style.css';
 import * as Widgets from '../Widgets/widgets';
 import { MapsBlock } from '../Widgets/MapsBlock';
 import { mapsStore } from "../Store";
-import { Redirect } from "react-router-dom";
 
 const body = document.body
 
@@ -17,7 +16,6 @@ class Index extends React.Component {
         }
         mapsStore.subscribe(() => {
             this.setState({mapsState: mapsStore.getState().dashboardData})
-            this.forceUpdate()
         })
     }
     calculateSize = () => {
@@ -37,11 +35,6 @@ class Index extends React.Component {
 
     render() {
         const {size, mapsState} = this.state
-        if (mapsState === undefined) {
-            setTimeout(function () {
-                return (<Redirect to={'.'}/>)
-            },1000)
-        }
         return (
             <div className={"OverviewGrid"}>
                 <div className={"div1"}>

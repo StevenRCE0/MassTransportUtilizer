@@ -249,7 +249,7 @@ export class DashboardOne extends React.Component {
     }
 
     render() {
-        const tint = "#137A7F"
+        const tint = this.props.tint === undefined ? "#137A7F" : this.props.tint
         const frame = {height: "100%", width: "100%", borderRadius: defaultRoundCorner, align: "center"}
         const size = this.props.size
         let nameLabel;
