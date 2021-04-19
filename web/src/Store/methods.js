@@ -1,13 +1,11 @@
-import {mapsStore} from "./index";
-
+const nowPlacebo = 'May 29, 2020 22:30:00'
 const defaultState = {
     active: "dashboard",
     theme: 'light',
     loginState: false,
     sessionData: '',
-    timeUpToDate: true,
-    now: new Date('May 29, 2020 22:30:00'),
-    timeline: new Date('May 29, 2020 22:30:00'),
+    now: new Date(nowPlacebo),
+    timeline: new Date(nowPlacebo),
     timePeriod: '实时',
     timeNoGo: '数据加载中',
     lineSpectating: 'No',
@@ -46,17 +44,17 @@ const Store = (state = defaultState, action) => {
     if (action.type === 'timeUpdate') {
         if (action.live === true) {
             newState.timePeriod = '实时'
-            newState.timeline = state.now
-            mapsStore.dispatch({type: 'refresh'})
-            return newState
+            newState.timeline = nowPlacebo
         }
-        if (action.time > state.now) {
-            newState.timePeriod = '预测'
+        else {
+            if (action.time > state.now) {
+                newState.timePeriod = '预测'
+            }
+            else if (action.time < state.now) {
+                newState.timePeriod = '历史'
+            }
+            newState.timeline = action.time
         }
-        else if (action.time < state.now) {
-            newState.timePeriod = '历史'
-        }
-        newState.timeline = action.time
         return newState
     }
     if (action.type === 'noGo') {
