@@ -10,7 +10,7 @@ import {
     LineChart,
     CartesianGrid,
     XAxis,
-    YAxis, Line, BarChart, Bar
+    YAxis, Line, BarChart, Bar, LabelList
 } from "recharts";
 import '../Controllers/Switch';
 
@@ -31,13 +31,31 @@ function makeAvailable(thing) {
     if (thing !== undefined) {return thing}
     return (<React.Fragment/>)
 }
-function constructData(propData, sampleData) {
-    if (propData !== undefined) {
-        if (propData == null) {
-            console.warn("Null data received")
-        }
-        return propData
-    } else return sampleData
+function fixDictionaryKeys(data, theKeys, zoom) {
+    let emptyData = [{}, {}, {}, {}]
+    const zoomSet = zoom === undefined ? 1 : zoom
+    const theKeysSet = theKeys === undefined ? ['name', 'value'] : theKeys
+    try {
+        data.map(function (value, index) {
+            emptyData[index] = {'name': value[theKeysSet[0]], 'value': value[theKeysSet[1]] * zoomSet}
+            return emptyData
+        }, emptyData, theKeysSet, zoomSet)
+    }
+    catch (e) {}
+    return emptyData
+}
+function makeDictionaryPairs(data, theKeys) {
+    let newDictionary = {}
+    try {
+        data.map(function (value) {
+            const key = value[theKeys[0]]
+            newDictionary[key] = value[theKeys[1]]
+            return true
+        }, theKeys)
+        console.log(newDictionary)
+    }
+    catch (e) {}
+    return newDictionary
 }
 function linesConstructor(dataArray, tintArray, state, tooltip) {
     const lines = dataArray.lines
@@ -78,7 +96,7 @@ function linesConstructor(dataArray, tintArray, state, tooltip) {
         </LineChart>
     )
 }
-function barConstructor(dataArray, tintArray, state) {
+function barConstructor(dataArray, tintArray, state, label) {
     let keys = []
     dataArray.map(function (x) {
         keys.push(Object.keys(x))
@@ -86,13 +104,20 @@ function barConstructor(dataArray, tintArray, state) {
     })
     keys = keys[0]
     const barContent = keys.map(function (key, index) {
+        let labelSet = []
+        if (label === true) {
+            labelSet = [<LabelList dataKey={key} position="top" style={{fill: 'var(--themeColor)'}}/>]
+
+        }
         return (
             <Bar
                 dataKey={key}
                 fill={tintArray[index]}
-            />
+            >
+                {labelSet}
+            </Bar>
         )
-    })
+    }, label)
 
     return (
         <BarChart
@@ -109,16 +134,7 @@ function barConstructor(dataArray, tintArray, state) {
 
 export class Dashboard extends React.Component {
     render() {
-        let data = [{}, {}, {}, {}]
-        const theKeys = this.props.keys === undefined ? ['name', 'value'] : this.props.keys
-        const zoom = this.props.zoom === undefined ? 1 : this.props.zoom
-        try {
-            this.props.data.map(function wow(value, index) {
-                data[index] = {'name': value[theKeys[0]], 'value': value[theKeys[1]] * zoom}
-                return true
-            }, theKeys)
-        }
-        catch (e) {}
+        const data = fixDictionaryKeys(this.props.data, this.props.keys, this.props.zoom)
         const size = this.props.size * 1.25
         const innerRadius = size / 3.75
         const spacing = 0
@@ -376,38 +392,6 @@ export class Trends extends React.Component {
 }
 
 export class SimpleTrends extends React.Component {
-    constructor(props) {
-        super(props);
-        const mockData = {
-            xAxisMeasurement: "XExample",
-            lines: [
-                {
-                    name: 'One',
-                    values: [
-                        4000,
-                        5000,
-                        3500,
-                        5000
-                    ]
-                },
-                {
-                    name: "Two",
-                    values: [
-                        7500,
-                        5560,
-                        2280,
-                        5600
-                    ]
-                },
-            ]
-        }
-        this.state = {
-            name: this.props.children,
-            data: this.props.data === undefined ? mockData : this.props.data,
-        }
-    }
-
-
     render() {
         const port = this.props.port
         const frame = {
@@ -415,39 +399,28 @@ export class SimpleTrends extends React.Component {
             width: "100%",
             borderRadius: defaultRoundCorner
         }
-        const tint = ["#EA0", "#08A"]
-        let nameLabel;
-        if (this.state.name !== undefined) {
-            nameLabel = [
-                <label className={'widgetLabel'}>
-                    {this.props.children}
-                </label>
-            ]
-        }
-        else {
-            nameLabel = <React.Fragment/>
-        }
+        const tint = this.props.tint === undefined ? ["#EA0", "#08A"] : this.props.tint
+        const dataToConstruct = fixDictionaryKeys(this.props.data, this.props.keys)
+        let nameLabel = makeAvailable(this.props.children)
 
         return (
             <div className={"Layer"} style={frame}>
-                {linesConstructor(this.state.data, tint, port, this.props.tooltip)}
-                {nameLabel}
+                {linesConstructor(dataToConstruct, tint, port, this.props.tooltip)}
+                <label className={'widgetLabel'}>
+                    {nameLabel}
+                </label>
             </div>
         )
     }
 }
 
 export class SimpleBars extends React.Component {
-    constructor(props) {
-        super(props);
-        const mockData = constructData(this.props.data, {"uv": 900, "pv": 609})
-        this.state = {
-            data: this.props.data === undefined ? mockData : this.props.data
-        }
+    componentDidMount() {
+        this.render()
     }
 
-
     render() {
+        const dataToConstruct = this.props.keys === undefined ? this.props.data : makeDictionaryPairs(this.props.data, this.props.keys)
         const port = this.props.port
         const tint = setTintArray(this.props.tint)
         let nameLabel;
@@ -468,7 +441,7 @@ export class SimpleBars extends React.Component {
         }
         return (
             <div className={"Layer"} style={frame}>
-                {barConstructor([this.state.data], tint, port)}
+                {barConstructor([dataToConstruct], tint, port, this.props.label)}
                 {nameLabel}
             </div>
         )

@@ -7,7 +7,6 @@ import { mapsStore } from "../Store";
 const body = document.body
 
 class Index extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -25,7 +24,6 @@ class Index extends React.Component {
     }
     componentDidMount() {
         window.addEventListener('resize', this.calculateSize)
-        setTimeout(() => {mapsStore.dispatch({type: 'refresh'})}, 500)
         this.calculateSize()
     }
 
@@ -36,7 +34,7 @@ class Index extends React.Component {
     render() {
         const {size, mapsState} = this.state
         return (
-            <div className={"OverviewGrid"}>
+            <div className={"OverviewGrid"} key={'pages-index'}>
                 <div className={"div1"}>
                     <Widgets.DashboardOne size={size} data={mapsState.highestFlow}>
                         客流最高站点

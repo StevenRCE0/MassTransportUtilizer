@@ -99,15 +99,48 @@ class App extends React.Component {
 }
 
 class AnimationApp extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            handling: 0,
+            redirect: undefined
+        }
+    }
+    wary(e) {
+        if (this.state.handling === 1) {
+            return
+        }
+        this.setState({handling: 1})
+        this.setState({redirect: e})
+        this.setState({redirect: undefined})
+    }
+
+    componentDidMount() {
+        let done = () => {
+            this.setState({handling: 0})
+        }
+
+        this.props.history.listen(location => {
+            if (this.props.location.pathname !== location.pathname) {
+                setTimeout(done, 500, done)
+            }
+        })
+    }
     render() {
+        let redirect = {
+            state: this.state.redirect,
+            handling: this.state.handling,
+            set: (e) => this.wary(e),
+            done: () => this.done()
+        }
+        function handleShortcutKey(key) {
+            const destination = ['Overview', 'LineHeat', 'HeatTimeline', 'PassengerAnalytics', 'Authenticate']
+            redirect.set(<Redirect to={destination[key - 1]}/>)
+        }
         // keyboard shortcuts
         window.addEventListener("keydown", function (e) {
             if (e.defaultPrevented) {
                 return;
-            }
-            function handleShortcutKey(key) {
-                const destination = ['Overview', 'LineHeat', 'HeatTimeline', 'PassengerAnalytics', 'Authenticate']
-                window.location.replace('./' + destination[key - 1])
             }
             if (e.key !== undefined) {
                 if (e.key === '1') {handleShortcutKey(1)}
@@ -115,6 +148,7 @@ class AnimationApp extends React.Component {
                 if (e.key === '3') {handleShortcutKey(3)}
                 if (e.key === '4') {handleShortcutKey(4)}
                 if (e.key === 'L' || e.key === 'l') {handleShortcutKey(5)}
+                console.log(redirect.handling)
             }
             else if (e.code !== undefined) {
                 if (e.code === 'Digit1') {handleShortcutKey(1)}
@@ -127,6 +161,7 @@ class AnimationApp extends React.Component {
 
         return (
             <React.Fragment>
+                {this.state.redirect}
                 <div className="Dock">
                     <NavLink key={"Overview"} to={"Overview"} activeClassName={"active"} exact>
                         <button className={"DockNavigation"}>概览<span>1</span></button>

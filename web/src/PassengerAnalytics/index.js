@@ -33,6 +33,7 @@ class PassengerAnalytics extends React.Component {
                             <Widgets.SimpleBars
                                 port={{"height": size, "width": size * 2}}
                                 tint={["#2196f3", "#8bc34a"]}
+                                data={{u:90, p:5}}
                             >
                                 Simple Bars
                             </Widgets.SimpleBars>

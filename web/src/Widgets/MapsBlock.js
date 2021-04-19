@@ -378,7 +378,7 @@ export class MapsBlock extends React.Component {
                     </Modal>
                 </div>
                 <div className={'Huge'} style={transformToCentre}>
-                    <Suspense fallback={<div className={"MLPlaceholder"}>Maps loading...</div>}>
+                    <Suspense fallback={<div className={"MLPlaceholder"}>地图正在加载……</div>}>
                         <MapFuture
                             height={this.props.port.height}
                             width={this.props.port.width}

@@ -1,31 +1,50 @@
 import React from "react";
 import './style.css';
 import * as Widgets from "../Widgets/widgets";
+import {mapsStore} from "../Store";
 
 const body = document.body
 
 export class LineHeat extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            mapsState: mapsStore.getState().dashboardData,
+        }
+        mapsStore.subscribe(() => {
+            this.setState({mapsState: mapsStore.getState().dashboardData})
+        })
     }
-    calculateSize() {
+    calculateSize = () => {
         this.setState({
-            size: Math.min(document.documentElement.clientHeight / 8, body.scrollWidth / 8)
+            width: body.scrollWidth / 2,
+            height: body.scrollHeight / 10,
         })
     }
     componentDidMount() {
-        this.calculateSize()
         window.addEventListener('resize', this.calculateSize)
+        this.calculateSize()
     }
+
     componentWillUnmount() {
         window.removeEventListener('resize', this.calculateSize)
     }
 
     render() {
+        const {height, width, mapsState} = this.state
         return(
-            <div className={"LHGrid"}>
-                <div className="div1"></div>
+            <div className={"LHGrid"} key={'pages-line-heat'}>
+                <div className="div1">
+                    <React.Suspense fallback={<div className={'Panel'}/>}>
+                        <Widgets.SimpleBars
+                            port={{height: height, width: width * 2}}
+                            data={mapsState.lineFlow}
+                            keys={['linename', 'flow']}
+                            tint={['#09B8A3', '#23EB62', '#F0438F', '#EBBF23', '#A1C0F5', '#0977B8', '#B98AF5', '#F7DF34', '#F75A43', '#65A1C2']}
+                            label={true}
+                        />
+                    </React.Suspense>
+                </div>
                 <div className="div2"></div>
                 <div className="div3"></div>
                 <div className="div4"></div>
@@ -59,7 +78,6 @@ export class HeatTimeline extends React.Component {
         this.setState({
             size: body.scrollHeight / 5
         })
-        console.log(this.state.size)
     }
     componentDidMount() {
         this.calculateSize()
@@ -72,7 +90,7 @@ export class HeatTimeline extends React.Component {
     render() {
         const {size} = this.state
         return(
-            <div className={"THGrid"}>
+            <div className={"THGrid"} key={'pages-timeline-heat'}>
                 <div className="div1">
                     <Widgets.Trends
                         port={{'height': size * 1, 'width': body.scrollWidth - 60}}

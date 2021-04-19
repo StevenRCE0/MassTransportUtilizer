@@ -97,19 +97,11 @@ class Path extends React.Component {
 }
 
 class MapFuture extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            mode: this.props.mode,
-            width: this.props.width,
-            height: this.props.height,
-        }
-    }
 
     render() {
         const widthIndex = this.props.width / 17500
         const heightIndex = this.props.height / 20000
-        const heatMode = (this.state.mode === '热力图')
+        const heatMode = (this.props.mode === '热力图')
         const pathSet = mapsStore.getState().pathData.map(function (path) {
             return (
                 <Path
@@ -145,7 +137,7 @@ class MapFuture extends React.Component {
 
         return (
             <PersistGate store={mapsStore} persistor={mapsExposedMethods}>
-                <Stage style={transformToCentre} width={this.state.width + 250} height={this.state.height + 50}>
+                <Stage style={transformToCentre} width={this.props.width + 250} height={this.props.height + 50}>
                     <Layer id={'FMpaths'}>
                         {pathSet}
                     </Layer>
