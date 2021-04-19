@@ -232,7 +232,10 @@ export class MapsBlock extends React.Component {
                 <div className={'MapTimestamp'}>
                     <span>预览时间线</span>
                     <span className={this.state.storeState.timeNoGo === true ? '' : 'noGo'}>{this.state.storeState.timeNoGo === true ? '数据可用' : '该时间无数据'}</span>
-                    {moment(this.state.storeState.timeline).format('MM-DD-YYYY HH:MM')}
+                    <br />
+                    <span className={'TimestampDate'}>
+                        {moment(this.state.storeState.timeline).format('MM-DD-YYYY HH:MM')}
+                    </span>
                 </div>
                 <div className={"MapControllers"}>
                     <MapSwitch

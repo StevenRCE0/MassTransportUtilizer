@@ -59,19 +59,17 @@ function setTheme() {
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = store.getState()
+        this.state = {storeState: store.getState()}
         this.storeChange = this.storeChange.bind(this)
         store.subscribe(this.storeChange)
     }
 
-    storeChange(){
-        this.setState(store.getState())
-    }
+    storeChange(){this.setState({storeState: store.getState()})}
 
     render() {
         setTheme()
         let pagesList = []
-        if (this.state.loginState === true) {
+        if (this.state.storeState.loginState === true) {
             pagesList.push(
                 <Switch>
                     <Route exact path={"./"}>

@@ -119,8 +119,9 @@ export class Dashboard extends React.Component {
             }, theKeys)
         }
         catch (e) {}
-        const size = this.props.size * 2
-        const spacing = size / 8
+        const size = this.props.size * 1.25
+        const innerRadius = size / 3.75
+        const spacing = 0
         const tint = this.props.tint === undefined ? ["#137A7F", "#373B3E", "#E12885", "#66CCFF"] : this.props.tint
         const frame = {height: "100%", width: "100%", borderRadius: defaultRoundCorner}
         let nameLabel;
@@ -138,10 +139,10 @@ export class Dashboard extends React.Component {
             <div className={'Layer'} style={frame}>
                 <RadialBarChart
                     style={{position: 'absolute', left: spacing, top: spacing}}
-                    width={size / 2.5}
-                    height={size / 2.5}
+                    width={size}
+                    height={size}
                     data={data.slice(0, 1)}
-                    innerRadius={size / 4.75}
+                    innerRadius={innerRadius}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -154,7 +155,7 @@ export class Dashboard extends React.Component {
                         angleAxisId={0}
                         dataKey={"value"}
                         cornerRadius={"100%"}
-                        background
+                        background={{fill: 'var(--themeControlBackground)'}}
                     >
                         <Cell fill={tint[0]}/>
                     </RadialBar>
@@ -163,10 +164,10 @@ export class Dashboard extends React.Component {
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', right: spacing, top: spacing}}
-                    width={size / 2.5}
-                    height={size / 2.5}
+                    width={size}
+                    height={size}
                     data={data.slice(1, 2)}
-                    innerRadius={size / 4.75}
+                    innerRadius={innerRadius}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -179,7 +180,7 @@ export class Dashboard extends React.Component {
                         angleAxisId={0}
                         dataKey={"value"}
                         cornerRadius={"100%"}
-                        background
+                        background={{fill: 'var(--themeControlBackground)'}}
                     >
                         <Cell fill={tint[1]}/>
                     </RadialBar>
@@ -188,10 +189,10 @@ export class Dashboard extends React.Component {
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', left: spacing, bottom: spacing}}
-                    width={size / 2.5}
-                    height={size / 2.5}
+                    width={size}
+                    height={size}
                     data={data.slice(2, 3)}
-                    innerRadius={size / 4.75}
+                    innerRadius={innerRadius}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -204,7 +205,7 @@ export class Dashboard extends React.Component {
                         angleAxisId={0}
                         dataKey={"value"}
                         cornerRadius={"100%"}
-                        background
+                        background={{fill: 'var(--themeControlBackground)'}}
                     >
                         <Cell fill={tint[2]}/>
                     </RadialBar>
@@ -213,10 +214,10 @@ export class Dashboard extends React.Component {
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', right: spacing, bottom: spacing}}
-                    width={size / 2.5}
-                    height={size / 2.5}
+                    width={size}
+                    height={size}
                     data={data.slice(3, 4)}
-                    innerRadius={size / 4.75}
+                    innerRadius={innerRadius}
                 >
                     <PolarAngleAxis
                         type={"number"}
@@ -229,7 +230,7 @@ export class Dashboard extends React.Component {
                         angleAxisId={0}
                         dataKey={"value"}
                         cornerRadius={"100%"}
-                        background
+                        background={{fill: 'var(--themeControlBackground)'}}
                     >
                         <Cell fill={tint[3]}/>
                     </RadialBar>
@@ -286,7 +287,7 @@ export class DashboardOne extends React.Component {
                         angleAxisId={0}
                         dataKey={"value"}
                         cornerRadius={"100%"}
-                        background
+                        background={{fill: 'var(--themeControlBackground)'}}
                     >
                         <Cell fill={tint}/>
                     </RadialBar>
@@ -572,6 +573,9 @@ export class GreatLegends extends React.Component {
         catch (error) {}
         return undefined
     }
+    makeEmpty(inside) {
+        return (inside === null || inside === undefined) ? '--' : inside
+    }
     render() {
         const frame = {
             "width": "100%",
@@ -586,7 +590,7 @@ export class GreatLegends extends React.Component {
                         {this.getFromData(this.props.data, this.props.index, this.props.keys[0])}
                     </div>
                     <div className={'GLValue'}>
-                        {this.getFromData(this.props.data, this.props.index, this.props.keys[1])}
+                        {this.makeEmpty(this.getFromData(this.props.data, this.props.index, this.props.keys[1]))}
                     </div>
                 </div>
                 <label className={'widgetLabel'}>
@@ -602,7 +606,7 @@ export class GreatLegends extends React.Component {
                             {this.props.name}
                         </div>
                         <div className="GLValue">
-                            {this.props.value}
+                            {this.makeEmpty(this.props.value)}
                         </div>
                     </div>
                     <label className={'widgetLabel'}>

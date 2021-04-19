@@ -50,14 +50,19 @@ svg:not(:root) {
     background: var(--themeControlBackground);
     border-radius: 20px;
     overflow: hidden;
+    text-align: left;
+    line-height: 1.5em;
 }
-.MapTimestamp > span {
+.MapTimestamp > span:not(.TimestampDate) {
     opacity: .6;
     margin-right: 5px;
     font-size: .8em;
 }
 .MapTimestamp > span.noGo {
     color: #F66;
+}
+.MapTimestamp > span.TimestampDate {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 .MapTable {
     border: none;
@@ -144,4 +149,5 @@ svg:not(:root) {
     font-size: 15pt;
     font-weight: bold;
     line-height: 2em;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }

@@ -3,7 +3,7 @@ import './style.css';
 import * as Widgets from '../Widgets/widgets';
 import { MapsBlock } from '../Widgets/MapsBlock';
 import { mapsStore } from "../Store";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const body = document.body
 
@@ -55,12 +55,22 @@ class Index extends React.Component {
                     </Widgets.GreatLegends>
                 </div>
                 <div className={"div3"}>
-                    <Widgets.Dashboard size={size} data={mapsState.highestDist4} zoom={0.1}>
+                    <Widgets.Dashboard
+                        size={size}
+                        data={mapsState.highestDist4}
+                        zoom={0.1}
+                        tint={['#6099DB', '#DC73BC', '#7BDB6B', '#DBD455']}
+                    >
                         客流高峰区域
                     </Widgets.Dashboard>
                 </div>
                 <div className={"div4"}>
-                    <Widgets.Dashboard size={size} data={mapsState.lineFlow} keys={['linename', 'flow']}>
+                    <Widgets.Dashboard
+                        size={size}
+                        data={mapsState.lineFlow}
+                        keys={['linename', 'flow']}
+                        tint={['#6BDB9C', '#DBC760', '#5685DB', '#D9734C']}
+                    >
                         客流高峰线路
                     </Widgets.Dashboard>
                 </div>
