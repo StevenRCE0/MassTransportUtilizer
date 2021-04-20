@@ -151,3 +151,7 @@ svg:not(:root) {
     line-height: 2em;
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+.recharts-default-legend {
+    font-size: 9pt;
+}

@@ -133,7 +133,6 @@ function barConstructor(dataArray, tintArray, state, label) {
 function pieConstructor(dataArray, tintArray, state, label) {
     const nameKey = Object.keys(dataArray[0])[0]
     const dataKey = Object.keys(dataArray[0])[1]
-    console.log(dataKey + '/' +nameKey)
     const barContent = dataArray.map(function (key, index) {
         let labelSet = []
         if (label === true) {
@@ -142,7 +141,7 @@ function pieConstructor(dataArray, tintArray, state, label) {
         return (
             <Pie
                 data={dataArray}
-                namekey={'key'}
+                namekey={nameKey}
                 dataKey={dataKey}
                 fill={tintArray[index]}
             >
@@ -461,7 +460,7 @@ export class SimpleBars extends React.Component {
         return (
             <div className={"Layer"} style={frame}>
                 {barConstructor([dataToConstruct], tint, this.props.port, this.props.label)}
-                {makeAvailable(this.props.children)}
+                <label className={'widgetLabel'}>{makeAvailable(this.props.children)}</label>
             </div>
         )
     }
@@ -629,12 +628,12 @@ export class SimplePieCharts extends React.Component {
         }
         const RADIAN = Math.PI / 180;
         const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
-            const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+            const radius = innerRadius + (outerRadius - innerRadius) * 0.6;
             const x = cx + radius * Math.cos(-midAngle * RADIAN);
             const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
             return (
-                <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                <text x={x} y={y} fill="white" textAnchor={'middle'} dominantBaseline="central">
                     {`${(percent * 100).toFixed(0)}%`}
                 </text>
             )
@@ -657,23 +656,23 @@ export class SimplePieCharts extends React.Component {
                             >
                                 {this.props.data.map((entry, index) => <Cell fill={this.props.tint[0][index % this.props.tint[0].length]}/>)}
                             </Pie>
-                                <Legend/>
+                                <Legend />
                         </PieChart>
                         <PieChart
                             width={this.props.size}
                             height={this.props.size}
                         >
                             <Pie
-                                data={this.props.data}
+                                data={this.props.data0}
                                 nameKey={'key'}
                                 dataKey={'value'}
                                 isAnimationActive={false}
                                 labelLine={false}
                                 label={renderCustomizedLabel}
                             >
-                                {this.props.data.map((entry, index) => <Cell fill={this.props.tint[1][index % this.props.tint[1].length]}/>)}
+                                {this.props.data0.map((entry, index) => <Cell fill={this.props.tint[1][index % this.props.tint[1].length]}/>)}
                             </Pie>
-                            <Legend/>
+                            <Legend />
                         </PieChart>
                     </div>
                     <label className={'widgetLabel'}>{makeAvailable(this.props.children)}</label>
@@ -698,7 +697,7 @@ export class SimplePieCharts extends React.Component {
                         >
                             {this.props.data.map((entry, index) => <Cell fill={this.props.tint[index % this.props.tint.length]}/>)}
                         </Pie>
-                        <Legend/>
+                        <Legend />
                     </PieChart>
                     <label className={'widgetLabel'}>{makeAvailable(this.props.children)}</label>
                 </div>
