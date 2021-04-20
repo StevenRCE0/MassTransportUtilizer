@@ -5,7 +5,9 @@ const defaultValue = {
     stationData: {},
     pathData: {},
     heatData: {},
-    dashboardData: {}
+    dashboardData: {},
+    lineSpectating: 'No',
+    stationSpectating: {station: '没有选中站点', flow: 0},
 }
 
 const Store = (state = defaultValue, action) => {
@@ -27,6 +29,16 @@ const Store = (state = defaultValue, action) => {
     }
     if (action.type === 'loadDashboard') {
         newMapState.dashboardData = action.data
+        return newMapState
+    }
+    if (action.type === 'hoverUpdate') {
+        newMapState.lineSpectating = action.line
+        if (action.hoverType === 'station' || action.hoverType === 'path') {
+            newMapState.stationSpectating[action.hoverType] = action.hoverID
+            newMapState.stationSpectating.flow = action.flow
+            console.log(newMapState.stationSpectating.flow)
+        }
+
         return newMapState
     }
     if (action.type === 'clear') {

@@ -1,16 +1,15 @@
 import React from "react";
 import './style.css';
 import {
+    PolarAngleAxis, XAxis, YAxis,
     AreaChart, Area,
-    RadialBarChart,
-    RadialBar,
-    PolarAngleAxis,
+    RadialBarChart, RadialBar,
+    LineChart, Line,
+    PieChart, Pie,
+    BarChart, Bar,
     Legend, Tooltip,
-    Cell,
-    LineChart,
-    CartesianGrid,
-    XAxis,
-    YAxis, Line, BarChart, Bar, LabelList
+    Cell, CartesianGrid,
+    LabelList
 } from "recharts";
 import '../Controllers/Switch';
 
@@ -27,7 +26,7 @@ function setTintArray(propTintArray) {
         return propTintArray
     } else return ["#137A7F", "#373B3E", "#E12885", "#66CCFF"]
 }
-function makeAvailable(thing) {
+export function makeAvailable(thing) {
     if (thing !== undefined) {return thing}
     return (<React.Fragment/>)
 }
@@ -112,6 +111,7 @@ function barConstructor(dataArray, tintArray, state, label) {
             <Bar
                 dataKey={key}
                 fill={tintArray[index]}
+                isAnimationActive={false}
             >
                 {labelSet}
             </Bar>
@@ -128,6 +128,38 @@ function barConstructor(dataArray, tintArray, state, label) {
             {barContent}
             <Legend/>
         </BarChart>
+    )
+}
+function pieConstructor(dataArray, tintArray, state, label) {
+    const nameKey = Object.keys(dataArray[0])[0]
+    const dataKey = Object.keys(dataArray[0])[1]
+    console.log(dataKey + '/' +nameKey)
+    const barContent = dataArray.map(function (key, index) {
+        let labelSet = []
+        if (label === true) {
+            labelSet = <LabelList dataKey={key} position="top" style={{fill: 'var(--themeColor)'}}/>
+        }
+        return (
+            <Pie
+                data={dataArray}
+                namekey={'key'}
+                dataKey={dataKey}
+                fill={tintArray[index]}
+            >
+                {labelSet}
+            </Pie>
+        )
+    }, label)
+
+    return (
+        <PieChart
+            width={state}
+            height={state}
+            style={transformToCentre}
+        >
+            {barContent}
+            <Legend/>
+        </PieChart>
     )
 }
 
@@ -420,28 +452,16 @@ export class SimpleBars extends React.Component {
 
     render() {
         const dataToConstruct = this.props.keys === undefined ? this.props.data : makeDictionaryPairs(this.props.data, this.props.keys)
-        const port = this.props.port
         const tint = setTintArray(this.props.tint)
-        let nameLabel;
-        if (this.props.children !== undefined) {
-            nameLabel = [
-                <label className={'widgetLabel'}>
-                    {this.props.children}
-                </label>
-            ]
-        }
-        else {
-            nameLabel = <React.Fragment/>
-        }
         const frame = {
             "width": "100%",
             "height": "100%",
-            "border-radius": defaultRoundCorner
+            "borderRadius": defaultRoundCorner
         }
         return (
             <div className={"Layer"} style={frame}>
-                {barConstructor([dataToConstruct], tint, port, this.props.label)}
-                {nameLabel}
+                {barConstructor([dataToConstruct], tint, this.props.port, this.props.label)}
+                {makeAvailable(this.props.children)}
             </div>
         )
     }
@@ -588,5 +608,101 @@ export class GreatLegends extends React.Component {
             )
         }
         return (<React.Fragment/>)
+    }
+}
+
+export class SimplePieCharts extends React.Component {
+    render() {
+        const frame = {
+            width: "100%",
+            height: "100%",
+            borderRadius: defaultRoundCorner,
+        }
+        const duetFrame = {
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            borderRadius: defaultRoundCorner,
+            display: 'flex',
+            flexDirection: 'row'
+        }
+        const RADIAN = Math.PI / 180;
+        const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+            const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+            const x = cx + radius * Math.cos(-midAngle * RADIAN);
+            const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+            return (
+                <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                    {`${(percent * 100).toFixed(0)}%`}
+                </text>
+            )
+        }
+        if (this.props.duet === true) {
+            return (
+                <div className={'Layer'} style={frame}>
+                    <div style={duetFrame}>
+                        <PieChart
+                            width={this.props.size}
+                            height={this.props.size}
+                        >
+                            <Pie
+                                data={this.props.data}
+                                nameKey={'key'}
+                                dataKey={'value'}
+                                isAnimationActive={false}
+                                labelLine={false}
+                                label={renderCustomizedLabel}
+                            >
+                                {this.props.data.map((entry, index) => <Cell fill={this.props.tint[0][index % this.props.tint[0].length]}/>)}
+                            </Pie>
+                                <Legend/>
+                        </PieChart>
+                        <PieChart
+                            width={this.props.size}
+                            height={this.props.size}
+                        >
+                            <Pie
+                                data={this.props.data}
+                                nameKey={'key'}
+                                dataKey={'value'}
+                                isAnimationActive={false}
+                                labelLine={false}
+                                label={renderCustomizedLabel}
+                            >
+                                {this.props.data.map((entry, index) => <Cell fill={this.props.tint[1][index % this.props.tint[1].length]}/>)}
+                            </Pie>
+                            <Legend/>
+                        </PieChart>
+                    </div>
+                    <label className={'widgetLabel'}>{makeAvailable(this.props.children)}</label>
+                </div>
+            )
+        }
+        else {
+            return (
+                <div className={'Layer'} style={frame}>
+                    <PieChart
+                        width={this.props.size}
+                        height={this.props.size}
+                        style={transformToCentre}
+                    >
+                        <Pie
+                            data={this.props.data}
+                            nameKey={'key'}
+                            dataKey={'value'}
+                            labelLine={false}
+                            label={renderCustomizedLabel}
+                            isAnimationActive={false}
+                        >
+                            {this.props.data.map((entry, index) => <Cell fill={this.props.tint[index % this.props.tint.length]}/>)}
+                        </Pie>
+                        <Legend/>
+                    </PieChart>
+                    <label className={'widgetLabel'}>{makeAvailable(this.props.children)}</label>
+                </div>
+            )
+        }
     }
 }

@@ -15,6 +15,8 @@ import axios from "axios";
 import moment from "moment";
 
 const MapFuture = React.lazy(() => import('./Map'));
+const PassengerMaps = React.lazy(() => import('./PassengerMaps'))
+const defaultRoundCorner = 20;
 const transformToCentre = {
     position: "absolute",
     left: "50%",
@@ -42,14 +44,13 @@ export class MapsBlock extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rounded: 20,
             datePicker: false,
             argumentPicker: false,
             activated: "无",
             selectedTime: new Date(store.getState().timeline),
             flowStats: true,
             storeState: store.getState(),
-            mapState: mapsStore.getState(),
+            mapsState: mapsStore.getState(),
             userArguments: {
                 holiday: undefined,
                 weather: {
@@ -69,13 +70,10 @@ export class MapsBlock extends React.Component {
                 }
             }
         }
-        this.storeChange = this.storeChange.bind(this)
-        store.subscribe(this.storeChange)
+        store.subscribe(() => this.setState({storeState: store.getState()}))
+        mapsStore.subscribe(() => this.setState({mapsState: mapsStore.getState()}))
     }
 
-    storeChange(){
-        this.setState({storeState: store.getState()})
-    }
     handleOpen(modal) {
         if (modal === 'datePicker') {this.setState({datePicker: !this.state.datePicker})}
         if (modal === 'argumentPicker') {this.setState({argumentPicker: !this.state.argumentPicker})}
@@ -138,11 +136,11 @@ export class MapsBlock extends React.Component {
             <table className={'MapTable'}>
                 <tr>
                     <td>线路</td>
-                    <td>{this.state.storeState.lineSpectating}</td>
+                    <td>{this.state.mapsState.lineSpectating}</td>
                 </tr>
                 <tr>
                     <td>断面客流</td>
-                    <td>{this.state.storeState.stationSpectating.flow}</td>
+                    <td>{this.state.mapsState.stationSpectating.flow}</td>
                 </tr>
                 <tr>
                     <td>高峰时段</td>
@@ -160,7 +158,7 @@ export class MapsBlock extends React.Component {
         else {
             return (
                 <React.Fragment>
-                    <FormLabel component={'legend'}>{this.state.storeState.stationSpectating.station}</FormLabel>
+                    <FormLabel component={'legend'}>{this.state.mapsState.stationSpectating.station}</FormLabel>
                     <FormGroup>
                         <FormControlLabel
                             control={
@@ -218,7 +216,7 @@ export class MapsBlock extends React.Component {
 
     render() {
         return (
-            <div className={"Layer"} style={{borderRadius: this.state.rounded}}>
+            <div className={"Layer"} style={{borderRadius: defaultRoundCorner}}>
                 <div
                     className={"MapStats"}
                     style={{
@@ -390,6 +388,23 @@ export class MapsBlock extends React.Component {
                             height={this.props.port.height}
                             width={this.props.port.width}
                             mode={this.state.activated}
+                        />
+                    </Suspense>
+                </div>
+            </div>
+        )
+    }
+}
+
+export class PassengerMapsBlock extends React.Component {
+    render() {
+        return (
+            <div className={'Layer'} style={{borderRadius: defaultRoundCorner}}>
+                <div className={'Huge'} style={transformToCentre}>
+                    <Suspense fallback={<div className={'MLPlaceholder'}>乘客画像地图正在加载……</div>}>
+                        <PassengerMaps
+                            height={this.props.port.height}
+                            width={this.props.port.width}
                         />
                     </Suspense>
                 </div>

@@ -8,11 +8,7 @@ const defaultState = {
     timeline: new Date(nowPlacebo),
     timePeriod: '实时',
     timeNoGo: '数据加载中',
-    lineSpectating: 'No',
-    stationSpectating: {station: '没有选中站点', flow: 0},
     flowSpectating: -1,
-    peakSpectating: -1,
-    dashboardData: {}
 }
 const Store = (state = defaultState, action) => {
     let newState = JSON.parse(JSON.stringify(state))
@@ -25,14 +21,6 @@ const Store = (state = defaultState, action) => {
         if (action.logout) {
             return defaultState
         }
-    }
-    if (action.type === 'hoverUpdate') {
-        newState.lineSpectating = action.line
-        if (action.hoverType === 'station') {
-            newState.stationSpectating.station = action.hoverID
-            newState.stationSpectating.flow = action.flow
-        }
-        return newState
     }
     if (action.type === 'switchTheme') {
         newState.theme = 'light'

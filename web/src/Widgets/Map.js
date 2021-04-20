@@ -1,10 +1,10 @@
 import React from "react";
 import {Stage, Layer, Circle, Group, Text, Ring, Line} from "react-konva";
 import "../Overview/style.css";
-import store, {mapsStore, mapsExposedMethods} from '../Store';
+import {mapsStore, mapsExposedMethods} from '../Store';
 import { PersistGate } from 'redux-persist/integration/react';
 
-const lineTintArray = [
+export const lineTintArray = [
     "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#000", "#000", "#E67874", "#009734", "#43B7AE"
 ]
 const transformToCentre = {
@@ -14,8 +14,8 @@ const transformToCentre = {
     transform: "translate(-50%, -50%)",
 }
 
-function hoverResponse(type, id, line, flow) {
-    store.dispatch({
+export function hoverResponse(type, id, line, flow) {
+    mapsStore.dispatch({
         type: 'hoverUpdate',
         hoverType: type,
         hoverID: id,
@@ -97,7 +97,6 @@ class Path extends React.Component {
 }
 
 class MapFuture extends React.Component {
-
     render() {
         const widthIndex = this.props.width / 17500
         const heightIndex = this.props.height / 20000
