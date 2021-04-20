@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import MapSwitch from "../Controllers/Switch";
 import { Button } from "../Controllers/Button";
+import { defaultRoundCorner } from "./widgets";
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import axios from "axios";
@@ -16,7 +17,6 @@ import moment from "moment";
 
 const MapFuture = React.lazy(() => import('./Map'));
 const PassengerMaps = React.lazy(() => import('./PassengerMaps'))
-const defaultRoundCorner = 20;
 const transformToCentre = {
     position: "absolute",
     left: "50%",

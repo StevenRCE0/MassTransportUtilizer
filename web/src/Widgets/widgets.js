@@ -19,7 +19,7 @@ const transformToCentre = {
     top: "50%",
     transform: "translate(-50%, -50%)",
 }
-const defaultRoundCorner = 20;
+export const defaultRoundCorner = 20;
 
 function setTintArray(propTintArray) {
     if (propTintArray !== undefined) {
@@ -57,7 +57,7 @@ function makeDictionaryPairs(data, theKeys) {
 }
 function linesConstructor(dataArray, tintArray, state, tooltip) {
     const lines = dataArray.lines
-    const tooltipElement = tooltip ? [<Tooltip/>] : []
+    const tooltipElement = tooltip ? [<Tooltip />] : []
     let converted = []
     let drawn = []
     lines.map(function (line, lineIndex) {
@@ -71,7 +71,7 @@ function linesConstructor(dataArray, tintArray, state, tooltip) {
         drawn.push(
             <Line
                 type={"monotone"}
-                dot={{r: 3}}
+                dot={{strokeWidth: 3}}
                 id={lineIndex}
                 dataKey={line.name}
                 stroke={tintArray[lineIndex]}
@@ -128,37 +128,6 @@ function barConstructor(dataArray, tintArray, state, label) {
             {barContent}
             <Legend/>
         </BarChart>
-    )
-}
-function pieConstructor(dataArray, tintArray, state, label) {
-    const nameKey = Object.keys(dataArray[0])[0]
-    const dataKey = Object.keys(dataArray[0])[1]
-    const barContent = dataArray.map(function (key, index) {
-        let labelSet = []
-        if (label === true) {
-            labelSet = <LabelList dataKey={key} position="top" style={{fill: 'var(--themeColor)'}}/>
-        }
-        return (
-            <Pie
-                data={dataArray}
-                namekey={nameKey}
-                dataKey={dataKey}
-                fill={tintArray[index]}
-            >
-                {labelSet}
-            </Pie>
-        )
-    }, label)
-
-    return (
-        <PieChart
-            width={state}
-            height={state}
-            style={transformToCentre}
-        >
-            {barContent}
-            <Legend/>
-        </PieChart>
     )
 }
 
@@ -430,12 +399,11 @@ export class SimpleTrends extends React.Component {
             borderRadius: defaultRoundCorner
         }
         const tint = this.props.tint === undefined ? ["#EA0", "#08A"] : this.props.tint
-        const dataToConstruct = fixDictionaryKeys(this.props.data, this.props.keys)
         let nameLabel = makeAvailable(this.props.children)
 
         return (
             <div className={"Layer"} style={frame}>
-                {linesConstructor(dataToConstruct, tint, port, this.props.tooltip)}
+                {linesConstructor(this.props.data, tint, port, this.props.tooltip)}
                 <label className={'widgetLabel'}>
                     {nameLabel}
                 </label>
@@ -683,8 +651,8 @@ export class SimplePieCharts extends React.Component {
             return (
                 <div className={'Layer'} style={frame}>
                     <PieChart
-                        width={this.props.size}
-                        height={this.props.size}
+                        width={this.props.size + 50}
+                        height={this.props.size + 50}
                         style={transformToCentre}
                     >
                         <Pie
@@ -697,7 +665,7 @@ export class SimplePieCharts extends React.Component {
                         >
                             {this.props.data.map((entry, index) => <Cell fill={this.props.tint[index % this.props.tint.length]}/>)}
                         </Pie>
-                        <Legend />
+                        <Legend layout={'vertical'} align={'right'} verticalAlign={'middle'}/>
                     </PieChart>
                     <label className={'widgetLabel'}>{makeAvailable(this.props.children)}</label>
                 </div>

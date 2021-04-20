@@ -16,6 +16,7 @@
     --actualFilter: rgba(255, 255, 255, .8);
     --themeControlBackground: rgba(80, 80, 80, 0.1);
     --dockBorderSize: 1px;
+    --defaultBorderRadius: 20px;
 }
 body {
     margin: 0;

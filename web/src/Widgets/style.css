@@ -155,3 +155,7 @@ svg:not(:root) {
 .recharts-default-legend {
     font-size: 9pt;
 }
+.recharts-default-tooltip {
+    border-radius: var(--defaultBorderRadius);
+    color: #222211;
+}

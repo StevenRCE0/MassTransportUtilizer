@@ -74,7 +74,7 @@ class PassengerAnalytics extends React.Component {
                             data={this.ArrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], [0, 4])}
                             data0={this.ArrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], [5, 9])}
                         >
-                            当前站点乘客结构
+                            全网乘客结构
                         </Widgets.SimplePieCharts>
                     </div>
                     <div className="div3">
@@ -85,7 +85,7 @@ class PassengerAnalytics extends React.Component {
                             data={this.ArrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], [0, 4])}
                             data0={this.ArrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], [5, 9])}
                         >
-                            全网乘客结构
+                            当前站点乘客结构
                         </Widgets.SimplePieCharts>
                     </div>
                     <div className="div4">
@@ -94,8 +94,9 @@ class PassengerAnalytics extends React.Component {
                             data={this.ArrayCoherence(['u', 'v'], [88, 99])}
                             tint={['#A1C0F5', '#0977B8']}
                         >
-                            线网乘客结构
-                        </Widgets.SimplePieCharts></div>
+                            当前站点客流性别比例
+                        </Widgets.SimplePieCharts>
+                    </div>
                     <div className="div5">
                         <Widgets.SimpleBars
                             port={{"height": size, "width": size * 2}}
@@ -105,9 +106,33 @@ class PassengerAnalytics extends React.Component {
                             Simple Bars
                         </Widgets.SimpleBars>
                     </div>
-                    <div className="div6"></div>
-                    <div className="div7"></div>
-                    <div className="div8"></div>
+                    <div className="div6">
+                        <Widgets.SimpleBars
+                            port={{"height": size, "width": size * 2}}
+                            tint={["#2196f3", "#8bc34a"]}
+                            data={{u:90, p:5}}
+                        >
+                            Simple Bars
+                        </Widgets.SimpleBars>
+                    </div>
+                    <div className="div7">
+                        <Widgets.SimpleBars
+                            port={{"height": size, "width": size * 2}}
+                            tint={["#2196f3", "#8bc34a"]}
+                            data={{u:90, p:5}}
+                        >
+                            Simple Bars
+                        </Widgets.SimpleBars>
+                    </div>
+                    <div className="div8">
+                        <Widgets.SimpleBars
+                            port={{"height": size, "width": size * 2}}
+                            tint={["#2196f3", "#8bc34a"]}
+                            data={{u:90, p:5}}
+                        >
+                            Simple Bars
+                        </Widgets.SimpleBars>
+                    </div>
                     <div className="div9"></div>
                     <div className="div10"></div>
                 </div>

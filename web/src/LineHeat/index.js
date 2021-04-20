@@ -17,7 +17,7 @@ export class LineHeat extends React.Component {
     }
     calculateSize = () => {
         this.setState({
-            width: body.scrollWidth / 2,
+            width: body.scrollWidth / 2.2,
             height: body.scrollHeight / 10,
         })
     }
@@ -35,17 +35,35 @@ export class LineHeat extends React.Component {
         return(
             <div className={"LHGrid"} key={'pages-line-heat'}>
                 <div className="div1">
-                    <React.Suspense fallback={<div className={'Panel'}/>}>
-                        <Widgets.SimpleBars
-                            port={{height: height, width: width * 2}}
-                            data={mapsState.lineFlow}
-                            keys={['linename', 'flow']}
-                            tint={['#09B8A3', '#23EB62', '#F0438F', '#EBBF23', '#A1C0F5', '#0977B8', '#B98AF5', '#F7DF34', '#F75A43', '#65A1C2']}
-                            label={true}
-                        />
-                    </React.Suspense>
+                    <Widgets.SimpleBars
+                        port={{height: height, width: width * 2}}
+                        data={mapsState.lineFlow}
+                        keys={['linename', 'flow']}
+                        tint={['#09B8A3', '#23EB62', '#F0438F', '#EBBF23', '#A1C0F5', '#0977B8', '#B98AF5', '#F7DF34', '#F75A43', '#65A1C2']}
+                        label={true}
+                    >
+                        当前全网线路客流
+                    </Widgets.SimpleBars>
                 </div>
-                <div className="div2"></div>
+                <div className="div2">
+                    <Widgets.SimpleTrends
+                        port={{height: height, width: width}}
+                        tooltip
+                        data={{
+                            xAxisMeasurements: 'meow',
+                            lines: [
+                                {
+                                    name: 'wow',
+                                    values: [1, 2, 3]
+                                },
+                                {
+                                    name: 'argh',
+                                    values: [23, 12, 12]
+                                }
+                            ]
+                        }}
+                    />
+                </div>
                 <div className="div3"></div>
                 <div className="div4"></div>
                 <div className="div5"></div>
