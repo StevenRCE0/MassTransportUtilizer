@@ -8,12 +8,15 @@ import {
     Checkbox, Slider, Select, MenuItem, TextField, InputLabel,
 } from "@material-ui/core";
 import MapSwitch from "../Controllers/Switch";
-import {Button} from "../Controllers/Button";
-import {KeyboardDateTimePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import { Button } from "../Controllers/Button";
+import { defaultRoundCorner } from "./widgets";
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import axios from "axios";
+import moment from "moment";
 
 const MapFuture = React.lazy(() => import('./Map'));
+const PassengerMaps = React.lazy(() => import('./PassengerMaps'))
 const transformToCentre = {
     position: "absolute",
     left: "50%",
@@ -23,13 +26,14 @@ const transformToCentre = {
 
 function predictionRequest(userArguments) {
     try {
-        axios.post('http://47.110.95.97:9999/python/predict', {
+        axios.post('/python/predict', {
             station: userArguments.boom.station,
             flow: userArguments.boom.flow,
             dayprop: userArguments.holiday,
             weather: userArguments.weather.condition,
             temperatures: [userArguments.weather.temperature.low, userArguments.weather.temperature.high],
         })
+            .then(response => {console.log(response)})
     }
     catch (error) {
         console.error(error);
@@ -40,19 +44,18 @@ export class MapsBlock extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rounded: 20,
             datePicker: false,
             argumentPicker: false,
             activated: "无",
-            selectedTime: new Date(),
+            selectedTime: new Date(store.getState().timeline),
             flowStats: true,
             storeState: store.getState(),
-            mapState: mapsStore.getState(),
+            mapsState: mapsStore.getState(),
             userArguments: {
                 holiday: undefined,
                 weather: {
                     enabled: false,
-                    condition: undefined,
+                    condition: '阴',
                     temperature: {
                         low: undefined,
                         high: undefined
@@ -67,19 +70,16 @@ export class MapsBlock extends React.Component {
                 }
             }
         }
-        this.storeChange = this.storeChange.bind(this)
-        store.subscribe(this.storeChange)
+        store.subscribe(() => this.setState({storeState: store.getState()}))
+        mapsStore.subscribe(() => this.setState({mapsState: mapsStore.getState()}))
     }
 
-    storeChange(){
-        this.setState({storeState: store.getState()})
-    }
     handleOpen(modal) {
         if (modal === 'datePicker') {this.setState({datePicker: !this.state.datePicker})}
         if (modal === 'argumentPicker') {this.setState({argumentPicker: !this.state.argumentPicker})}
     }
     handleTime(e) {
-        this.setState({time: e})
+        this.setState({selectedTime: e})
     }
     handleChange(e, argument) {
         let newArguments = this.state.userArguments
@@ -94,7 +94,7 @@ export class MapsBlock extends React.Component {
         }
         if (argument === 'boom') {
             newArguments.boom.station = this.state.stationSpectating
-            newArguments.boom.flow = e.target.value
+            newArguments.boom.flow = e
         }
         if (argument === 'weatherTick') {
             newArguments.weather.enabled = e.target.checked
@@ -113,13 +113,21 @@ export class MapsBlock extends React.Component {
         }
         this.setState({userArguments: newArguments})
     }
-
     handlePredictionUpdate(type) {
         predictionRequest(this.state.userArguments, type)
-        alert('预测请求已经提交')
+        alert('预测请求已经提交'+this.state.userArguments.boom.flow)
         this.handleOpen('argumentPicker')
     }
-
+    handleTimeUpdate() {
+        store.dispatch({
+            type: 'timeUpdate',
+            time: this.state.selectedTime
+        })
+        mapsStore.dispatch({
+            type: 'refresh'
+        })
+        this.handleOpen('datePicker')
+    }
     triggerStats() {
         this.setState({flowStats: !this.state.flowStats})
     }
@@ -128,11 +136,11 @@ export class MapsBlock extends React.Component {
             <table className={'MapTable'}>
                 <tr>
                     <td>线路</td>
-                    <td>{this.state.storeState.lineSpectating}</td>
+                    <td>{this.state.mapsState.lineSpectating}</td>
                 </tr>
                 <tr>
                     <td>断面客流</td>
-                    <td>{this.state.storeState.stationSpectating.flow}</td>
+                    <td>{this.state.mapsState.stationSpectating.flow}</td>
                 </tr>
                 <tr>
                     <td>高峰时段</td>
@@ -150,7 +158,7 @@ export class MapsBlock extends React.Component {
         else {
             return (
                 <React.Fragment>
-                    <FormLabel component={'legend'}>{this.state.storeState.stationSpectating.station}</FormLabel>
+                    <FormLabel component={'legend'}>{this.state.mapsState.stationSpectating.station}</FormLabel>
                     <FormGroup>
                         <FormControlLabel
                             control={
@@ -195,7 +203,7 @@ export class MapsBlock extends React.Component {
                                     min={10}
                                     max={110}
                                     disabled={!this.state.userArguments.boom.enabled}
-                                    onChange={(event) => this.handleChange(event, 'boom')}
+                                    onChange={(foo, event) => this.handleChange(event, 'boom')}
                                 />
                             </FormGroup>
                         </FormGroup>
@@ -207,9 +215,8 @@ export class MapsBlock extends React.Component {
     }
 
     render() {
-        mapsStore.dispatch({type: 'refresh'})
         return (
-            <div className={"Layer"} style={{borderRadius: this.state.rounded}}>
+            <div className={"Layer"} style={{borderRadius: defaultRoundCorner}}>
                 <div
                     className={"MapStats"}
                     style={{
@@ -220,13 +227,30 @@ export class MapsBlock extends React.Component {
                 >
                     {this.getStats()}
                 </div>
+                <div className={'MapTimestamp'}>
+                    <span>预览时间线</span>
+                    <span className={this.state.storeState.timeNoGo === true ? '' : 'noGo'}>{this.state.storeState.timeNoGo === true ? '数据可用' : '该时间无数据'}</span>
+                    <br />
+                    <span className={'TimestampDate'}>
+                        {moment(this.state.storeState.timeline).format('MM-DD-YYYY HH:MM')}
+                    </span>
+                </div>
                 <div className={"MapControllers"}>
-                    <MapSwitch switchOptions={["无", "热力图"]} state={this.state}
-                               setState={(e) => (this.setState(e))}
+                    <MapSwitch
+                        switchOptions={["无", "热力图"]}
+                        setState={(e) => (this.setState(e))}
+                        state={this.state}
                     />
-                    <Button onClick={() => this.handleOpen('datePicker')}>
-                        选择日期
-                    </Button>
+                    <div style={{display: "flex", flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Button onClick={() => this.handleOpen('datePicker')}>
+                            日期
+                        </Button>
+                        <div style={{width: '.5em'}}/>
+                        <Button onClick={() => store.dispatch({type: 'timeUpdate', live: true})}>
+                            实时
+                        </Button>
+                    </div>
+
                     <Button onClick={() => this.triggerStats()}>
                         {(this.state.flowStats) ? '隐藏' : '显示'}数据
                     </Button>
@@ -242,16 +266,23 @@ export class MapsBlock extends React.Component {
                                 <div style={{margin: "0 20px"}}>
                                     <MuiPickersUtilsProvider utils={MomentUtils}>
                                         <KeyboardDateTimePicker
-                                            value={this.state.time}
+                                            value={this.state.selectedTime}
                                             onChange={(e) => this.handleTime(e)}
                                         />
                                     </MuiPickersUtilsProvider>
                                 </div>
                                 <CardActions>
-                                    <MaterialButton size={"small"} color={"primary"}>
+                                    <MaterialButton
+                                        size={"small"}
+                                        color={"primary"}
+                                        onClick={() => this.handleTimeUpdate(this.state.storeState.time)}
+                                    >
                                         完成
                                     </MaterialButton>
-                                    <MaterialButton size={"small"} color={"default"} onClick={() => this.handleOpen('datePicker')}>
+                                    <MaterialButton
+                                        size={"small"}
+                                        color={"default"}
+                                        onClick={() => this.handleOpen('datePicker')}>
                                         取消
                                     </MaterialButton>
                                 </CardActions>
@@ -352,11 +383,50 @@ export class MapsBlock extends React.Component {
                     </Modal>
                 </div>
                 <div className={'Huge'} style={transformToCentre}>
-                    <Suspense fallback={<div className={"MLPlaceholder"}>Maps loading...</div>}>
+                    <Suspense fallback={<div className={"MLPlaceholder"}>地图正在加载……</div>}>
                         <MapFuture
                             height={this.props.port.height}
                             width={this.props.port.width}
                             mode={this.state.activated}
+                        />
+                    </Suspense>
+                </div>
+            </div>
+        )
+    }
+}
+
+export class PassengerMapsBlock extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {activated: store.getState().passengerMode}
+        store.subscribe(() => {
+            this.setState({activated: store.getState().passengerMode})
+        })
+    }
+    handlePassengerModeChange(e) {
+        store.dispatch({
+            type: 'changePassengerMode',
+            mode: e.activated
+        })
+    }
+
+    render() {
+        return (
+            <div className={'Layer'} style={{borderRadius: defaultRoundCorner}}>
+                <div className="MapControllers" style={{left: 5, right: 'inherit'}}>
+                    <MapSwitch
+                        switchOptions={["总客流", "出站", "进站"]}
+                        setState={(e) => (this.handlePassengerModeChange(e))}
+                        state={this.state}
+                    />
+                </div>
+
+                <div className={'Huge'} style={transformToCentre}>
+                    <Suspense fallback={<div className={'MLPlaceholder'}>乘客画像地图正在加载……</div>}>
+                        <PassengerMaps
+                            height={this.props.port.height}
+                            width={this.props.port.width}
                         />
                     </Suspense>
                 </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import {Stage, Layer, Circle, Group, Text, Ring, Line} from "react-konva";
 import "../Overview/style.css";
-import store, { mapsStore, mapsExposedMethods } from '../Store';
+import {mapsStore, mapsExposedMethods} from '../Store';
 import { PersistGate } from 'redux-persist/integration/react';
 
-const lineTintArray = [
+export const lineTintArray = [
     "#ADEA7D", "#FBDE5D", "#E23424", "#3487E9", "#6937E5","#984323", "#000", "#000", "#000", "#000", "#E67874", "#009734", "#43B7AE"
 ]
 const transformToCentre = {
@@ -14,8 +14,8 @@ const transformToCentre = {
     transform: "translate(-50%, -50%)",
 }
 
-function hoverResponse(type, id, line, flow) {
-    store.dispatch({
+export function hoverResponse(type, id, line, flow) {
+    mapsStore.dispatch({
         type: 'hoverUpdate',
         hoverType: type,
         hoverID: id,
@@ -63,7 +63,6 @@ class Point extends React.Component {
         )
     }
 }
-
 class Path extends React.Component {
     constructor(props) {
         super(props);
@@ -98,20 +97,10 @@ class Path extends React.Component {
 }
 
 class MapFuture extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            mode: this.props.mode,
-            width: this.props.width,
-            height: this.props.height,
-        }
-    }
-
     render() {
-        mapsStore.dispatch({type: 'refresh'})
         const widthIndex = this.props.width / 17500
         const heightIndex = this.props.height / 20000
-        const heatMode = (this.state.mode === '热力图')
+        const heatMode = (this.props.mode === '热力图')
         const pathSet = mapsStore.getState().pathData.map(function (path) {
             return (
                 <Path
@@ -130,21 +119,24 @@ class MapFuture extends React.Component {
         });
         const pointSet = mapsStore.getState().stationData.map(function (point) {
             return (
-                <Point
-                    x={point.x * widthIndex} y={point.y * heightIndex}
-                    level={heatMode ? point.level : 1}
-                    type={point.type}
-                    station={point.station}
-                    line={point.line}
-                    tint={lineTintArray[point.line.match("^[0-9]+")]}
-                    onClick={() => hoverResponse('station', point.station, point.line, point.id)} //last one to be changed
-                />
+                <React.Suspense fallback={<Point/>}>
+                    <Point
+                        x={point.x * widthIndex} y={point.y * heightIndex}
+                        level={heatMode ? 1 : 1}
+                        type={point.type}
+                        station={point.station}
+                        line={point.line}
+                        tint={lineTintArray[point.line.match("^[0-9]+")]}
+                        onClick={() => hoverResponse('station', point.station, point.line, point.id)} //last one to be changed
+                    />
+                </React.Suspense>
+
             )
         })
 
         return (
             <PersistGate store={mapsStore} persistor={mapsExposedMethods}>
-                <Stage style={transformToCentre} width={this.state.width + 250} height={this.state.height + 50}>
+                <Stage style={transformToCentre} width={this.props.width + 250} height={this.props.height + 50}>
                     <Layer id={'FMpaths'}>
                         {pathSet}
                     </Layer>

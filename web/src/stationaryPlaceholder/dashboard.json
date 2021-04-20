@@ -1,0 +1,890 @@
+{
+  "result": {
+    "code": 200,
+    "msg": "成功",
+    "data": null
+  },
+  "overallFlow": "加载中",
+  "highestTime": "1:8:0",
+  "highestFlow": {
+    "name": "加载中",
+    "value": 0
+  },
+  "highestDist4": [
+    {
+      "name": "加载中",
+      "value": 0
+    },
+    {
+      "name": "加载中",
+      "value": 0
+    },
+    {
+      "name": "加载中",
+      "value": 0
+    },
+    {
+      "name": "加载中",
+      "value": 0
+    }
+  ],
+  "hotPowerGraph": [
+    {
+      "id": "1004",
+      "level": 1,
+      "station": "Sta1"
+    },
+    {
+      "id": "1006",
+      "level": 5,
+      "station": "Sta159"
+    },
+    {
+      "id": "1008",
+      "level": 13.80248,
+      "station": "Sta108"
+    },
+    {
+      "id": "1009",
+      "level": 14.25326,
+      "station": "Sta83"
+    },
+    {
+      "id": "1010",
+      "level": 13.68758,
+      "station": "Sta107"
+    },
+    {
+      "id": "1011",
+      "level": 15.18339,
+      "station": "Sta154"
+    },
+    {
+      "id": "1012",
+      "level": 14.9118,
+      "station": "Sta150"
+    },
+    {
+      "id": "1013",
+      "level": 14.9118,
+      "station": "Sta64"
+    },
+    {
+      "id": "1014",
+      "level": 22.22965,
+      "station": "Sta89"
+    },
+    {
+      "id": "1015",
+      "level": 19,
+      "station": "Sta80"
+    },
+    {
+      "id": "1016",
+      "level": 19,
+      "station": "Sta97"
+    },
+    {
+      "id": "1017",
+      "level": 16,
+      "station": "Sta110"
+    },
+    {
+      "id": "1018",
+      "level": 13,
+      "station": "Sta106"
+    },
+    {
+      "id": "1019",
+      "level": 12,
+      "station": "Sta34"
+    },
+    {
+      "id": "1020",
+      "level": 11,
+      "station": "Sta128"
+    },
+    {
+      "id": "1021",
+      "level": 7,
+      "station": "Sta74"
+    },
+    {
+      "id": "1022",
+      "level": 6,
+      "station": "Sta149"
+    },
+    {
+      "id": "1023",
+      "level": 4,
+      "station": "Sta49"
+    },
+    {
+      "id": "1024",
+      "level": 0,
+      "station": "Sta65"
+    },
+    {
+      "id": "1025",
+      "level": 11.674009,
+      "station": "Sta9"
+    },
+    {
+      "id": "1026",
+      "level": 11.865999,
+      "station": "Sta163"
+    },
+    {
+      "id": "1027",
+      "level": 11.13182,
+      "station": "Sta53"
+    },
+    {
+      "id": "1028",
+      "level": 0,
+      "station": "Sta78"
+    },
+    {
+      "id": "1030",
+      "level": 11.09783,
+      "station": "Sta79"
+    },
+    {
+      "id": "1031",
+      "level": 11.09783,
+      "station": "Sta18"
+    },
+    {
+      "id": "1032",
+      "level": 10.26108,
+      "station": "Sta123"
+    },
+    {
+      "id": "1033",
+      "level": 16.70105,
+      "station": "Sta127"
+    },
+    {
+      "id": "1034",
+      "level": 7,
+      "station": "Sta81"
+    },
+    {
+      "id": "1035",
+      "level": 5,
+      "station": "Sta27"
+    },
+    {
+      "id": "1036",
+      "level": 3,
+      "station": "Sta48"
+    },
+    {
+      "id": "1037",
+      "level": 2,
+      "station": "Sta151"
+    },
+    {
+      "id": "1038",
+      "level": 2,
+      "station": "Sta68"
+    },
+    {
+      "id": "1039",
+      "level": 1,
+      "station": "Sta52"
+    },
+    {
+      "id": "1040",
+      "level": 1,
+      "station": "Sta76"
+    },
+    {
+      "id": "1041",
+      "level": 1,
+      "station": "Sta57"
+    },
+    {
+      "id": "1042",
+      "level": 1,
+      "station": "Sta71"
+    },
+    {
+      "id": "1043",
+      "level": 1,
+      "station": "Sta139"
+    },
+    {
+      "id": "1044",
+      "level": 0,
+      "station": "Sta24"
+    },
+    {
+      "id": "1045",
+      "level": 0,
+      "station": "Sta105"
+    },
+    {
+      "id": "1046",
+      "level": 0,
+      "station": "Sta51"
+    },
+    {
+      "id": "1048",
+      "level": 1,
+      "station": "Sta143"
+    },
+    {
+      "id": "1049",
+      "level": 2,
+      "station": "Sta156"
+    },
+    {
+      "id": "1050",
+      "level": 2,
+      "station": "Sta61"
+    },
+    {
+      "id": "1051",
+      "level": 2,
+      "station": "Sta50"
+    },
+    {
+      "id": "1052",
+      "level": 3,
+      "station": "Sta119"
+    },
+    {
+      "id": "1053",
+      "level": 3,
+      "station": "Sta66"
+    },
+    {
+      "id": "1054",
+      "level": 5,
+      "station": "Sta12"
+    },
+    {
+      "id": "1055",
+      "level": 6,
+      "station": "Sta161"
+    },
+    {
+      "id": "1056",
+      "level": 6,
+      "station": "Sta21"
+    },
+    {
+      "id": "1057",
+      "level": 6,
+      "station": "Sta133"
+    },
+    {
+      "id": "1058",
+      "level": 6,
+      "station": "Sta22"
+    },
+    {
+      "id": "1059",
+      "level": 8,
+      "station": "Sta138"
+    },
+    {
+      "id": "1060",
+      "level": 23.34705,
+      "station": "Sta41"
+    },
+    {
+      "id": "1061",
+      "level": 18.60454,
+      "station": "Sta30"
+    },
+    {
+      "id": "1062",
+      "level": 17.98311,
+      "station": "Sta67"
+    },
+    {
+      "id": "1063",
+      "level": 17.49506,
+      "station": "Sta144"
+    },
+    {
+      "id": "1064",
+      "level": 17.28206,
+      "station": "Sta29"
+    },
+    {
+      "id": "1065",
+      "level": 15.789669,
+      "station": "Sta126"
+    },
+    {
+      "id": "1067",
+      "level": 9.88608,
+      "station": "Sta40"
+    },
+    {
+      "id": "1068",
+      "level": 9.527451,
+      "station": "Sta131"
+    },
+    {
+      "id": "1069",
+      "level": 9.527451,
+      "station": "Sta39"
+    },
+    {
+      "id": "1070",
+      "level": 9.26844,
+      "station": "Sta100"
+    },
+    {
+      "id": "1072",
+      "level": 9.27991,
+      "station": "Sta167"
+    },
+    {
+      "id": "1073",
+      "level": 7.27991,
+      "station": "Sta113"
+    },
+    {
+      "id": "1074",
+      "level": 7.27991,
+      "station": "Sta141"
+    },
+    {
+      "id": "1075",
+      "level": 5.5117197,
+      "station": "Sta142"
+    },
+    {
+      "id": "1076",
+      "level": 3.7435303,
+      "station": "Sta158"
+    },
+    {
+      "id": "1077",
+      "level": 2.743526,
+      "station": "Sta44"
+    },
+    {
+      "id": "1078",
+      "level": 2.743526,
+      "station": "Sta117"
+    },
+    {
+      "id": "1079",
+      "level": 2.743526,
+      "station": "Sta147"
+    },
+    {
+      "id": "1080",
+      "level": 4.24486,
+      "station": "Sta42"
+    },
+    {
+      "id": "1081",
+      "level": 4.74619,
+      "station": "Sta35"
+    },
+    {
+      "id": "1082",
+      "level": 7,
+      "station": "Sta109"
+    },
+    {
+      "id": "1084",
+      "level": 7,
+      "station": "Sta33"
+    },
+    {
+      "id": "1085",
+      "level": 6,
+      "station": "Sta112"
+    },
+    {
+      "id": "1086",
+      "level": 6,
+      "station": "Sta153"
+    },
+    {
+      "id": "1087",
+      "level": 5,
+      "station": "Sta125"
+    },
+    {
+      "id": "1088",
+      "level": 1,
+      "station": "Sta121"
+    },
+    {
+      "id": "1089",
+      "level": 1,
+      "station": "Sta11"
+    },
+    {
+      "id": "1091",
+      "level": 23.32405,
+      "station": "Sta134"
+    },
+    {
+      "id": "1092",
+      "level": 3,
+      "station": "Sta59"
+    },
+    {
+      "id": "1093",
+      "level": 2,
+      "station": "Sta19"
+    },
+    {
+      "id": "1094",
+      "level": 2,
+      "station": "Sta62"
+    },
+    {
+      "id": "1095",
+      "level": 1,
+      "station": "Sta165"
+    },
+    {
+      "id": "1096",
+      "level": 0,
+      "station": "Sta58"
+    },
+    {
+      "id": "1097",
+      "level": 1,
+      "station": "Sta38"
+    },
+    {
+      "id": "1098",
+      "level": 0,
+      "station": "Sta43"
+    },
+    {
+      "id": "1099",
+      "level": 0,
+      "station": "Sta10"
+    },
+    {
+      "id": "1100",
+      "level": 0,
+      "station": "Sta96"
+    },
+    {
+      "id": "1101",
+      "level": 1,
+      "station": "Sta132"
+    },
+    {
+      "id": "1102",
+      "level": 1,
+      "station": "Sta37"
+    },
+    {
+      "id": "1103",
+      "level": 1,
+      "station": "Sta16"
+    },
+    {
+      "id": "1104",
+      "level": 2,
+      "station": "Sta69"
+    },
+    {
+      "id": "1107",
+      "level": 4,
+      "station": "Sta54"
+    },
+    {
+      "id": "1108",
+      "level": 1,
+      "station": "Sta120"
+    },
+    {
+      "id": "1109",
+      "level": 2,
+      "station": "Sta130"
+    },
+    {
+      "id": "1110",
+      "level": 4,
+      "station": "Sta146"
+    },
+    {
+      "id": "1111",
+      "level": 5,
+      "station": "Sta25"
+    },
+    {
+      "id": "1112",
+      "level": 25.99864,
+      "station": "Sta3"
+    },
+    {
+      "id": "1113",
+      "level": 24.334599,
+      "station": "Sta46"
+    },
+    {
+      "id": "1114",
+      "level": 27.334599,
+      "station": "Sta86"
+    },
+    {
+      "id": "1115",
+      "level": 32.117447,
+      "station": "Sta15"
+    },
+    {
+      "id": "1117",
+      "level": 21.267399,
+      "station": "Sta162"
+    },
+    {
+      "id": "1118",
+      "level": 20.042381,
+      "station": "Sta118"
+    },
+    {
+      "id": "1119",
+      "level": 11.30982,
+      "station": "Sta20"
+    },
+    {
+      "id": "1120",
+      "level": 10.79504,
+      "station": "Sta55"
+    },
+    {
+      "id": "1121",
+      "level": 11.2001095,
+      "station": "Sta70"
+    },
+    {
+      "id": "1122",
+      "level": 10.60518,
+      "station": "Sta13"
+    },
+    {
+      "id": "1124",
+      "level": 11.72408,
+      "station": "Sta140"
+    },
+    {
+      "id": "1125",
+      "level": 0,
+      "station": "Sta77"
+    },
+    {
+      "id": "1126",
+      "level": 2,
+      "station": "Sta122"
+    },
+    {
+      "id": "1127",
+      "level": 3,
+      "station": "Sta36"
+    },
+    {
+      "id": "1128",
+      "level": 3,
+      "station": "Sta166"
+    },
+    {
+      "id": "1129",
+      "level": 5,
+      "station": "Sta99"
+    },
+    {
+      "id": "1130",
+      "level": 3,
+      "station": "Sta124"
+    },
+    {
+      "id": "1131",
+      "level": 3,
+      "station": "Sta28"
+    },
+    {
+      "id": "1132",
+      "level": 3.85801,
+      "station": "Sta82"
+    },
+    {
+      "id": "1133",
+      "level": 2.8580132,
+      "station": "Sta164"
+    },
+    {
+      "id": "1134",
+      "level": 1.8580129,
+      "station": "Sta152"
+    },
+    {
+      "id": "1135",
+      "level": 0,
+      "station": "Sta45"
+    },
+    {
+      "id": "1136",
+      "level": 1.7870009,
+      "station": "Sta75"
+    },
+    {
+      "id": "1137",
+      "level": 0,
+      "station": "Sta136"
+    },
+    {
+      "id": "1138",
+      "level": 14.547501,
+      "station": "Sta137"
+    },
+    {
+      "id": "1139",
+      "level": 16.231821,
+      "station": "Sta101"
+    },
+    {
+      "id": "1140",
+      "level": 17.91622,
+      "station": "Sta17"
+    },
+    {
+      "id": "1141",
+      "level": 13.4237,
+      "station": "Sta26"
+    },
+    {
+      "id": "1142",
+      "level": 16.43228,
+      "station": "Sta90"
+    },
+    {
+      "id": "1143",
+      "level": 11.02341,
+      "station": "Sta95"
+    },
+    {
+      "id": "1144",
+      "level": 0,
+      "station": "Sta93"
+    },
+    {
+      "id": "1145",
+      "level": 5.9277496,
+      "station": "Sta92"
+    },
+    {
+      "id": "1146",
+      "level": 5.86078,
+      "station": "Sta32"
+    },
+    {
+      "id": "1147",
+      "level": 15.11816,
+      "station": "Sta91"
+    },
+    {
+      "id": "1149",
+      "level": 0,
+      "station": "Sta157"
+    },
+    {
+      "id": "1150",
+      "level": 10.171061,
+      "station": "Sta168"
+    },
+    {
+      "id": "1151",
+      "level": 8.4540205,
+      "station": "Sta85"
+    },
+    {
+      "id": "1152",
+      "level": 7.4644403,
+      "station": "Sta2"
+    },
+    {
+      "id": "1153",
+      "level": 7.41863,
+      "station": "Sta4"
+    },
+    {
+      "id": "1154",
+      "level": 6.7778897,
+      "station": "Sta103"
+    },
+    {
+      "id": "1155",
+      "level": 7.18296,
+      "station": "Sta145"
+    },
+    {
+      "id": "1156",
+      "level": 8.11194,
+      "station": "Sta88"
+    },
+    {
+      "id": "1157",
+      "level": 4.25943,
+      "station": "Sta94"
+    },
+    {
+      "id": "1158",
+      "level": 5.4685802,
+      "station": "Sta160"
+    },
+    {
+      "id": "1159",
+      "level": 3.677738,
+      "station": "Sta7"
+    },
+    {
+      "id": "1160",
+      "level": 2.696868,
+      "station": "Sta6"
+    },
+    {
+      "id": "1161",
+      "level": 2.715991,
+      "station": "Sta8"
+    },
+    {
+      "id": "1162",
+      "level": 0,
+      "station": "Sta102"
+    },
+    {
+      "id": "1165",
+      "level": 15.91622,
+      "station": "Sta31"
+    },
+    {
+      "id": "1166",
+      "level": 1,
+      "station": "Sta72"
+    },
+    {
+      "id": "1169",
+      "level": 5.86078,
+      "station": "Sta116"
+    },
+    {
+      "id": "1170",
+      "level": 9.89678,
+      "station": "Sta129"
+    },
+    {
+      "id": "1171",
+      "level": 22.188759,
+      "station": "Sta47"
+    },
+    {
+      "id": "1172",
+      "level": 2,
+      "station": "Sta60"
+    },
+    {
+      "id": "1173",
+      "level": 1,
+      "station": "Sta148"
+    },
+    {
+      "id": "1174",
+      "level": 0,
+      "station": "Sta73"
+    },
+    {
+      "id": "1175",
+      "level": 33.19378,
+      "station": "Sta23"
+    },
+    {
+      "id": "1176",
+      "level": 22.1041,
+      "station": "Sta56"
+    },
+    {
+      "id": "1177",
+      "level": 36.59034,
+      "station": "Sta115"
+    },
+    {
+      "id": "1178",
+      "level": 15.33989,
+      "station": "Sta63"
+    },
+    {
+      "id": "1185",
+      "level": 29.79743,
+      "station": "Sta114"
+    },
+    {
+      "id": "1186",
+      "level": 22.93126,
+      "station": "Sta135"
+    },
+    {
+      "id": "1187",
+      "level": 12.02327,
+      "station": "Sta87"
+    },
+    {
+      "id": "1188",
+      "level": 3,
+      "station": "Sta84"
+    },
+    {
+      "id": "1191",
+      "level": 5.8504896,
+      "station": "Sta111"
+    }
+  ],
+  "lineFlow": [
+    {
+      "linename": "全网",
+      "flow": 0
+    },
+    {
+      "linename": "10号线",
+      "flow": 0
+    },
+    {
+      "linename": "11号线",
+      "flow": 0
+    },
+    {
+      "linename": "3号线",
+      "flow": 7.63697
+    },
+    {
+      "linename": "12号线",
+      "flow": 51.1044
+    },
+    {
+      "linename": "3号线",
+      "flow": 0
+    },
+    {
+      "linename": "2号线",
+      "flow": 0
+    },
+    {
+      "linename": "1号线",
+      "flow": 0
+    },
+    {
+      "linename": "4号线",
+      "flow": 0
+    },
+    {
+      "linename": "5号线",
+      "flow": 0
+    }
+  ]
+}

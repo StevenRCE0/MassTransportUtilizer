@@ -1,23 +1,26 @@
 .LHGrid {
     width: var(--dashboardWidth);
-    height: var(--dashboardHeight);
+    height: calc(var(--dashboardHeight) * 2);
     margin: 10px 10px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(7, 1fr);
     grid-column-gap: var(--dashboardSpacing);
     grid-row-gap: var(--dashboardRowSpacing);
 }
 .LHGrid  > .div1 { grid-area: 1 / 1 / 2 / 3; }
-.LHGrid  > .div2 { grid-area: 1 / 3 / 2 / 5; }
-.LHGrid  > .div3 { grid-area: 2 / 1 / 3 / 3; }
-.LHGrid  > .div4 { grid-area: 2 / 3 / 3 / 5; }
-.LHGrid  > .div5 { grid-area: 3 / 1 / 4 / 3; }
-.LHGrid  > .div6 { grid-area: 3 / 3 / 4 / 5; }
-.LHGrid  > .div7 { grid-area: 4 / 1 / 5 / 3; }
-.LHGrid  > .div8 { grid-area: 4 / 3 / 5 / 5; }
-.LHGrid  > .div9 { grid-area: 5 / 1 / 6 / 3; }
-.LHGrid  > .div10 { grid-area: 5 / 3 / 6 / 5; }
+.LHGrid  > .div2 { grid-area: 2 / 1 / 3 / 2; }
+.LHGrid  > .div3 { grid-area: 2 / 2 / 3 / 3; }
+.LHGrid  > .div4 { grid-area: 3 / 1 / 4 / 2; }
+.LHGrid  > .div5 { grid-area: 3 / 2 / 4 / 3; }
+.LHGrid  > .div6 { grid-area: 4 / 1 / 5 / 2; }
+.LHGrid  > .div7 { grid-area: 4 / 2 / 5 / 3; }
+.LHGrid  > .div8 { grid-area: 5 / 1 / 6 / 2; }
+.LHGrid  > .div9 { grid-area: 5 / 2 / 6 / 3; }
+.LHGrid  > .div10 { grid-area: 6 / 1 / 7 / 2; }
+.LHGrid  > .div11 { grid-area: 6 / 2 / 7 / 3; }
+.LHGrid  > .div12 { grid-area: 7 / 1 / 8 / 2; }
+.LHGrid  > .div13 { grid-area: 7 / 2 / 8 / 3; }
 
 .THGrid {
     width: var(--dashboardWidth);

@@ -1,45 +1,31 @@
 import React from "react";
-import {Input, Button} from '../Controllers';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
+import { Input, Button } from '../Controllers';
+import { FormGroup, FormLabel, Slider, Button as MaterialButton } from '@material-ui/core'
 import axios from "axios";
 import './style.css';
-import store, { setExpiration } from "../Store";
+import store, { setExpiration, clearStorage } from "../Store";
+import { ThemeSwitch } from "../Controllers/Switch";
 
 function loginRequest(username, password) {
     try {
-        axios.post('http://47.110.95.97:8080/log', {
+        axios.post('/api/log', {
             'username': username,
             'password': password
         }).then(function (response) {
+            console.log(response.data)
             alert(response.data.msg)
             if (response.data.code === 200) {
                 store.dispatch({
                     type: 'login',
                     loginState: true,
-                    session: response.data.data
+                    session: response.data
                 })
             }
         })
     }
     catch (error) {
+        alert('网络连接出现了一些问题')
         console.error(error);
-    }
-}
-
-function switchTheme() {
-    if (store.getState().theme === 'light') {
-        store.dispatch({
-            type: 'switchTheme',
-            theme: 'dark'
-        })
-    }
-    else if (store.getState().theme === 'dark') {
-        store.dispatch({
-            type: 'switchTheme',
-            theme: 'light'
-        })
     }
 }
 
@@ -47,46 +33,71 @@ class CertForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            'option': ''
+            duration: 1,
         }
     }
-    CertChange(event) {
+    CertChange(type) {
         let feedbackInfo
-        if (this.state.option === 'logout') {
+        if (type === 'logout') {
             feedbackInfo = '注销凭据完成'
             const action = {
                 type: 'certMan',
-                logout: (this.state.option === 'logout')
+                logout: true
             }
             store.dispatch(action)
         }
-        if (this.state.option === 'cache') {
-            feedbackInfo = '保存凭据'+22+'天'
-            setExpiration()
+        if (type === 'cache') {
+            feedbackInfo = '保存凭据' + this.state.duration +'天'
+            setExpiration(this.state.duration)
         }
         alert(feedbackInfo)
-        event.preventDefault()
-
+    }
+    handleSlider = (event, newValue) => {
+        this.setState({duration: newValue})
     }
 
     render() {
-        const handleRadioChange = (event) => {
-            this.setState({'option': event.target.value})
-        };
         return(
             <React.Fragment>
-                <Button onClick={() => switchTheme()}>
-                    切换主题
-                </Button>
-                <br /><br />
-                <form onSubmit={(event) => this.CertChange(event)}>
-                    <RadioGroup name={'manageOption'} value={this.state.option} onChange={handleRadioChange}>
-                        <FormControlLabel value={'logout'} control={<Radio/>} label={"登出"}/>
-                        <FormControlLabel value={'cache'} control={<Radio/>} label={"保存凭据"}/>
-                    </RadioGroup>
-                    <Button type={'submit'}>
-                        确定
-                    </Button>
+                <ThemeSwitch/>
+                <div className={'Description'}>
+                    可以按 [K] 快速切换主题
+                </div>
+                <form
+                    style={{marginTop: '2em'}}
+                    onSubmit={() => this.CertChange('cache', this.state.duration)}
+                >
+                    <FormGroup>
+                        <FormLabel style={{color: 'var(--ThemeColor)'}} component={'legend'}>保存凭据时长（天）</FormLabel>
+                        <div style={{margin: '0 auto', width: 'calc(100% - 20px)'}}>
+                            <Slider
+                                defaultValue={1}
+                                valueLabelDisplay="auto"
+                                step={5}
+                                marks
+                                min={1}
+                                max={31}
+                                onChange={this.handleSlider}
+                            />
+                        </div>
+                    </FormGroup>
+                    <div style={{display: "flex", flexDirection: 'row'}}>
+                        <Button type={'submit'}>
+                            保存凭据
+                        </Button>
+                        <div style={{width: '.5em'}}/>
+                        <Button onClick={() => this.CertChange('logout')}>
+                            注销
+                        </Button>
+                    </div>
+                    <br />
+                    <MaterialButton
+                        size={'small'}
+                        style={{color: '#F66'}}
+                        onClick={() => clearStorage()}
+                    >
+                        清除本地数据并注销
+                    </MaterialButton>
                 </form>
             </React.Fragment>
         )

@@ -6,7 +6,7 @@
     --themeTable: #E3E3E3;
     --themeBorder: none;
     --themeColor: #443;
-    --themeHover: #220;
+    --themeHover: #221;
     --themeActive: #220;
     --themeLayer: rgba(250, 250, 250, 0.8);
     --themeFilter: screen;
@@ -14,8 +14,9 @@
     --themePure0: rgba(255, 255, 255, 1);
     --themePure1: rgba(255, 255, 255, 0);
     --actualFilter: rgba(255, 255, 255, .8);
+    --themeControlBackground: rgba(80, 80, 80, 0.1);
     --dockBorderSize: 1px;
-    transition: .2s linear;
+    --defaultBorderRadius: 20px;
 }
 body {
     margin: 0;
@@ -94,4 +95,12 @@ code {
     border: solid var(--dockBorderSize) #5399fb;
     color: var(--themeHover);
     cursor: pointer;
+}
+
+.MLPlaceholder {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
