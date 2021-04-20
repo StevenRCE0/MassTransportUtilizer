@@ -6,6 +6,7 @@ const defaultState = {
     sessionData: '',
     now: new Date(nowPlacebo),
     timeline: new Date(nowPlacebo),
+    passengerMode: '总客流',
     timePeriod: '实时',
     timeNoGo: '数据加载中',
     flowSpectating: -1,
@@ -27,6 +28,10 @@ const Store = (state = defaultState, action) => {
         if (state.theme === 'light') {
             newState.theme = 'dark'
         }
+        return newState
+    }
+    if (action.type === 'changePassengerMode') {
+        newState.passengerMode = action.mode
         return newState
     }
     if (action.type === 'timeUpdate') {

@@ -397,9 +397,31 @@ export class MapsBlock extends React.Component {
 }
 
 export class PassengerMapsBlock extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {activated: store.getState().passengerMode}
+        store.subscribe(() => {
+            this.setState({activated: store.getState().passengerMode})
+        })
+    }
+    handlePassengerModeChange(e) {
+        store.dispatch({
+            type: 'changePassengerMode',
+            mode: e.activated
+        })
+    }
+
     render() {
         return (
             <div className={'Layer'} style={{borderRadius: defaultRoundCorner}}>
+                <div className="MapControllers" style={{left: 5, right: 'inherit'}}>
+                    <MapSwitch
+                        switchOptions={["总客流", "出站", "进站"]}
+                        setState={(e) => (this.handlePassengerModeChange(e))}
+                        state={this.state}
+                    />
+                </div>
+
                 <div className={'Huge'} style={transformToCentre}>
                     <Suspense fallback={<div className={'MLPlaceholder'}>乘客画像地图正在加载……</div>}>
                         <PassengerMaps

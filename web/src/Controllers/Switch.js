@@ -43,6 +43,7 @@ class MapSwitch extends React.Component {
         return(
             <div
                 className={"SwitchBase"}
+                style={this.props.style}
             >
                 {this.enumOptions(this.props.state, this.props.setState)}
             </div>
