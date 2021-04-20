@@ -111,8 +111,18 @@ http://localhost:8080/time/json metmod:post
     "highestTime": "9:00",
     "highestFlow": {"name": "Sta5","value": 50},
     "highestDist4": [{"name": "dist1","value": 50},...],
-    "hotPowerGraph":[{"id": 1004,"level": 50,"station": "Sta5"},..],
-    "lineFlow": [{"linename": "1号线","flow": 50},...]
+    "lineFlow": [{"linename": "1号线","flow": 50},...],
+    "hotPowerGraph":[{"id": 1004,"level":50,"x":12,"y":45,"line": "1\u53f7\u7ebf","station": "Sta65","type":0,"dist":"Dist1"},...], // 热力图数据
+
+    "age":[{
+     "id": 1004,
+    "in":[1,54,1,0,0,...],
+    "out":[1,54,1,0,0,...],
+    "station": "Sta65",
+    "x":12,
+    "y":45,
+    },...]
+    
 }
 
 当查询的数据不在可查范围内时：
@@ -127,7 +137,16 @@ http://localhost:8080/time/json metmod:post
     "highestFlow": null,
     "highestDist4": null,
     "hotPowerGraph": null,
-    "lineFlow": null
+    "lineFlow": null,
+    
+    "age":[{
+     "id": 1004,
+    "in":null,
+    "out":null,
+    "station": "Sta65",
+    "x":12,
+    "y":45,
+    },...]
 }
 ```
 
