@@ -128,6 +128,56 @@ export class MapsBlock extends React.Component {
         })
         this.handleOpen('datePicker')
     }
+    getTripForm() {
+        if (this.state.tripStart === undefined && this.state.tripFinish === undefined) {
+            return <React.Fragment />
+        }
+        else {
+            return (
+                <React.Fragment>
+                    <tr>
+                        <td>进站</td>
+                        <td>{this.state.tripStart}</td>
+                    </tr>
+                    <tr>
+                        <td>出站</td>
+                        <td>{this.state.tripFinish}</td>
+                    </tr>
+                </React.Fragment>
+            )
+        }
+    }
+    startTrip(station) {
+        this.setState({tripStart: station})
+    }
+    finishTrip(station) {
+        this.setState({tripFinish: station})
+    }
+    tripCalculate() {
+        if (this.state.tripStart === this.state.tripFinish) {
+            alert('起点和终点好像在同一站，不计算时间了。')
+            return
+        }
+        const data = {
+            stationin: this.state.tripStart,
+            stationout: this.state.tripFinish,
+            month: this.state.selectedTime.getMonth() + 1,
+            hour: this.state.selectedTime.getHours(),
+            dayprop: (this.state.userArguments.holiday === true) ? 1 : 0
+        }
+        axios.post('/python/dettime', data)
+            .then(response => alert(response.data.dettime))
+            .catch(error => console.error(error))
+    }
+    getBeginTripButton(start, finish) {
+        if (start !== undefined && finish !== undefined && start !== finish) {
+            return <Button onClick={() => this.tripCalculate()}>开始预测行程</Button>
+        }
+        else {
+            return <React.Fragment />
+        }
+    }
+
     triggerStats() {
         this.setState({flowStats: !this.state.flowStats})
     }
@@ -146,6 +196,7 @@ export class MapsBlock extends React.Component {
                     <td>高峰时段</td>
                     <td>9:00</td>
                 </tr>
+                {this.getTripForm()}
             </table>
         )
     }
@@ -241,20 +292,27 @@ export class MapsBlock extends React.Component {
                         setState={(e) => (this.setState(e))}
                         state={this.state}
                     />
+                    <Button onClick={() => this.triggerStats()}>
+                        {(this.state.flowStats) ? '隐藏' : '显示'}数据
+                    </Button>
+                    <div style={{fontSize: '11pt', marginTop: '.5em'}}>更改预览时间</div>
                     <div style={{display: "flex", flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Button onClick={() => this.handleOpen('datePicker')}>
-                            日期
+                            选择
                         </Button>
                         <div style={{width: '.5em'}}/>
                         <Button onClick={() => store.dispatch({type: 'timeUpdate', live: true})}>
                             实时
                         </Button>
                     </div>
-
-                    <Button onClick={() => this.triggerStats()}>
-                        {(this.state.flowStats) ? '隐藏' : '显示'}数据
-                    </Button>
-                    {this.state.flowStats ? <Button onClick={() => this.handleOpen('argumentPicker')}>模拟数据变更</Button> : ''}
+                    <div style={{fontSize: '11pt', marginTop: '.5em'}}>行程时间预测</div>
+                    <div style={{display: "flex", flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Button onClick={() => this.startTrip(this.state.mapsState.stationSpectating.station)}>起点</Button>
+                        <Button onClick={() => this.finishTrip(this.state.mapsState.stationSpectating.station)}>终点</Button>
+                    </div>
+                    {this.getBeginTripButton(this.state.tripStart, this.state.tripFinish)}
+                    <div style={{fontSize: '11pt', marginTop: '.5em'}}>更改预测参数</div>
+                    <Button onClick={() => this.handleOpen('argumentPicker')}>模拟数据变更</Button>
                     <Modal open={this.state.datePicker}>
                         <Fade in={this.state.datePicker}>
                             <Card className={"Panel"} style={transformToCentre}>
