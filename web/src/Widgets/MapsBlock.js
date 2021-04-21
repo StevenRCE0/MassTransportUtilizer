@@ -166,7 +166,7 @@ export class MapsBlock extends React.Component {
             dayprop: (this.state.userArguments.holiday === true) ? 1 : 0
         }
         axios.post('/python/dettime', data)
-            .then(response => alert(response.data.dettime))
+            .then(response => alert('旅程时间大约为' + response.data.dettime + '分钟'))
             .catch(error => console.error(error))
     }
     getBeginTripButton(start, finish) {

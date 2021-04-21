@@ -413,10 +413,6 @@ export class SimpleTrends extends React.Component {
 }
 
 export class SimpleBars extends React.Component {
-    componentDidMount() {
-        this.render()
-    }
-
     render() {
         const dataToConstruct = this.props.keys === undefined ? this.props.data : makeDictionaryPairs(this.props.data, this.props.keys)
         const tint = setTintArray(this.props.tint)
@@ -579,6 +575,16 @@ export class GreatLegends extends React.Component {
 }
 
 export class SimplePieCharts extends React.Component {
+    isItZero(data) {
+        let result = false
+        data.map(function (data) {
+            if (data.value > 0) {
+                result = true
+                return
+            }
+        })
+        return result
+    }
     render() {
         const frame = {
             width: "100%",
@@ -600,10 +606,22 @@ export class SimplePieCharts extends React.Component {
             const x = cx + radius * Math.cos(-midAngle * RADIAN);
             const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
+            if (percent < .01) {
+                return <React.Fragment />
+            }
             return (
                 <text x={x} y={y} fill="white" textAnchor={'middle'} dominantBaseline="central">
                     {`${(percent * 100).toFixed(0)}%`}
                 </text>
+            )
+        }
+        const data = this.props.data
+        if (this.isItZero(data) === false) {
+            return (
+                <div className={'Layer'} style={frame}>
+                    <div style={transformToCentre}>当前情况无客流</div>
+                    <label className={'widgetLabel'}>{makeAvailable(this.props.children)}</label>
+                </div>
             )
         }
         if (this.props.duet === true) {
@@ -615,14 +633,14 @@ export class SimplePieCharts extends React.Component {
                             height={this.props.size}
                         >
                             <Pie
-                                data={this.props.data}
+                                data={data}
                                 nameKey={'key'}
                                 dataKey={'value'}
                                 isAnimationActive={false}
                                 labelLine={false}
                                 label={renderCustomizedLabel}
                             >
-                                {this.props.data.map((entry, index) => <Cell fill={this.props.tint[0][index % this.props.tint[0].length]}/>)}
+                                {data.map((entry, index) => <Cell fill={this.props.tint[0][index % this.props.tint[0].length]}/>)}
                             </Pie>
                                 <Legend />
                         </PieChart>

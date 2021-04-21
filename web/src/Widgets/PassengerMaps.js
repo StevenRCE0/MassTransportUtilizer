@@ -2,13 +2,23 @@ import React from "react";
 import {Circle, Group, Ring, Text, Stage, Layer} from "react-konva";
 import {mapsExposedMethods, mapsStore} from "../Store";
 import {PersistGate} from "redux-persist/integration/react";
-import {lineTintArray, hoverResponse} from "./Map";
+import {lineTintArray} from "./Map";
 
 const transformToCentre = {
     position: "absolute",
     left: "50%",
     top: "50%",
     transform: "translate(-50%, -50%)",
+}
+
+function hoverResponse(id, inward, outward) {
+    mapsStore.dispatch({
+        type: 'hoverUpdate',
+        hoverType: 'age',
+        hoverID: id,
+        inward: inward,
+        outward: outward
+    })
 }
 
 class Point extends React.Component {
@@ -24,9 +34,9 @@ class Point extends React.Component {
         }
     }
     render() {
-        const basis = 1.5;
-        const multiplier = (this.props.type === "1") ? 3 : 2;
-        const radius = this.state.level * multiplier * basis;
+        const basis = 3;
+        const multiplier = (this.props.type === "1") ? 0.3 : 0.15;
+        const radius = this.state.level * multiplier + basis;
         return (
             <Group x={this.state.x} y={this.state.y} onClick={this.props.onClick}>
                 <Circle
@@ -55,17 +65,17 @@ class PassengerMaps extends React.Component {
         const widthIndex = this.props.width / 16000
         const heightIndex = this.props.height / 19000
         const offset = {x: 40, y: 60}
-        const pointSet = mapsStore.getState().stationData.map(function (point) {
+        const pointSet = mapsStore.getState().dashboardData.hotPowerGraph.map(function (point) {
             return (
                 <React.Suspense fallback={<Point/>}>
                     <Point
                         x={point.x * widthIndex + offset.x} y={point.y * heightIndex + offset.y}
-                        level={1}
+                        level={point.level}
                         type={point.type}
                         station={point.station}
                         line={point.line}
                         tint={lineTintArray[point.line.match("^[0-9]+")]}
-                        onClick={() => hoverResponse('age', point.station, point.line, point.age)}
+                        onClick={() => hoverResponse(point.station)}
                     />
                 </React.Suspense>
             )

@@ -14,7 +14,7 @@ const transformToCentre = {
     transform: "translate(-50%, -50%)",
 }
 
-export function hoverResponse(type, id, line, flow) {
+function hoverResponse(type, id, line, flow) {
     mapsStore.dispatch({
         type: 'hoverUpdate',
         hoverType: type,
@@ -28,11 +28,6 @@ class Point extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.id,
-            x: this.props.x,
-            y: this.props.y,
-            level: this.props.level,
-            type: this.props.type,
             line: this.props.line.match('^[0-9]+'),
             station: this.props.station.match('[0-9]+'),
         }
@@ -40,9 +35,9 @@ class Point extends React.Component {
     render() {
         const basis = 2;
         const multiplier = (this.props.type === "1") ? 3 : 2;
-        const radius = this.state.level * multiplier * basis;
+        const radius = this.props.level * multiplier * basis;
         return (
-            <Group x={this.state.x} y={this.state.y} onClick={this.props.onClick}>
+            <Group x={this.props.x} y={this.props.y} onClick={this.props.onClick}>
                 <Circle
                     radius={radius * 0.5}
                     fill={'#FFF'}
@@ -58,6 +53,21 @@ class Point extends React.Component {
                     stroke={'#FFF'}
                     fillAfterStrokeEnabled={true}
                     x={-radius}
+                />
+            </Group>
+        )
+    }
+}
+class HeatCircle extends React.Component {
+    render() {
+        const basis = 2;
+        const radius = this.props.level * basis;
+        return (
+            <Group x={this.props.x} y={this.props.y} onClick={this.props.onClick}>
+                <Circle
+                    radius={radius * 0.5}
+                    fill={this.props.tint === undefined ? '#B93' : this.props.tint}
+                    opacity={0.23}
                 />
             </Group>
         )
@@ -97,11 +107,21 @@ class Path extends React.Component {
 }
 
 class MapFuture extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {mapsState: mapsStore.getState()}
+        mapsStore.subscribe(() => {
+            this.setState({mapsState: mapsStore.getState()})
+        })
+    }
+
     render() {
+        const { pathData } = this.state.mapsState
+        const stationData = this.state.mapsState.dashboardData.hotPowerGraph
         const widthIndex = this.props.width / 17500
         const heightIndex = this.props.height / 20000
-        const heatMode = (this.props.mode === '热力图')
-        const pathSet = mapsStore.getState().pathData.map(function (path) {
+        const heatMode = this.props.mode === '热力图'
+        const pathSet = pathData.map(function (path) {
             return (
                 <Path
                     x1={path.x1 * widthIndex}
@@ -117,30 +137,44 @@ class MapFuture extends React.Component {
                 />
             )
         });
-        const pointSet = mapsStore.getState().stationData.map(function (point) {
+        const pointSet = stationData.map(function (point) {
             return (
-                <React.Suspense fallback={<Point/>}>
-                    <Point
-                        x={point.x * widthIndex} y={point.y * heightIndex}
-                        level={heatMode ? 1 : 1}
-                        type={point.type}
-                        station={point.station}
-                        line={point.line}
-                        tint={lineTintArray[point.line.match("^[0-9]+")]}
-                        onClick={() => hoverResponse('station', point.station, point.line, point.id)} //last one to be changed
-                    />
-                </React.Suspense>
-
+                <Point
+                    x={point.x * widthIndex} y={point.y * heightIndex}
+                    level={1}
+                    type={point.type}
+                    station={point.station}
+                    line={point.line}
+                    tint={lineTintArray[point.line.match("^[0-9]+")]}
+                    onClick={() => hoverResponse('station', point.station, point.line, point.id)} //last one to be changed
+                />
             )
+        })
+        const heatBackgroundSet = stationData.map(function (point) {
+            if (heatMode) {
+                return (
+                <HeatCircle
+                    x={point.x * widthIndex} y={point.y * heightIndex}
+                    level={point.level}
+                    tint={lineTintArray[point.line.match("^[0-9]+")]}
+                />
+                )
+            }
+            else {
+                return <React.Fragment />
+            }
         })
 
         return (
             <PersistGate store={mapsStore} persistor={mapsExposedMethods}>
                 <Stage style={transformToCentre} width={this.props.width + 250} height={this.props.height + 50}>
-                    <Layer id={'FMpaths'}>
+                    <Layer key={'FMHeat'}>
+                        {heatBackgroundSet}
+                    </Layer>
+                    <Layer key={'FMpaths'}>
                         {pathSet}
                     </Layer>
-                    <Layer id={'FMstations'}>
+                    <Layer key={'FMstations'}>
                         {pointSet}
                     </Layer>
                 </Stage>

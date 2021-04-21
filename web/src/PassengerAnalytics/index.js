@@ -6,17 +6,22 @@ import store, {mapsStore} from "../Store";
 
 const body = document.body
 const passengerArray=['16岁以下', '16~25', '25~40', '40~60', '60岁以上', '16岁以下', '16~25', '25~40', '40~60', '60岁以上', '16岁以下', '16~25', '25~40', '40~60', '60岁以上']
+const tintArray=[['#09B8A3', '#23EB62', '#A1C0F5', '#0977B8', '#658EA4'], ['#F5E3D0', '#F5DE2F', '#F58CB2', '#7FDAFA', '#7A5DF9']]
 
 class PassengerAnalytics extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            mapsState: mapsStore.getState().dashboardData,
-            activated: store.getState().passengerMode
+            stationInward: mapsStore.getState().ageMapSpectating.inward,
+            stationOutward: mapsStore.getState().ageMapSpectating.outward,
+            activated: store.getState().passengerMode,
         }
         mapsStore.subscribe(() => {
-            this.setState({mapsStore: mapsStore.getState().dashboardData})
+            this.setState({
+                stationInward: mapsStore.getState().ageMapSpectating.inward,
+                stationOutward: mapsStore.getState().ageMapSpectating.outward,
+            })
+            this.forceUpdate()
         })
         store.subscribe(() => {
             this.setState({activated: store.getState().passengerMode})
@@ -40,23 +45,29 @@ class PassengerAnalytics extends React.Component {
 
     arrayCoherence(keys, values, slice) {
         let newArray = []
-        values.map(function (value, index) {
-            if (slice === undefined) {
-                let newDictionary = {
-                    key: keys[index],
-                    value: value
+        try {
+            values.map(function (value, index) {
+                if (slice === undefined) {
+                    let newDictionary = {
+                        key: keys[index],
+                        value: value
+                    }
+                    newArray.push(newDictionary)
                 }
-                newArray.push(newDictionary)
-            }
-            else if (index >= slice[0] && index <= slice[1]) {
-                let newDictionary = {
-                    key: keys[index],
-                    value: value
+                else if (index >= slice[0] && index <= slice[1]) {
+                    let newDictionary = {
+                        key: keys[index],
+                        value: value
+                    }
+                    newArray.push(newDictionary)
                 }
-                newArray.push(newDictionary)
-            }
-            return true
-        })
+                return true
+            })
+        }
+        catch (e) {
+            newArray = [{key: '数据加载中', value: 100}]
+        }
+
         return newArray
     }
     getSlice() {
@@ -85,9 +96,9 @@ class PassengerAnalytics extends React.Component {
                         <Widgets.SimplePieCharts
                             size={size * 2}
                             duet
-                            tint={[['#09B8A3', '#23EB62', '#A1C0F5', '#0977B8', '#658EA4'], ['#F0438F', '#EBBF23']]}
-                            data={this.arrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], this.getSlice())}
-                            data0={this.arrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], this.getSlice())}
+                            tint={tintArray}
+                            data={this.arrayCoherence(passengerArray, this.state.stationInward, this.getSlice())}
+                            data0={this.arrayCoherence(passengerArray, this.state.stationOutward, this.getSlice())}
                         >
                             所选站点乘客结构
                         </Widgets.SimplePieCharts>
@@ -96,7 +107,7 @@ class PassengerAnalytics extends React.Component {
                         <Widgets.SimplePieCharts
                             size={size * 2}
                             duet
-                            tint={[['#09B8A3', '#23EB62', '#A1C0F5', '#0977B8', '#658EA4'], ['#F0438F', '#EBBF23']]}
+                            tint={tintArray}
                             data={this.arrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], [10, 14])}
                             data0={this.arrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], [10, 14])}
                         >
@@ -107,7 +118,7 @@ class PassengerAnalytics extends React.Component {
                         <Widgets.SimplePieCharts
                             size={size}
                             data={this.arrayCoherence(['u', 'v'], [88, 99])}
-                            tint={['#A1C0F5', '#0977B8']}
+                            tint={tintArray[1]}
                         >
                             当前站点客流性别比例
                         </Widgets.SimplePieCharts>
