@@ -43,7 +43,7 @@ function setTheme() {
         root.style.setProperty('--themeHover', '#AAB')
         root.style.setProperty('--themeActive', '#FFF')
         root.style.setProperty('--themeLayer', 'rgba(53, 53, 53, 0.8)')
-        root.style.setProperty('--themeFilter', 'multiply')
+        root.style.setProperty('--themeFilter', 'luminosity')
         root.style.setProperty('--themeDarkFilter', 'brightness(.25)')
         root.style.setProperty('--themePure0', 'rgba(64, 64, 64, 1)')
         root.style.setProperty('--themePure1', 'rgba(0, 0, 0, 0)')
@@ -163,7 +163,6 @@ class AnimationApp extends React.Component {
                 if (e.key === '4') {handleShortcutKey(4)}
                 if (e.key === 'L' || e.key === 'l') {handleShortcutKey(5)}
                 if (e.key === 'K' || e.key === 'k') {themeSwitchKey()}
-                return;
             }
             else if (e.code !== undefined) {
                 if (e.code === 'Digit1') {handleShortcutKey(1)}
@@ -172,7 +171,6 @@ class AnimationApp extends React.Component {
                 if (e.code === 'Digit4') {handleShortcutKey(4)}
                 if (e.code === 'KeyL') {handleShortcutKey(5)}
                 if (e.code === 'KeyK') {themeSwitchKey()}
-                return;
             }
         })
 

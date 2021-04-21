@@ -152,6 +152,14 @@ svg:not(:root) {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.CircleLegend {
+    font-size: 9pt;
+}
+.CircleLegend > span {
+    font-size: 11pt;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
 .recharts-default-legend {
     font-size: 9pt;
 }

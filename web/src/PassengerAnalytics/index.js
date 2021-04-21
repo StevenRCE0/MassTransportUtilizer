@@ -185,7 +185,7 @@ class PassengerAnalytics extends React.Component {
                     <div className="div5">
                         <Widgets.SimpleBars
                             port={{"height": size, "width": width}}
-                            tint={["#2196f3", "#8bc34a"]}
+                            tint={["#FAA45A", "#FA5A9F"]}
                             data={this.getSum('inOutBar', this.state.stationInward, this.state.stationOutward)}
                             label
                         >
@@ -195,28 +195,10 @@ class PassengerAnalytics extends React.Component {
                     <div className="div6">
                         <Widgets.SimpleBars
                             port={{"height": size, "width": size * 2}}
-                            tint={["#2196f3", "#8bc34a"]}
-                            data={{u:90, p:5}}
+                            tint={["#5CD0FF", "#98FA8A"]}
+                            data={{'女性':55, '男性':50}}
                         >
-                            Simple Bars
-                        </Widgets.SimpleBars>
-                    </div>
-                    <div className="div7">
-                        <Widgets.SimpleBars
-                            port={{"height": size, "width": size * 2}}
-                            tint={["#2196f3", "#8bc34a"]}
-                            data={{u:90, p:5}}
-                        >
-                            Simple Bars
-                        </Widgets.SimpleBars>
-                    </div>
-                    <div className="div8">
-                        <Widgets.SimpleBars
-                            port={{"height": size, "width": size * 2}}
-                            tint={["#2196f3", "#8bc34a"]}
-                            data={{u:90, p:5}}
-                        >
-                            Simple Bars
+                            全网乘客性别比例
                         </Widgets.SimpleBars>
                     </div>
                 </div>

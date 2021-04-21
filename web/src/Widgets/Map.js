@@ -28,16 +28,26 @@ class Point extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            size: 1,
             line: this.props.line.match('^[0-9]+'),
             station: this.props.station.match('[0-9]+'),
         }
     }
+    handleHover(basis) {
+        this.setState({size: basis})
+    }
     render() {
         const basis = 2;
         const multiplier = (this.props.type === "1") ? 3 : 2;
-        const radius = this.props.level * multiplier * basis;
+        const radius = this.props.level * multiplier * basis * this.state.size;
         return (
-            <Group x={this.props.x} y={this.props.y} onClick={this.props.onClick}>
+            <Group
+                x={this.props.x}
+                y={this.props.y}
+                onClick={this.props.onClick}
+                onMouseEnter={() => {this.handleHover(3)}}
+                onMouseLeave={() => {this.handleHover(1)}}
+            >
                 <Circle
                     radius={radius * 0.5}
                     fill={'#FFF'}

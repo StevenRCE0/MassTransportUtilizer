@@ -9,7 +9,6 @@
     mix-blend-mode: var(--themeFilter);
 }
 #ActualCard > h1 {
-    color: #000;
     font-weight: bolder;
     font-size: 48pt;
     margin-left: 20px;

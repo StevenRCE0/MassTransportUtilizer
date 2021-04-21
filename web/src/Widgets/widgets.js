@@ -55,11 +55,15 @@ function makeDictionaryPairs(data, theKeys) {
     catch (e) {}
     return newDictionary
 }
-function linesConstructor(dataArray, tintArray, state, tooltip) {
+function linesConstructor(dataArray, tintArray, state, tooltip, axis) {
     const lines = dataArray.lines
     const tooltipElement = tooltip ? [<Tooltip />] : []
     let converted = []
     let drawn = []
+    let centreStyle = transformToCentre
+    if (axis === true) {
+        centreStyle = {position: 'absolute', bottom: 10}
+    }
     lines.map(function (line, lineIndex) {
         line.values.map(function (y, x) {
             const partPoint = {}
@@ -86,15 +90,19 @@ function linesConstructor(dataArray, tintArray, state, tooltip) {
             data={converted}
             width={state.width}
             height={state.height}
-            style={transformToCentre}
+            style={centreStyle}
         >
-            <Legend/>
+
+            {axis ? <CartesianGrid /> : <React.Fragment />}
+            {axis ? <YAxis tickLine={false}/> : <React.Fragment />}
+            {axis ? <XAxis tickLine={false}/> : <React.Fragment />}
             {tooltipElement}
             {drawn}
+            <Legend />
         </LineChart>
     )
 }
-function barConstructor(dataArray, tintArray, state, label) {
+function barConstructor(dataArray, tintArray, state, label, axis) {
     let keys = []
     dataArray.map(function (x) {
         keys.push(Object.keys(x))
@@ -126,6 +134,8 @@ function barConstructor(dataArray, tintArray, state, label) {
             height={fixedHeight}
             style={wrapperStyle}
         >
+            {axis ? <CartesianGrid /> : <React.Fragment />}
+            {axis ? <YAxis tickLine={false}/> : <React.Fragment />}
             {barContent}
             <Legend/>
         </BarChart>
@@ -147,6 +157,74 @@ export class Dashboard extends React.Component {
         const spacing = 0
         const tint = this.props.tint === undefined ? ["#137A7F", "#373B3E", "#E12885", "#66CCFF"] : this.props.tint
         const frame = {height: "100%", width: "100%", borderRadius: defaultRoundCorner}
+        const valueKey = this.props.keys === undefined ? 'value' : this.props.keys[1]
+        const values = this.props.data.map(function (entry) {
+            return Math.round(entry[valueKey] * 100) / 100
+        })
+        const renderLegend0 = (props) => {
+            const { payload } = props;
+            return (
+                <div>
+                    {
+                        payload.map((entry) => (
+                            <div className={'CircleLegend'}>
+                                {entry.value}
+                                <br />
+                                <span>{values[0]}</span>
+                            </div>
+                        ), values)
+                    }
+                </div>
+            );
+        }
+        const renderLegend1 = (props) => {
+            const { payload } = props;
+            return (
+                <div>
+                    {
+                        payload.map((entry) => (
+                            <div className={'CircleLegend'}>
+                                {entry.value}
+                                <br />
+                                <span>{values[1]}</span>
+                            </div>
+                        ), values)
+                    }
+                </div>
+            );
+        }
+        const renderLegend2 = (props) => {
+            const { payload } = props;
+            return (
+                <div>
+                    {
+                        payload.map((entry) => (
+                            <div className={'CircleLegend'}>
+                                {entry.value}
+                                <br />
+                                <span>{values[2]}</span>
+                            </div>
+                        ), values)
+                    }
+                </div>
+            );
+        }
+        const renderLegend3 = (props) => {
+            const { payload } = props;
+            return (
+                <div>
+                    {
+                        payload.map((entry) => (
+                            <div className={'CircleLegend'}>
+                                {entry.value}
+                                <br />
+                                <span>{values[3]}</span>
+                            </div>
+                        ), values)
+                    }
+                </div>
+            );
+        }
         let nameLabel;
         if (this.props.children !== undefined) {
             nameLabel = [
@@ -182,8 +260,11 @@ export class Dashboard extends React.Component {
                     >
                         <Cell fill={tint[0]}/>
                     </RadialBar>
-                    <Legend verticalAlign={"middle"} align={"center"} iconSize={0}
-                            wrapperStyle={{transform: "translateX(4px)"}}/>
+                    <Legend
+                        verticalAlign={"middle"}
+                        align={"center"}
+                        content={renderLegend0}
+                    />
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', right: spacing, top: spacing}}
@@ -207,8 +288,11 @@ export class Dashboard extends React.Component {
                     >
                         <Cell fill={tint[1]}/>
                     </RadialBar>
-                    <Legend verticalAlign={"middle"} align={"center"} iconSize={0}
-                            wrapperStyle={{transform: "translateX(4px)"}}/>
+                    <Legend
+                        verticalAlign={"middle"}
+                        align={"center"}
+                        content={renderLegend1}
+                    />
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', left: spacing, bottom: spacing}}
@@ -232,8 +316,11 @@ export class Dashboard extends React.Component {
                     >
                         <Cell fill={tint[2]}/>
                     </RadialBar>
-                    <Legend verticalAlign={"middle"} align={"center"} iconSize={0}
-                            wrapperStyle={{transform: "translateX(4px)"}}/>
+                    <Legend
+                        verticalAlign={"middle"}
+                        align={"center"}
+                        content={renderLegend2}
+                    />
                 </RadialBarChart>
                 <RadialBarChart
                     style={{position: 'absolute', right: spacing, bottom: spacing}}
@@ -257,8 +344,11 @@ export class Dashboard extends React.Component {
                     >
                         <Cell fill={tint[3]}/>
                     </RadialBar>
-                    <Legend verticalAlign={"middle"} align={"center"} iconSize={0}
-                            wrapperStyle={{transform: "translateX(4px)"}}/>
+                    <Legend
+                        verticalAlign={"middle"}
+                        align={"center"}
+                        content={renderLegend3}
+                    />
                 </RadialBarChart>
                 {nameLabel}
             </div>
@@ -267,7 +357,7 @@ export class Dashboard extends React.Component {
 }
 
 export class DashboardOne extends React.Component {
-    greatLegend(value) {
+    greatLegend(value, ) {
         return (<span>{value}</span>)
     }
 
@@ -275,6 +365,23 @@ export class DashboardOne extends React.Component {
         const tint = this.props.tint === undefined ? "#137A7F" : this.props.tint
         const frame = {height: "100%", width: "100%", borderRadius: defaultRoundCorner, align: "center"}
         const size = this.props.size
+        const value = Math.round(this.props.data.value * 100) / 100
+        const renderLegend = (props) => {
+            const { payload } = props;
+            return (
+                <div>
+                    {
+                        payload.map((entry) => (
+                            <div className={'CircleLegend'}>
+                                {entry.value}
+                                <br />
+                                <span>{value}</span>
+                            </div>
+                        ), value)
+                    }
+                </div>
+            );
+        }
         let nameLabel;
         if (this.props.children !== undefined) {
             nameLabel = [
@@ -314,12 +421,12 @@ export class DashboardOne extends React.Component {
                     >
                         <Cell fill={tint}/>
                     </RadialBar>
+
                     <Legend
                         verticalAlign={"middle"}
                         align={"center"}
-                        iconSize={0}
-                        wrapperStyle={{transform: "translateX(4px)"}}
                         formatter={this.greatLegend}
+                        content={renderLegend}
                     />
                 </RadialBarChart>
                 {nameLabel}
@@ -411,7 +518,7 @@ export class SimpleTrends extends React.Component {
 
         return (
             <div className={"Layer"} style={frame}>
-                {linesConstructor(this.props.data, tint, port, this.props.tooltip)}
+                {linesConstructor(this.props.data, tint, port, this.props.tooltip, this.props.axis)}
                 <label className={'widgetLabel'}>
                     {nameLabel}
                 </label>
@@ -431,7 +538,7 @@ export class SimpleBars extends React.Component {
         }
         return (
             <div className={"Layer"} style={frame}>
-                {barConstructor([dataToConstruct], tint, this.props.port, this.props.label)}
+                {barConstructor([dataToConstruct], tint, this.props.port, this.props.label, this.props.axis)}
                 <label className={'widgetLabel'}>{makeAvailable(this.props.children)}</label>
             </div>
         )

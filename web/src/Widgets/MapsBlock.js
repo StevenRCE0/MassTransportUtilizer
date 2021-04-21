@@ -25,19 +25,25 @@ const transformToCentre = {
 }
 
 function predictionRequest(userArguments) {
+    const timeConstructed = moment(userArguments.time).format('MM:DD:hh:mm')
+    const data = {
+        time: timeConstructed,
+        station: {
+            name: userArguments.boom.station,
+            flow: userArguments.boom.flow === undefined || userArguments.boom.type === undefined ? undefined : [userArguments.boom.flow, userArguments.boom.type],
+        },
+        dayprop: userArguments.holiday,
+        weather: userArguments.weather.condition,
+        temperatures: [userArguments.weather.temperature.low, userArguments.weather.temperature.high],
+    }
     try {
-        axios.post('/python/predict', {
-            station: userArguments.boom.station,
-            flow: userArguments.boom.flow,
-            dayprop: userArguments.holiday,
-            weather: userArguments.weather.condition,
-            temperatures: [userArguments.weather.temperature.low, userArguments.weather.temperature.high],
-        })
+        axios.post('/python/predict', data)
             .then(response => {console.log(response)})
     }
     catch (error) {
         console.error(error);
     }
+    console.log(data)
 }
 
 export class MapsBlock extends React.Component {
@@ -52,6 +58,7 @@ export class MapsBlock extends React.Component {
             storeState: store.getState(),
             mapsState: mapsStore.getState(),
             userArguments: {
+                time: store.getState().timeline,
                 holiday: undefined,
                 weather: {
                     enabled: false,
@@ -115,7 +122,7 @@ export class MapsBlock extends React.Component {
     }
     handlePredictionUpdate(type) {
         predictionRequest(this.state.userArguments, type)
-        alert('预测请求已经提交'+this.state.userArguments.boom.flow)
+        alert('预测请求已经提交')
         this.handleOpen('argumentPicker')
     }
     handleTimeUpdate() {
@@ -184,6 +191,10 @@ export class MapsBlock extends React.Component {
     getStats() {
         return(
             <table className={'MapTable'}>
+                <tr>
+                    <td>站点</td>
+                    <td>{this.state.mapsState.stationSpectating.station}</td>
+                </tr>
                 <tr>
                     <td>线路</td>
                     <td>{this.state.mapsState.lineSpectating}</td>

@@ -41,6 +41,7 @@ export class LineHeat extends React.Component {
                         keys={['linename', 'flow']}
                         tint={['#09B8A3', '#23EB62', '#F0438F', '#EBBF23', '#A1C0F5', '#0977B8', '#B98AF5', '#F7DF34', '#F75A43', '#65A1C2']}
                         label
+                        axis
                     >
                         当前全网线路客流
                     </Widgets.SimpleBars>
@@ -48,7 +49,6 @@ export class LineHeat extends React.Component {
                 <div className="div2">
                     <Widgets.SimpleTrends
                         port={{height: height, width: width}}
-                        tooltip
                         data={{
                             xAxisMeasurements: 'meow',
                             lines: [
@@ -62,6 +62,8 @@ export class LineHeat extends React.Component {
                                 }
                             ]
                         }}
+                        tooltip
+                        axis
                     />
                 </div>
                 <div className="div3"></div>
