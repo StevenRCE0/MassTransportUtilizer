@@ -146,7 +146,7 @@ class MapFuture extends React.Component {
                     station={point.station}
                     line={point.line}
                     tint={lineTintArray[point.line.match("^[0-9]+")]}
-                    onClick={() => hoverResponse('station', point.station, point.line, point.id)} //last one to be changed
+                    onClick={() => hoverResponse('station', point.station, point.line, point.level)}
                 />
             )
         })
