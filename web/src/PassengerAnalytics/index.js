@@ -38,6 +38,7 @@ class PassengerAnalytics extends React.Component {
     componentDidMount() {
         this.calculateSize()
         window.addEventListener('resize', this.calculateSize)
+        mapsStore.dispatch({type: 'refresh'})
     }
     componentWillUnmount() {
         window.removeEventListener('resize', this.calculateSize)
@@ -81,6 +82,66 @@ class PassengerAnalytics extends React.Component {
             return [10, 14]
         }
     }
+    getSum(type, data0, data1) {
+        try {
+            if (type === 'inOut') {
+                let inward = 0
+                let outward = 0
+                data0.slice(10, 14).map(function (value) {
+                    inward += value
+                    return true
+                })
+                data1.slice(10, 14).map(function (value) {
+                    outward += value
+                    return true
+                })
+                return [
+                    {key: '进站', value: inward},
+                    {key: '出站', value: outward}
+                ]
+            }
+            if (type === 'inOutBar') {
+                let inward = 0
+                let outward = 0
+                data0.slice(10, 14).map(function (value) {
+                    inward += value
+                    return true
+                })
+                data1.slice(10, 14).map(function (value) {
+                    outward += value
+                    return true
+                })
+                //eslint-ignore-next-line
+                return {'进站': inward, '出站': outward}
+            }
+            if (type === 'gender') {
+                let girls = 0
+                let boys = 0
+                data0.slice(0, 4).map(function (value) {
+                    girls += value
+                    return true
+                })
+                data1.slice(0, 4).map(function (value) {
+                    girls += value
+                    return true
+                })
+                data0.slice(5, 10).map(function (value) {
+                    boys += value
+                    return true
+                })
+                data1.slice(5, 10).map(function (value) {
+                    boys += value
+                    return true
+                })
+                return [
+                    {key: '女性', value: girls},
+                    {key: '男性', value: boys}
+                ]
+            }
+        }
+        catch (e) {}
+        return ({key: '加载中', value: 0})
+    }
 
     render() {
         const {height, width, size} = this.state
@@ -98,7 +159,7 @@ class PassengerAnalytics extends React.Component {
                             duet
                             tint={tintArray}
                             data={this.arrayCoherence(passengerArray, this.state.stationInward, this.getSlice())}
-                            data0={this.arrayCoherence(passengerArray, this.state.stationOutward, this.getSlice())}
+                            data0={this.getSum('inOut', this.state.stationInward, this.state.stationOutward)}
                         >
                             所选站点乘客结构
                         </Widgets.SimplePieCharts>
@@ -106,10 +167,8 @@ class PassengerAnalytics extends React.Component {
                     <div className="div3">
                         <Widgets.SimplePieCharts
                             size={size * 2}
-                            duet
-                            tint={tintArray}
+                            tint={tintArray[0]}
                             data={this.arrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], [10, 14])}
-                            data0={this.arrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], [10, 14])}
                         >
                             全网乘客结构
                         </Widgets.SimplePieCharts>
@@ -117,7 +176,7 @@ class PassengerAnalytics extends React.Component {
                     <div className="div4">
                         <Widgets.SimplePieCharts
                             size={size}
-                            data={this.arrayCoherence(['u', 'v'], [88, 99])}
+                            data={this.getSum('gender', this.state.stationInward, this.state.stationOutward)}
                             tint={tintArray[1]}
                         >
                             当前站点客流性别比例
@@ -125,11 +184,12 @@ class PassengerAnalytics extends React.Component {
                     </div>
                     <div className="div5">
                         <Widgets.SimpleBars
-                            port={{"height": size, "width": size * 2}}
+                            port={{"height": size, "width": width}}
                             tint={["#2196f3", "#8bc34a"]}
-                            data={{u:90, p:5}}
+                            data={this.getSum('inOutBar', this.state.stationInward, this.state.stationOutward)}
+                            label
                         >
-                            Simple Bars
+                            当前站点进出站客流
                         </Widgets.SimpleBars>
                     </div>
                     <div className="div6">

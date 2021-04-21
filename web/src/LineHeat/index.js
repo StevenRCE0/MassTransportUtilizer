@@ -40,7 +40,7 @@ export class LineHeat extends React.Component {
                         data={mapsState.lineFlow}
                         keys={['linename', 'flow']}
                         tint={['#09B8A3', '#23EB62', '#F0438F', '#EBBF23', '#A1C0F5', '#0977B8', '#B98AF5', '#F7DF34', '#F75A43', '#65A1C2']}
-                        label={true}
+                        label
                     >
                         当前全网线路客流
                     </Widgets.SimpleBars>
@@ -112,7 +112,9 @@ export class HeatTimeline extends React.Component {
                 <div className="div1">
                     <Widgets.Trends
                         port={{'height': size * 1, 'width': body.scrollWidth - 60}}
-                    />
+                    >
+                        近日客流
+                    </Widgets.Trends>
                 </div>
                 <div className="div2">
                     <Widgets.Trends

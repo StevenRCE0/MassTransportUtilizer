@@ -101,11 +101,12 @@ function barConstructor(dataArray, tintArray, state, label) {
         return x
     })
     keys = keys[0]
+    const wrapperStyle = {position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)'}
+    const fixedHeight = label ? state.height - 10 : state.height
     const barContent = keys.map(function (key, index) {
         let labelSet = []
-        if (label === true) {
+        if (label) {
             labelSet = [<LabelList dataKey={key} position="top" style={{fill: 'var(--themeColor)'}}/>]
-
         }
         return (
             <Bar
@@ -122,13 +123,20 @@ function barConstructor(dataArray, tintArray, state, label) {
         <BarChart
             data={dataArray}
             width={state.width}
-            height={state.height}
-            style={transformToCentre}
+            height={fixedHeight}
+            style={wrapperStyle}
         >
             {barContent}
             <Legend/>
         </BarChart>
     )
+}
+function colouredPieConstructor(data, tint) {
+    try {
+        return data.map((entry, index) => <Cell fill={tint[index % tint.length]}/>)
+    }
+    catch (e) {}
+
 }
 
 export class Dashboard extends React.Component {
@@ -577,14 +585,20 @@ export class GreatLegends extends React.Component {
 export class SimplePieCharts extends React.Component {
     isItZero(data) {
         let result = false
-        data.map(function (data) {
-            if (data.value > 0) {
-                result = true
-                return
-            }
-        })
+        try {
+            data.map(function (data) {
+                if (data.value > 0) {
+                    result = true
+                    return true
+                }
+                return true
+            })
+            return result
+        }
+        catch (e) {}
         return result
     }
+
     render() {
         const frame = {
             width: "100%",
@@ -610,12 +624,13 @@ export class SimplePieCharts extends React.Component {
                 return <React.Fragment />
             }
             return (
-                <text x={x} y={y} fill="white" textAnchor={'middle'} dominantBaseline="central">
+                <text x={x} y={y} fill="#777" textAnchor={'middle'} dominantBaseline="central" style={{mixBlendMode: 'difference'}}>
                     {`${(percent * 100).toFixed(0)}%`}
                 </text>
             )
         }
         const data = this.props.data
+        const data0 = this.props.data0
         if (this.isItZero(data) === false) {
             return (
                 <div className={'Layer'} style={frame}>
@@ -640,7 +655,7 @@ export class SimplePieCharts extends React.Component {
                                 labelLine={false}
                                 label={renderCustomizedLabel}
                             >
-                                {data.map((entry, index) => <Cell fill={this.props.tint[0][index % this.props.tint[0].length]}/>)}
+                                {colouredPieConstructor(data, this.props.tint[0])}
                             </Pie>
                                 <Legend />
                         </PieChart>
@@ -649,14 +664,14 @@ export class SimplePieCharts extends React.Component {
                             height={this.props.size}
                         >
                             <Pie
-                                data={this.props.data0}
+                                data={data0}
                                 nameKey={'key'}
                                 dataKey={'value'}
                                 isAnimationActive={false}
                                 labelLine={false}
                                 label={renderCustomizedLabel}
                             >
-                                {this.props.data0.map((entry, index) => <Cell fill={this.props.tint[1][index % this.props.tint[1].length]}/>)}
+                                {colouredPieConstructor(data, this.props.tint[1])}
                             </Pie>
                             <Legend />
                         </PieChart>
@@ -674,14 +689,14 @@ export class SimplePieCharts extends React.Component {
                         style={transformToCentre}
                     >
                         <Pie
-                            data={this.props.data}
+                            data={data}
                             nameKey={'key'}
                             dataKey={'value'}
                             labelLine={false}
                             label={renderCustomizedLabel}
                             isAnimationActive={false}
                         >
-                            {this.props.data.map((entry, index) => <Cell fill={this.props.tint[index % this.props.tint.length]}/>)}
+                            {colouredPieConstructor(data, this.props.tint)}
                         </Pie>
                         <Legend layout={'vertical'} align={'right'} verticalAlign={'middle'}/>
                     </PieChart>
