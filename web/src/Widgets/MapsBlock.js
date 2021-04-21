@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import store, { mapsStore } from "../Store";
+import store, {mapsStore, patchZero} from "../Store";
 import {
     Button as MaterialButton,
     Card, CardActions, CardContent, Typography,
@@ -165,15 +165,17 @@ export class MapsBlock extends React.Component {
             alert('起点和终点好像在同一站，不计算时间了。')
             return
         }
+        const timeline = new Date(this.state.storeState.timeline)
         const data = {
             stationin: this.state.tripStart,
             stationout: this.state.tripFinish,
-            month: this.state.selectedTime.getMonth() + 1,
-            hour: this.state.selectedTime.getHours(),
+            month: timeline.getMonth() + 1,
+            hour: timeline.getHours(),
             dayprop: (this.state.userArguments.holiday === true) ? 1 : 0
         }
+        console.log(data)
         axios.post('/python/dettime', data)
-            .then(response => alert('旅程时间大约为' + response.data.dettime + '分钟'))
+            .then(response => alert('旅程时间大约为' + Math.abs(response.data.dettime) + '分钟'))
             .catch(error => console.error(error))
     }
     getBeginTripButton(start, finish) {
@@ -189,6 +191,7 @@ export class MapsBlock extends React.Component {
         this.setState({flowStats: !this.state.flowStats})
     }
     getStats() {
+        const timeArray = [this.state.mapsState.dashboardData.highestTime.replace(/:[0-9]$/, '').match(/[0-9]+$/), this.state.mapsState.dashboardData.highestTime.match(/[0-9]+$/)]
         return(
             <table className={'MapTable'}>
                 <tr>
@@ -205,7 +208,7 @@ export class MapsBlock extends React.Component {
                 </tr>
                 <tr>
                     <td>高峰时段</td>
-                    <td>9:00</td>
+                    <td>{patchZero(timeArray[0], 2)+':'+patchZero(timeArray[1], 2)}</td>
                 </tr>
                 {this.getTripForm()}
             </table>

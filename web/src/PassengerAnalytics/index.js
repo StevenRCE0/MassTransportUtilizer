@@ -2,7 +2,7 @@ import React from "react";
 import './style.css';
 import * as Widgets from '../Widgets/widgets';
 import {PassengerMapsBlock} from "../Widgets/MapsBlock";
-import store, {mapsStore} from "../Store";
+import store, {mapsStore, arrayCoherence} from "../Store";
 
 const body = document.body
 const passengerArray=['16岁以下', '16~25', '25~40', '40~60', '60岁以上', '16岁以下', '16~25', '25~40', '40~60', '60岁以上', '16岁以下', '16~25', '25~40', '40~60', '60岁以上']
@@ -44,33 +44,6 @@ class PassengerAnalytics extends React.Component {
         window.removeEventListener('resize', this.calculateSize)
     }
 
-    arrayCoherence(keys, values, slice) {
-        let newArray = []
-        try {
-            values.map(function (value, index) {
-                if (slice === undefined) {
-                    let newDictionary = {
-                        key: keys[index],
-                        value: value
-                    }
-                    newArray.push(newDictionary)
-                }
-                else if (index >= slice[0] && index <= slice[1]) {
-                    let newDictionary = {
-                        key: keys[index],
-                        value: value
-                    }
-                    newArray.push(newDictionary)
-                }
-                return true
-            })
-        }
-        catch (e) {
-            newArray = [{key: '数据加载中', value: 100}]
-        }
-
-        return newArray
-    }
     getSlice() {
         if (this.state.activated === '进站') {
             return [0, 4]
@@ -158,7 +131,7 @@ class PassengerAnalytics extends React.Component {
                             size={size * 2}
                             duet
                             tint={tintArray}
-                            data={this.arrayCoherence(passengerArray, this.state.stationInward, this.getSlice())}
+                            data={arrayCoherence(passengerArray, this.state.stationInward, this.getSlice())}
                             data0={this.getSum('inOut', this.state.stationInward, this.state.stationOutward)}
                         >
                             所选站点乘客结构
@@ -168,7 +141,7 @@ class PassengerAnalytics extends React.Component {
                         <Widgets.SimplePieCharts
                             size={size * 2}
                             tint={tintArray[0]}
-                            data={this.arrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], [10, 14])}
+                            data={arrayCoherence(passengerArray, [88, 99, 77, 66, 55, 44, 33, 22, 11, 44, 55, 66, 77, 88, 99, 100], [10, 14])}
                         >
                             全网乘客结构
                         </Widgets.SimplePieCharts>

@@ -1,9 +1,20 @@
 import React from "react";
 import './style.css';
 import * as Widgets from "../Widgets/widgets";
-import {mapsStore} from "../Store";
+import store, {mapsStore} from "../Store";
+import {fixDictionaryKeys} from "../Widgets/widgets";
 
 const body = document.body
+
+function getLineTimelines(timelineData) {
+    let result = {
+        xAxisMeasurements: '日',
+        lines:
+            fixDictionaryKeys(timelineData, ['name', 'values'])
+    }
+    console.log(result)
+    return result
+}
 
 export class LineHeat extends React.Component {
     constructor(props) {
@@ -17,8 +28,9 @@ export class LineHeat extends React.Component {
     }
     calculateSize = () => {
         this.setState({
+            height: body.scrollHeight / 5,
             width: body.scrollWidth / 2.2,
-            height: body.scrollHeight / 10,
+            size: Math.min(body.scrollHeight / 5, body.scrollWidth / 3)
         })
     }
     componentDidMount() {
@@ -48,7 +60,7 @@ export class LineHeat extends React.Component {
                 </div>
                 <div className="div2">
                     <Widgets.SimpleTrends
-                        port={{height: height, width: width}}
+                        port={{height: height, width: width * 2}}
                         data={{
                             xAxisMeasurements: 'meow',
                             lines: [
@@ -70,6 +82,69 @@ export class LineHeat extends React.Component {
                 <div className="div4"></div>
                 <div className="div5"></div>
                 <div className="div6"></div>
+            </div>
+        )
+    }
+}
+
+export class HeatTimeline extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            storeState: store.getState(),
+            timelineData: mapsStore.getState().dashboardData.sevenFlow
+        }
+        store.subscribe(() => this.setState({storeState: store.getState()}))
+        mapsStore.subscribe(() => this.setState({timelineData: mapsStore.getState().dashboardData.sevenFlow}))
+    }
+    calculateSize = () => {
+        this.setState({
+            width: body.scrollWidth / 2.2,
+            height: body.scrollHeight / 10,
+        })
+    }
+    componentDidMount() {
+        this.calculateSize()
+        window.addEventListener('resize', this.calculateSize)
+        mapsStore.dispatch({type: 'refresh'})
+    }
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.calculateSize)
+    }
+
+    render() {
+        const { height, width } = this.state
+        const testData = {
+            xAxisMeasurement: '日',
+            lines: [{
+                name: '1号线', values: [1, 2, 3, 4, 5, 6]
+            }]
+        }
+        return(
+            <div className={"THGrid"} key={'pages-timeline-heat'}>
+                <div className="div1">
+                    <Widgets.SimpleTrends
+                        port={{'height':  height, 'width': width * 2}}
+                        data={testData}
+                        tooltip
+                        axis
+                    >
+                        近日客流量时间分布
+                    </Widgets.SimpleTrends>
+                </div>
+                <div className="div2">
+                    <Widgets.Trends
+                        port={{'height': height, 'width': width}}
+                    />
+                </div>
+                <div className="div3">
+                    <Widgets.AreaChartTrends
+                        port={{'height': height, 'width': width}}
+                    />
+                </div>
+                <div className="div4"></div>
+                <div className="div5"></div>
+                <div className="div6"></div>
                 <div className="div7"></div>
                 <div className="div8"></div>
                 <div className="div9"></div>
@@ -84,53 +159,6 @@ export class LineHeat extends React.Component {
                 <div className="div18"></div>
                 <div className="div19"></div>
                 <div className="div20"></div>
-            </div>
-        )
-    }
-}
-
-export class HeatTimeline extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
-    }
-    calculateSize = () => {
-        this.setState({
-            size: body.scrollHeight / 5
-        })
-    }
-    componentDidMount() {
-        this.calculateSize()
-        window.addEventListener('resize', this.calculateSize)
-    }
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.calculateSize)
-    }
-
-    render() {
-        const {size} = this.state
-        return(
-            <div className={"THGrid"} key={'pages-timeline-heat'}>
-                <div className="div1">
-                    <Widgets.Trends
-                        port={{'height': size * 1, 'width': body.scrollWidth - 60}}
-                    >
-                        近日客流
-                    </Widgets.Trends>
-                </div>
-                <div className="div2">
-                    <Widgets.Trends
-                        port={{'height': size * 1, 'width': body.scrollWidth - 60}}
-                    />
-                </div>
-                <div className="div3">
-                    <Widgets.AreaChartTrends
-                        port={{'height': size * 1, 'width': body.scrollWidth - 60}}
-                    />
-                </div>
-                <div className="div4"></div>
-                <div className="div5"></div>
-                <div className="div6"></div>
             </div>
         )
     }

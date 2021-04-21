@@ -95,3 +95,34 @@ export function clearStorage() {
     mapsStore.dispatch({type: 'clear'})
     store.dispatch({type: 'clear'})
 }
+export function arrayCoherence(keys, values, slice) {
+    let newArray = []
+    try {
+        values.map(function (value, index) {
+            if (slice === undefined) {
+                let newDictionary = {
+                    key: keys[index],
+                    value: value
+                }
+                newArray.push(newDictionary)
+            }
+            else if (index >= slice[0] && index <= slice[1]) {
+                let newDictionary = {
+                    key: keys[index],
+                    value: value
+                }
+                newArray.push(newDictionary)
+            }
+            return true
+        })
+    }
+    catch (e) {
+        newArray = [{key: '数据加载中', value: 100}]
+    }
+
+    return newArray
+}
+export function patchZero(str, target){
+    str ='00000'+str;
+    return str.substring(str.length-target,str.length);
+}

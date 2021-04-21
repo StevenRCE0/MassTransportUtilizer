@@ -30,7 +30,7 @@ export function makeAvailable(thing) {
     if (thing !== undefined) {return thing}
     return (<React.Fragment/>)
 }
-function fixDictionaryKeys(data, theKeys, zoom) {
+export function fixDictionaryKeys(data, theKeys, zoom) {
     let emptyData = [{}, {}, {}, {}]
     const zoomSet = zoom === undefined ? 1 : zoom
     const theKeysSet = theKeys === undefined ? ['name', 'value'] : theKeys
@@ -62,7 +62,7 @@ function linesConstructor(dataArray, tintArray, state, tooltip, axis) {
     let drawn = []
     let centreStyle = transformToCentre
     if (axis === true) {
-        centreStyle = {position: 'absolute', bottom: 10}
+        centreStyle = {position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)'}
     }
     lines.map(function (line, lineIndex) {
         line.values.map(function (y, x) {
@@ -440,7 +440,7 @@ export class Trends extends React.Component {
         super(props);
         const mockData = [
             {
-                name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
+                name: 'Page A', '1号线': 4000, pv: 2400, amt: 2400,
             },
             {
                 name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
