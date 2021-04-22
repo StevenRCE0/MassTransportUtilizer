@@ -79,7 +79,6 @@ export class MapsBlock extends React.Component {
     }
 
     handleOpen(modal) {
-        window.addEventListener("keyup", )
         if (modal === 'datePicker') {this.setState({datePicker: !this.state.datePicker})}
         if (modal === 'argumentPicker') {this.setState({argumentPicker: !this.state.argumentPicker})}
     }
