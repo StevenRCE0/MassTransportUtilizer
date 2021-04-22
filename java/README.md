@@ -116,8 +116,7 @@ http://localhost:8080/time/json metmod:post
 
     "age":[{
      "id": 1004,
-    "in":[1,54,1,0,0,...],
-    "out":[1,54,1,0,0,...],
+    "all":[a11,a12,a13,a14,a15],
     "station": "Sta65",
     "x":12,
     "y":45,
