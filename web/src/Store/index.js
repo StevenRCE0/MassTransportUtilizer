@@ -48,11 +48,20 @@ export function searchObject(data, searchKey, value, requiredKey) {
             }
         })
     }
-    catch(error)
-    {
-        console.error(error)
-        return result
+    catch(error) {}
+
+    return result
+}
+export function searchArray(data, searchKey, value, requiredKey) {
+    let result = []
+    try {
+        data.forEach(function (theObject) {
+            if (theObject[searchKey] === value) {
+                result.push(theObject[requiredKey])
+            }
+        })
     }
+    catch(error) {}
 
     return result
 }
@@ -81,9 +90,6 @@ export function refreshDashboard(timeline) {
                 type: 'noGo',
                 value: response.data.result.msg
             })
-        })
-        .catch(error => {
-            console.error(error)
         })
 }
 export function moodyTimeDifference(givenTime) {

@@ -40,10 +40,7 @@ function predictionRequest(userArguments) {
         axios.post('/python/predict', data)
             .then(response => {console.log(response)})
     }
-    catch (error) {
-        console.error(error);
-    }
-    console.log(data)
+    catch (error) {}
 }
 
 export class MapsBlock extends React.Component {
@@ -173,10 +170,8 @@ export class MapsBlock extends React.Component {
             hour: timeline.getHours(),
             dayprop: (this.state.userArguments.holiday === true) ? 1 : 0
         }
-        console.log(data)
         axios.post('/python/dettime', data)
             .then(response => alert('旅程时间大约为' + Math.abs(response.data.dettime) + '分钟'))
-            .catch(error => console.error(error))
     }
     getBeginTripButton(start, finish) {
         if (start !== undefined && finish !== undefined && start !== finish) {

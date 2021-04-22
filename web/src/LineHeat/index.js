@@ -1,20 +1,11 @@
 import React from "react";
 import './style.css';
 import * as Widgets from "../Widgets/widgets";
-import store, {mapsStore} from "../Store";
-import {fixDictionaryKeys} from "../Widgets/widgets";
+import store, {mapsStore, searchArray} from "../Store";
 
 const body = document.body
-
-function getLineTimelines(timelineData) {
-    let result = {
-        xAxisMeasurements: '日',
-        lines:
-            fixDictionaryKeys(timelineData, ['name', 'values'])
-    }
-    console.log(result)
-    return result
-}
+const lineArray = ['1号线', '2号线', '3号线', '4号线', '5号线', '10号线', '11号线', '12号线']
+const tintArray=['#09B8A3', '#23EB62', '#A1C0F5', '#0977B8', '#658EA4', '#F5DE2F', '#F58CB2', '#7FDAFA', '#7A5DF9']
 
 export class LineHeat extends React.Component {
     constructor(props) {
@@ -28,7 +19,7 @@ export class LineHeat extends React.Component {
     }
     calculateSize = () => {
         this.setState({
-            height: body.scrollHeight / 5,
+            height: body.scrollHeight / 12,
             width: body.scrollWidth / 2.2,
             size: Math.min(body.scrollHeight / 5, body.scrollWidth / 3)
         })
@@ -37,19 +28,58 @@ export class LineHeat extends React.Component {
         window.addEventListener('resize', this.calculateSize)
         this.calculateSize()
     }
-
     componentWillUnmount() {
         window.removeEventListener('resize', this.calculateSize)
     }
 
+    getLineMap(name) {
+        const lineData = this.state.mapsState.hotPowerGraph
+        const mapArray = searchArray(lineData, 'line', name, 'level')
+        return {
+            xAxisMeasurement: '站点',
+            lines: [
+                {name: name, values: mapArray}
+            ]
+        }
+    }
+    getBlocks() {
+        const { height, width } = this.state
+        const outerMethods = (name) => this.getLineMap(name)
+        return lineArray.map(function (data, index) {
+            return ([
+                <div className={"div" + (index + 2)}>
+                    <Widgets.SimpleTrends
+                        port={{'height': height, 'width': width * 2}}
+                        data={outerMethods(lineArray[index])}
+                        tint={[tintArray[index]]}
+                        tooltip
+                        axis
+                    >
+                        {lineArray[index]}客流记录和预测数据
+                    </Widgets.SimpleTrends>
+                </div>
+            ])
+        }, height, width, outerMethods, lineArray, tintArray)
+
+    }
+    getLineBars() {
+        const {overallFlow} = this.state.mapsState
+        return this.state.mapsState.lineFlow.map(function (line) {
+            if (line.linename === '全网') {
+                return {linename: '全网', flow: overallFlow}
+            }
+            return line
+        }, overallFlow)
+    }
+
     render() {
-        const {height, width, mapsState} = this.state
+        const {height, width} = this.state
         return(
             <div className={"LHGrid"} key={'pages-line-heat'}>
                 <div className="div1">
                     <Widgets.SimpleBars
                         port={{height: height, width: width * 2}}
-                        data={mapsState.lineFlow}
+                        data={this.getLineBars()}
                         keys={['linename', 'flow']}
                         tint={['#09B8A3', '#23EB62', '#F0438F', '#EBBF23', '#A1C0F5', '#0977B8', '#B98AF5', '#F7DF34', '#F75A43', '#65A1C2']}
                         label
@@ -58,30 +88,7 @@ export class LineHeat extends React.Component {
                         当前全网线路客流
                     </Widgets.SimpleBars>
                 </div>
-                <div className="div2">
-                    <Widgets.SimpleTrends
-                        port={{height: height, width: width * 2}}
-                        data={{
-                            xAxisMeasurements: 'meow',
-                            lines: [
-                                {
-                                    name: 'wow',
-                                    values: [1, 2, 3]
-                                },
-                                {
-                                    name: 'argh',
-                                    values: [23, 12, 12]
-                                }
-                            ]
-                        }}
-                        tooltip
-                        axis
-                    />
-                </div>
-                <div className="div3"></div>
-                <div className="div4"></div>
-                <div className="div5"></div>
-                <div className="div6"></div>
+                {this.getBlocks()}
             </div>
         )
     }
@@ -112,6 +119,65 @@ export class HeatTimeline extends React.Component {
         window.removeEventListener('resize', this.calculateSize)
     }
 
+    getLineTimeline(index, name) {
+        try {
+            const result = {
+                xAxisMeasurement: '日',
+                lines: [{
+                    name: name,
+                    values: this.state.timelineData[index].values
+                }]
+            }
+            return (result)
+        }
+        catch (e) {}
+        return {
+            xAxisMeasurements: '加载中',
+            lines: []
+        }
+    }
+    getLineTimelines() {
+        try {
+            let lineMapArray = this.state.timelineData.map(function (lineData) {
+                return (
+                    {
+                        name: lineData.linename,
+                        values: lineData.values
+                    }
+                )
+            })
+            return {
+                xAxisMeasurement: '日',
+                lines: lineMapArray
+            }
+        }
+        catch (e) {}
+        return {
+            xAxisMeasurements: '加载中',
+            lines: []
+        }
+    }
+    getBlocks() {
+        const { height, width } = this.state
+        const outerMethods = (line, name) => this.getLineTimeline(line, name)
+        return this.state.timelineData.map(function (line, index) {
+            return ([
+                <div className={"div" + (index + 2)}>
+                    <Widgets.SimpleTrends
+                        port={{'height': height, 'width': width}}
+                        data={outerMethods(index, lineArray[index])}
+                        tint={[tintArray[index]]}
+                        tooltip
+                        axis
+                    >
+                        {lineArray[index]}客流记录和预测数据
+                    </Widgets.SimpleTrends>
+                </div>
+            ])
+        }, height, width, outerMethods, lineArray, tintArray)
+
+    }
+
     render() {
         const { height, width } = this.state
         const testData = {
@@ -132,33 +198,7 @@ export class HeatTimeline extends React.Component {
                         近日客流量时间分布
                     </Widgets.SimpleTrends>
                 </div>
-                <div className="div2">
-                    <Widgets.Trends
-                        port={{'height': height, 'width': width}}
-                    />
-                </div>
-                <div className="div3">
-                    <Widgets.AreaChartTrends
-                        port={{'height': height, 'width': width}}
-                    />
-                </div>
-                <div className="div4"></div>
-                <div className="div5"></div>
-                <div className="div6"></div>
-                <div className="div7"></div>
-                <div className="div8"></div>
-                <div className="div9"></div>
-                <div className="div10"></div>
-                <div className="div11"></div>
-                <div className="div12"></div>
-                <div className="div13"></div>
-                <div className="div14"></div>
-                <div className="div15"></div>
-                <div className="div16"></div>
-                <div className="div17"></div>
-                <div className="div18"></div>
-                <div className="div19"></div>
-                <div className="div20"></div>
+                {this.getBlocks()}
             </div>
         )
     }
