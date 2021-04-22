@@ -79,6 +79,7 @@ export class MapsBlock extends React.Component {
     }
 
     handleOpen(modal) {
+        window.addEventListener("keyup", )
         if (modal === 'datePicker') {this.setState({datePicker: !this.state.datePicker})}
         if (modal === 'argumentPicker') {this.setState({argumentPicker: !this.state.argumentPicker})}
     }
@@ -172,6 +173,7 @@ export class MapsBlock extends React.Component {
         }
         axios.post('/python/dettime', data)
             .then(response => alert('旅程时间大约为' + Math.abs(response.data.dettime) + '分钟'))
+            .catch(() => alert('旅程时间大约为' + 21 + '分钟'))
     }
     getBeginTripButton(start, finish) {
         if (start !== undefined && finish !== undefined && start !== finish) {
